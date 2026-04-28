@@ -1,0 +1,32 @@
+<style>
+  .newsletter { padding: 100px 0; background: var(--color-secondary); text-align: center; }
+  .newsletter__container { max-width: 500px; margin: 0 auto; }
+  .newsletter__title { font-size: 2.5rem; margin-bottom: 16px; }
+  .newsletter__text { font-size: 1.1rem; color: var(--color-text-light); margin-bottom: 32px; }
+  
+  .newsletter__form { display: flex; gap: 10px; }
+  .newsletter__input { flex: 1; padding: 14px 20px; border-radius: var(--radius-pill); border: 1.5px solid transparent; outline: none; font-size: 1rem; transition: border-color 0.2s; }
+  .newsletter__input:focus { border-color: var(--color-primary); }
+  .newsletter__submit { padding: 14px 30px; }
+
+  @media (max-width: 560px) {
+    .newsletter__form { flex-direction: column; }
+  }
+</style>
+
+<section class="newsletter">
+  <div class="container">
+    <div class="newsletter__container animate-reveal">
+      <h2 class="newsletter__title">Stay in the Loop</h2>
+      <p class="newsletter__text">Join our community and get 10% off your first order, plus exclusive access to new drops.</p>
+      <form class="newsletter__form">
+        <input type="email" class="newsletter__input" placeholder="Enter your email" required>
+        <button type="submit" class="button newsletter__submit">Join Now</button>
+      </form>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Newsletter" }
+{% endschema %}

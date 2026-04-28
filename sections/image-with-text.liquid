@@ -1,0 +1,47 @@
+<style>
+  .img-text { padding: 100px 0; background: #fff; }
+  .img-text__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .img-text__media { border-radius: var(--radius-soft); overflow: hidden; box-shadow: var(--shadow-soft); aspect-ratio: 4/5; }
+  .img-text__media img { width: 100%; height: 100%; object-fit: cover; }
+  
+  .img-text__eyebrow { color: var(--color-primary); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; display: block; margin-bottom: 16px; }
+  .img-text__title { font-size: 3rem; line-height: 1.1; margin-bottom: 24px; }
+  .img-text__content { font-size: 1.1rem; color: var(--color-text-light); line-height: 1.8; margin-bottom: 32px; }
+  
+  .img-text__features { display: flex; flex-direction: column; gap: 16px; list-style: none; padding: 0; margin: 0 0 40px; }
+  .img-text__feature { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 500; }
+  .img-text__feature-icon { width: 20px; height: 20px; background: var(--color-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; }
+
+  @media (max-width: 768px) {
+    .img-text__grid { grid-template-columns: 1fr; gap: 40px; }
+    .img-text { padding: 60px 0; }
+    .img-text__title { font-size: 2.2rem; }
+  }
+</style>
+
+<section class="img-text animate-reveal">
+  <div class="container">
+    <div class="img-text__grid">
+      <div class="img-text__media">
+        <img src="https://images.unsplash.com/photo-1555008544-aa0f18826500?q=80&w=800" alt="Quality Craftsmanship">
+      </div>
+      <div class="img-text__body">
+        <span class="img-text__eyebrow">Our Philosophy</span>
+        <h2 class="img-text__title">The Softest Touch for Their Skin</h2>
+        <p class="img-text__content">We believe every child deserves clothing that feels like a hug. Our signature bamboo fabric is naturally breathable, moisture-wicking, and incredibly gentle on even the most sensitive skin.</p>
+        
+        <ul class="img-text__features">
+          <li class="img-text__feature"><span class="img-text__feature-icon">✓</span> Sustainably Sourced Bamboo</li>
+          <li class="img-text__feature"><span class="img-text__feature-icon">✓</span> Hypoallergenic & Gentle</li>
+          <li class="img-text__feature"><span class="img-text__feature-icon">✓</span> Designed for Better Sleep</li>
+        </ul>
+
+        <a href="/pages/about" class="button">Our Story</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Image with Text" }
+{% endschema %}

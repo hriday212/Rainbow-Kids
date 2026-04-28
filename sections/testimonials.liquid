@@ -1,0 +1,41 @@
+<style>
+  .testimonials { padding: 100px 0; background: var(--color-highlight); }
+  .testimonials__header { text-align: center; margin-bottom: 60px; }
+  .testimonials__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  
+  .review-card { background: #fff; padding: 40px 30px; border-radius: var(--radius-soft); box-shadow: var(--shadow-soft); text-align: center; display: flex; flex-direction: column; gap: 20px; }
+  .review-card__stars { color: #FFB800; font-size: 1.2rem; letter-spacing: 4px; }
+  .review-card__quote { font-style: italic; font-size: 1.05rem; line-height: 1.7; color: var(--color-text); }
+  .review-card__author { font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-dark); margin-top: auto; }
+</style>
+
+<section class="testimonials animate-reveal">
+  <div class="container">
+    <div class="testimonials__header">
+      <span class="section-tag">Reviews</span>
+      <h2 style="font-size: 2.5rem;">Loved by 100,000+ Parents</h2>
+    </div>
+
+    <div class="testimonials__grid">
+      <div class="review-card">
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__quote">"Literally the softest thing I've ever felt. My baby sleeps so much longer in these sleep bags. Truly a lifesaver!"</p>
+        <span class="review-card__author">— Sarah M.</span>
+      </div>
+      <div class="review-card">
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__quote">"The colors are even more beautiful in person. They hold up so well in the wash, unlike other brands."</p>
+        <span class="review-card__author">— Emily R.</span>
+      </div>
+      <div class="review-card">
+        <div class="review-card__stars">★★★★★</div>
+        <p class="review-card__quote">"I was skeptical about the price, but the quality is night and day. We're officially a Rainbow Kids family now."</p>
+        <span class="review-card__author">— Jessica K.</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Testimonials" }
+{% endschema %}

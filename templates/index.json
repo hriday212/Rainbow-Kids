@@ -3,7 +3,11 @@
     "hero": { "type": "hero-slider" },
     "marquee": { "type": "marquee-bar" },
     "collections": { "type": "collection-list" },
-    "featured": { "type": "featured-collection" }
+    "featured": { "type": "featured-collection" },
+    "story": { "type": "image-with-text" },
+    "testimonials": { "type": "testimonials" },
+    "trust": { "type": "trust-bar" },
+    "newsletter": { "type": "newsletter" }
   },
-  "order": ["hero", "marquee", "collections", "featured"]
+  "order": ["hero", "marquee", "collections", "featured", "story", "testimonials", "trust", "newsletter"]
 }
