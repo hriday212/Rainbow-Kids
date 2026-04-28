@@ -1,0 +1,22 @@
+<style>
+  .marquee-bar { background: var(--color-text-dark); color: #fff; padding: 12px 0; overflow: hidden; white-space: nowrap; font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; }
+  .marquee-bar__track { display: inline-flex; animation: marqueeScroll 30s linear infinite; }
+  @keyframes marqueeScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+  .marquee-bar__item { padding: 0 40px; display: inline-flex; align-items: center; gap: 12px; }
+  .marquee-bar__dot { width: 4px; height: 4px; border-radius: 50%; background: var(--color-primary); }
+</style>
+
+<div class="marquee-bar" aria-hidden="true">
+  <div class="marquee-bar__track">
+    {%- for i in (1..10) -%}
+      <span class="marquee-bar__item"><span class="marquee-bar__dot"></span> Free Shipping Over $85</span>
+      <span class="marquee-bar__item"><span class="marquee-bar__dot"></span> Soft, Breathable Bamboo</span>
+      <span class="marquee-bar__item"><span class="marquee-bar__dot"></span> Easy 30-Day Returns</span>
+      <span class="marquee-bar__item"><span class="marquee-bar__dot"></span> Gentle on Sensitive Skin</span>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{ "name": "Marquee Bar" }
+{% endschema %}

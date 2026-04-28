@@ -1,0 +1,80 @@
+<style>
+  .hero-slider { position: relative; width: 100%; overflow: hidden; background: var(--color-secondary); }
+  .hero-slider__track { display: flex; transition: transform 0.7s var(--ease-smooth); height: clamp(500px, 75vh, 750px); }
+  .hero-slide { flex-shrink: 0; width: 100%; position: relative; display: flex; align-items: center; overflow: hidden; }
+  .hero-slide__bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
+  .hero-slide__overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,253,248,0.85) 0%, rgba(255,253,248,0.3) 60%, transparent 100%); }
+  .hero-slide__content { position: relative; z-index: 2; padding: 60px; max-width: 600px; }
+  
+  .hero-slide__eyebrow { display: block; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-text-light); margin-bottom: 20px; }
+  .hero-slide__title { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; margin-bottom: 24px; color: var(--color-text-dark); }
+  .hero-slide__text { font-size: 1.1rem; color: var(--color-text-light); margin-bottom: 36px; max-width: 440px; }
+  
+  .hero-dots { position: absolute; bottom: 30px; left: 60px; display: flex; gap: 10px; z-index: 10; }
+  .hero-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(44,44,44,0.2); border: none; cursor: pointer; transition: all 0.3s; padding:0; }
+  .hero-dot.active { background: var(--color-text-dark); width: 30px; border-radius: 5px; }
+
+  @media (max-width: 768px) {
+    .hero-slider__track { height: 500px; }
+    .hero-slide__content { padding: 40px 24px; text-align: center; }
+    .hero-slide__overlay { background: rgba(255,253,248,0.7); }
+    .hero-dots { left: 50%; transform: translateX(-50%); }
+  }
+</style>
+
+<section class="hero-slider">
+  <div class="hero-slider__track" id="HeroTrack">
+    
+    <!-- Slide 1 -->
+    <div class="hero-slide">
+      <div class="hero-slide__bg" style="background-image: url('https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=2070&auto=format&fit=crop');"></div>
+      <div class="hero-slide__overlay"></div>
+      <div class="hero-slide__content container">
+        <span class="hero-slide__eyebrow">New Arrivals</span>
+        <h2 class="hero-slide__title">Made for Little Ones</h2>
+        <p class="hero-slide__text">Buttery soft fabrics your baby will love. Discover our new season essentials in pastel palettes.</p>
+        <a href="/collections/all" class="button">Shop Now</a>
+      </div>
+    </div>
+
+    <!-- Slide 2 -->
+    <div class="hero-slide">
+      <div class="hero-slide__bg" style="background-image: url('https://images.unsplash.com/photo-1544126592-807daa2b565b?q=80&w=2070&auto=format&fit=crop');"></div>
+      <div class="hero-slide__overlay"></div>
+      <div class="hero-slide__content container">
+        <span class="hero-slide__eyebrow">Sleep Better</span>
+        <h2 class="hero-slide__title">A Softer Way to Soothe</h2>
+        <p class="hero-slide__text">The original bamboo sleep bags. Designed for safety, comfort, and a better night's rest.</p>
+        <a href="/collections/all-sleep-bags" class="button">Shop Sleep</a>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="hero-dots" id="HeroDots">
+    <button class="hero-dot active" onclick="goSlide(0)"></button>
+    <button class="hero-dot" onclick="goSlide(1)"></button>
+  </div>
+</section>
+
+<script>
+  let currentSlide = 0;
+  const track = document.getElementById('HeroTrack');
+  const dots = document.querySelectorAll('.hero-dot');
+  
+  function goSlide(index) {
+    currentSlide = index;
+    track.style.transform = `translateX(-${index * 100}%)`;
+    dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+  }
+
+  // Auto-slide every 6 seconds
+  setInterval(() => {
+    let next = (currentSlide + 1) % 2;
+    goSlide(next);
+  }, 6000);
+</script>
+
+{% schema %}
+{ "name": "Hero Slider" }
+{% endschema %}

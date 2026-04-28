@@ -1,8 +1,7 @@
 {
   "sections": {
-    "main": {
-      "type": "main-index"
-    }
+    "hero": { "type": "hero-slider" },
+    "marquee": { "type": "marquee-bar" }
   },
-  "order": ["main"]
+  "order": ["hero", "marquee"]
 }
