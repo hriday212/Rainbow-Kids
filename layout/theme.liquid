@@ -1,22 +1,42 @@
 <!doctype html>
-<html lang="{{ request.locale.iso_code }}">
+<html class="no-js" lang="{{ request.locale.iso_code }}">
   <head>
     <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="theme-color" content="#F8C8DC">
+    <link rel="canonical" href="{{ canonical_url }}">
+    
     <title>{{ page_title }}</title>
+
     {{ content_for_header }}
-    <style>
-      :root { --color-primary: #F8C8DC; --color-background: #FFFDF8; --color-text: #2C2C2C; }
-      body { background: var(--color-background); color: var(--color-text); font-family: sans-serif; margin: 0; }
-      .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
-      .main-content { padding: 40px 0; min-height: 60vh; }
-    </style>
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+
+    <!-- Styles -->
+    {{ 'base.css' | asset_url | stylesheet_tag }}
   </head>
+
   <body>
     {% section 'header' %}
-    <main role="main" class="main-content">
+
+    <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
       {{ content_for_layout }}
     </main>
+
     {% section 'footer' %}
+
+    <script>
+      // Intersection Observer for reveal animations
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) entry.target.classList.add('reveal');
+        });
+      }, { threshold: 0.1 });
+      document.querySelectorAll('.animate-reveal').forEach(el => observer.observe(el));
+    </script>
   </body>
 </html>

@@ -1,0 +1,14 @@
+{
+  "current": "Default",
+  "presets": {
+    "Default": {
+      "color_primary": "#F8C8DC",
+      "color_secondary": "#CDE7F0",
+      "color_accent": "#DFF5E1",
+      "color_highlight": "#FFF1B8",
+      "color_background": "#FFFDF8",
+      "color_text": "#2C2C2C",
+      "font_heading": "'Playfair Display', Georgia, serif"
+    }
+  }
+}
