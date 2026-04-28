@@ -1,7 +1,9 @@
 {
   "sections": {
     "hero": { "type": "hero-slider" },
-    "marquee": { "type": "marquee-bar" }
+    "marquee": { "type": "marquee-bar" },
+    "collections": { "type": "collection-list" },
+    "featured": { "type": "featured-collection" }
   },
-  "order": ["hero", "marquee"]
+  "order": ["hero", "marquee", "collections", "featured"]
 }

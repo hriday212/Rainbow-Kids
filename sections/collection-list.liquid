@@ -1,0 +1,61 @@
+<style>
+  .coll-list { padding: 80px 0; background: #fff; }
+  .coll-list__header { text-align: center; margin-bottom: 48px; }
+  .coll-list__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  
+  .coll-card { position: relative; border-radius: var(--radius-soft); overflow: hidden; aspect-ratio: 4/5; background: var(--color-secondary); transition: transform 0.4s var(--ease-smooth); }
+  .coll-card:hover { transform: translateY(-8px); }
+  .coll-card__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-smooth); }
+  .coll-card:hover .coll-card__img { transform: scale(1.05); }
+  
+  .coll-card__content { position: absolute; bottom: 0; left: 0; right: 0; padding: 30px; background: linear-gradient(to top, rgba(0,0,0,0.4) 0%, transparent 100%); color: #fff; text-align: center; }
+  .coll-card__title { font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 8px; }
+  .coll-card__link { font-size: 0.8rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: underline; text-underline-offset: 4px; }
+
+  @media (max-width: 768px) {
+    .coll-list__grid { grid-template-columns: 1fr; }
+    .coll-list { padding: 40px 0; }
+  }
+</style>
+
+<section class="coll-list animate-reveal">
+  <div class="container">
+    <div class="coll-list__header">
+      <span class="section-tag">Collections</span>
+      <h2 style="font-size: 2.5rem;">Shop by Category</h2>
+    </div>
+
+    <div class="coll-list__grid">
+      <!-- Category 1 -->
+      <a href="/collections/all" class="coll-card">
+        <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=600" class="coll-card__img" alt="Sleep Bags">
+        <div class="coll-card__content">
+          <h3 class="coll-card__title">Sleep Bags</h3>
+          <span class="coll-card__link">Explore Now</span>
+        </div>
+      </a>
+
+      <!-- Category 2 -->
+      <a href="/collections/all" class="coll-card" style="background: var(--color-accent);">
+        <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=600" class="coll-card__img" alt="Pajamas">
+        <div class="coll-card__content">
+          <h3 class="coll-card__title">Pajamas</h3>
+          <span class="coll-card__link">Explore Now</span>
+        </div>
+      </a>
+
+      <!-- Category 3 -->
+      <a href="/collections/all" class="coll-card" style="background: var(--color-highlight);">
+        <img src="https://images.unsplash.com/photo-1555008544-aa0f18826500?q=80&w=600" class="coll-card__img" alt="Essentials">
+        <div class="coll-card__content">
+          <h3 class="coll-card__title">Essentials</h3>
+          <span class="coll-card__link">Explore Now</span>
+        </div>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Collection List" }
+{% endschema %}
