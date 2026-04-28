@@ -1,0 +1,130 @@
+<style>
+  .product-section { padding: 40px 0 100px; background: #fff; }
+  .product-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: start; }
+  
+  /* Gallery */
+  .product-gallery { position: sticky; top: 120px; display: flex; flex-direction: column; gap: 12px; }
+  .product-gallery__main { border-radius: var(--radius-soft); overflow: hidden; background: #f9f9f9; aspect-ratio: 1/1; }
+  .product-gallery__main img { width: 100%; height: 100%; object-fit: cover; }
+  .product-gallery__thumbs { display: flex; gap: 10px; }
+  .product-gallery__thumb { width: 80px; height: 80px; border-radius: 8px; overflow: hidden; border: 2px solid transparent; cursor: pointer; }
+  .product-gallery__thumb--active { border-color: var(--color-primary); }
+  
+  /* Info */
+  .product-info { display: flex; flex-direction: column; gap: 24px; }
+  .product-info__title { font-size: 2.8rem; margin: 0; }
+  .product-info__stars { color: #FFB800; font-size: 0.9rem; letter-spacing: 2px; }
+  .product-info__price { font-size: 1.5rem; font-weight: 700; color: var(--color-text-dark); }
+  
+  .product-option { display: flex; flex-direction: column; gap: 12px; }
+  .product-option__label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
+  .product-option__list { display: flex; flex-wrap: wrap; gap: 10px; }
+  
+  .swatch { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px #eee; cursor: pointer; transition: transform 0.2s; }
+  .swatch.active { box-shadow: 0 0 0 2px var(--color-text-dark); }
+  
+  .size-btn { padding: 10px 24px; border-radius: var(--radius-pill); border: 1.5px solid #eee; background: #fff; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
+  .size-btn.active { background: var(--color-text-dark); color: #fff; border-color: var(--color-text-dark); }
+  
+  .product-form { display: flex; flex-direction: column; gap: 20px; margin-top: 20px; }
+  .qty-selector { display: flex; align-items: center; border: 1.5px solid #eee; border-radius: var(--radius-pill); width: fit-content; overflow: hidden; }
+  .qty-btn { padding: 12px 20px; background: none; border: none; cursor: pointer; font-size: 1.2rem; }
+  .qty-input { width: 40px; border: none; text-align: center; font-weight: 700; }
+
+  /* Tabs */
+  .product-tabs { border-top: 1px solid #eee; margin-top: 40px; }
+  .product-tab { border-bottom: 1px solid #eee; }
+  .product-tab__header { padding: 20px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
+  .product-tab__content { padding: 0 0 20px; font-size: 0.95rem; color: var(--color-text-light); line-height: 1.7; display: none; }
+  .product-tab.active .product-tab__content { display: block; }
+
+  @media (max-width: 860px) {
+    .product-grid { grid-template-columns: 1fr; gap: 40px; }
+    .product-gallery { position: relative; top: 0; }
+    .product-info__title { font-size: 2.2rem; }
+  }
+</style>
+
+<section class="product-section">
+  <div class="container product-grid">
+    
+    <!-- Gallery -->
+    <div class="product-gallery">
+      <div class="product-gallery__main">
+        <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=1000" alt="Product Title">
+      </div>
+      <div class="product-gallery__thumbs">
+        <div class="product-gallery__thumb product-gallery__thumb--active"><img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=200" alt="Thumb"></div>
+        <div class="product-gallery__thumb"><img src="https://images.unsplash.com/photo-1544126592-807daa2b565b?q=80&w=200" alt="Thumb"></div>
+        <div class="product-gallery__thumb"><img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=200" alt="Thumb"></div>
+      </div>
+    </div>
+
+    <!-- Info -->
+    <div class="product-info">
+      <div class="product-breadcrumb" style="font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 0.1em;">
+        Home / Collections / Sleep Bags
+      </div>
+      
+      <h1 class="product-info__title">Sleep Bag in Blossom 1.0</h1>
+      
+      <div class="product-info__stars">★★★★★ <span style="color:#999; margin-left:8px;">(2,450 Reviews)</span></div>
+      
+      <div class="product-info__price">$55.00</div>
+      
+      <div class="product-option">
+        <span class="product-option__label">Color: Blossom</span>
+        <div class="product-option__list">
+          <div class="swatch active" style="background-color: #F8C8DC;"></div>
+          <div class="swatch" style="background-color: #CDE7F0;"></div>
+          <div class="swatch" style="background-color: #DFF5E1;"></div>
+          <div class="swatch" style="background-color: #FFF1B8;"></div>
+        </div>
+      </div>
+
+      <div class="product-option">
+        <span class="product-option__label">Size: 6-18 Months</span>
+        <div class="product-option__list">
+          <button class="size-btn">0-6M</button>
+          <button class="size-btn active">6-18M</button>
+          <button class="size-btn">18-36M</button>
+        </div>
+      </div>
+
+      <div class="product-form">
+        <div class="qty-selector">
+          <button class="qty-btn">−</button>
+          <input type="text" class="qty-input" value="1" readonly>
+          <button class="qty-btn">+</button>
+        </div>
+        <button class="button" style="width: 100%; padding: 18px;" onclick="window.openCart()">Add to Bag</button>
+      </div>
+
+      <div class="product-tabs">
+        <div class="product-tab active">
+          <div class="product-tab__header">Description <span>+</span></div>
+          <div class="product-tab__content">
+            Our award-winning sleep bag is designed to keep your little one cozy and safe. Made from our signature breathable bamboo fabric, it's perfect for year-round comfort.
+          </div>
+        </div>
+        <div class="product-tab">
+          <div class="product-tab__header">Fabric & Care <span>+</span></div>
+          <div class="product-tab__content">
+            97% Rayon made from Bamboo, 3% Spandex. Machine wash cold on gentle cycle. Tumble dry low or hang to dry.
+          </div>
+        </div>
+        <div class="product-tab">
+          <div class="product-tab__header">Shipping & Returns <span>+</span></div>
+          <div class="product-tab__content">
+            Free shipping on orders over $85. 30-day easy returns for unused items in original packaging.
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Main Product" }
+{% endschema %}
