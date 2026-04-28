@@ -1,6 +1,60 @@
-<header style="padding: 20px; border-bottom: 1px solid #eee; text-align:center;">
-  <strong>{{ shop.name }}</strong>
+<style>
+  .header { padding: 15px 0; background: #fff; border-bottom: 1px solid #f4f4f4; position: sticky; top: 0; z-index: 1000; }
+  .header__grid { display: flex; justify-content: space-between; align-items: center; }
+  .header__logo { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: var(--color-text-dark); }
+  
+  .header__nav { display: flex; gap: 30px; }
+  .header__nav-link { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-light); }
+  .header__nav-link:hover { color: var(--color-primary); }
+  
+  .header__actions { display: flex; gap: 20px; align-items: center; }
+  .header__action-btn { background: none; border: none; cursor: pointer; color: var(--color-text-dark); position: relative; padding: 5px; }
+  .header__cart-count { position: absolute; top: -2px; right: -2px; background: var(--color-primary); color: var(--color-text-dark); font-size: 0.65rem; font-weight: 800; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
+
+  @media (max-width: 768px) { .header__nav { display: none; } }
+</style>
+
+<header class="header">
+  <div class="container header__grid">
+    <!-- Logo -->
+    <a href="/" class="header__logo">{{ shop.name }}</a>
+
+    <!-- Nav -->
+    <nav class="header__nav">
+      <a href="/collections/all" class="header__nav-link">Shop All</a>
+      <a href="/collections/new" class="header__nav-link">Newborn</a>
+      <a href="/collections/sleep" class="header__nav-link">Sleep Bags</a>
+      <a href="/pages/about" class="header__nav-link">Our Story</a>
+    </nav>
+
+    <!-- Actions -->
+    <div class="header__actions">
+      <button class="header__action-btn" aria-label="Search">{% render 'icon', icon: 'search' %}</button>
+      <button class="header__action-btn" id="CartToggle" aria-label="Cart">
+        {% render 'icon', icon: 'cart' %}
+        <span class="header__cart-count">0</span>
+      </button>
+    </div>
+  </div>
 </header>
+
+<script>
+  // Simple Drawer Logic
+  const cartToggle = document.getElementById('CartToggle');
+  const cartDrawer = document.getElementById('CartDrawer');
+  const cartOverlay = document.getElementById('CartOverlay');
+  const cartClose = document.getElementById('CartClose');
+
+  const openCart = () => { cartDrawer.classList.add('active'); cartOverlay.classList.add('active'); };
+  const closeCart = () => { cartDrawer.classList.remove('active'); cartOverlay.classList.remove('active'); };
+
+  if(cartToggle) cartToggle.addEventListener('click', openCart);
+  if(cartClose) cartClose.addEventListener('click', closeCart);
+  if(cartOverlay) cartOverlay.addEventListener('click', closeCart);
+
+  // Expose to global for "Add to Cart" buttons
+  window.openCart = openCart;
+</script>
 
 {% schema %}
 { "name": "Header" }

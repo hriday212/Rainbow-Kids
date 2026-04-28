@@ -21,6 +21,9 @@
   </head>
 
   <body>
+    <!-- Cart Drawer (Fixed position) -->
+    {% section 'cart-drawer' %}
+
     {% section 'header' %}
 
     <main id="MainContent" class="content-for-layout focus-none" role="main" tabindex="-1">
@@ -37,6 +40,14 @@
         });
       }, { threshold: 0.1 });
       document.querySelectorAll('.animate-reveal').forEach(el => observer.observe(el));
+
+      // Global Add to Cart interceptor (Placeholder for now)
+      document.querySelectorAll('.product-card__atc').forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          e.preventDefault();
+          if(window.openCart) window.openCart();
+        });
+      });
     </script>
   </body>
 </html>
