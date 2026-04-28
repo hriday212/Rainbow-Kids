@@ -1,0 +1,22 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <title>{{ page_title }}</title>
+    {{ content_for_header }}
+    <style>
+      :root { --color-primary: #F8C8DC; --color-background: #FFFDF8; --color-text: #2C2C2C; }
+      body { background: var(--color-background); color: var(--color-text); font-family: sans-serif; margin: 0; }
+      .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+      .main-content { padding: 40px 0; min-height: 60vh; }
+    </style>
+  </head>
+  <body>
+    {% section 'header' %}
+    <main role="main" class="main-content">
+      {{ content_for_layout }}
+    </main>
+    {% section 'footer' %}
+  </body>
+</html>
