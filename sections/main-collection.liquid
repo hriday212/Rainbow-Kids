@@ -1,57 +1,66 @@
 <style>
-  .collection-page { padding: 40px 0 100px; }
-  .collection-header { text-align: center; margin-bottom: 60px; }
-  .collection-header__title { font-size: 3.5rem; margin-bottom: 16px; }
-  .collection-header__description { max-width: 600px; margin: 0 auto; color: var(--color-text-light); line-height: 1.7; }
+  .collection-page { padding: 80px 0 120px; background: var(--color-background); }
+  .collection-header { text-align: center; margin-bottom: 80px; }
+  .collection-header__title { font-size: 4rem; margin-bottom: 20px; font-family: var(--font-heading); }
+  .collection-header__description { max-width: 700px; margin: 0 auto; color: var(--color-text-light); line-height: 1.8; font-size: 1.1rem; }
   
-  .collection-filters { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin-bottom: 60px; }
-  .filter-btn { background: none; border: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; display: flex; align-items: center; gap: 8px; }
+  .collection-filters { display: flex; justify-content: space-between; align-items: center; padding: 25px 0; border-top: 1px solid rgba(0,0,0,0.05); border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 80px; }
+  .filter-btn { background: none; border: none; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; display: flex; align-items: center; gap: 10px; color: var(--color-text-dark); }
   
-  .collection-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 60px 24px; }
+  .collection-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 60px 30px; }
 
-  /* Premium Product Card Redesign */
-  .product-card { position: relative; display: flex; flex-direction: column; gap: 20px; }
-  .product-card__media { position: relative; aspect-ratio: 1/1; border-radius: var(--radius-soft); overflow: hidden; background: #FDFBFF; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
-  .product-card__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1); }
-  .product-card:hover .product-card__img { transform: scale(1.08); }
+  /* Premium Product Card - Kyte Baby Style */
+  .product-card { position: relative; display: flex; flex-direction: column; gap: 24px; transition: transform 0.4s var(--ease-smooth); }
+  .product-card:hover { transform: translateY(-5px); }
   
-  .product-card__badge { position: absolute; top: 12px; left: 12px; background: var(--color-primary); color: var(--color-text-dark); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; padding: 6px 12px; border-radius: var(--radius-pill); z-index: 2; letter-spacing: 0.05em; }
+  .product-card__media { position: relative; aspect-ratio: 1/1; border-radius: 24px; overflow: hidden; background: #fff; display: block; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+  .product-card__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease-smooth); }
+  .product-card:hover .product-card__img { transform: scale(1.1); }
+  
+  .product-card__badge { position: absolute; top: 15px; left: 15px; background: var(--color-primary); color: var(--color-text-dark); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; padding: 8px 16px; border-radius: var(--radius-pill); z-index: 2; letter-spacing: 0.1em; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
   .product-card__badge--sale { background: var(--color-secondary); }
   
-  .product-card__info { display: flex; flex-direction: column; gap: 8px; text-align: center; }
-  .product-card__title { font-size: 1.1rem; font-weight: 600; color: var(--color-text-dark); margin: 0; line-height: 1.4; min-height: 2.8em; }
-  .product-card__price { font-size: 1rem; color: var(--color-text-light); font-weight: 500; }
+  .product-card__info { display: flex; flex-direction: column; gap: 10px; text-align: center; }
+  .product-card__title { font-size: 1.15rem; font-weight: 700; color: var(--color-text-dark); margin: 0; line-height: 1.4; font-family: var(--font-body); }
+  .product-card__price { font-size: 1rem; color: var(--color-text-light); font-weight: 600; opacity: 0.8; }
   
-  .product-card__atc { width: 100%; padding: 14px; border-radius: var(--radius-pill); border: 1.5px solid #eee; background: #fff; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.3s; margin-top: 10px; }
-  .product-card__atc:hover { background: var(--color-text-dark); color: #fff; border-color: var(--color-text-dark); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+  /* Bold Button - High Contrast Fix */
+  .product-card__atc { width: 100%; padding: 18px; border-radius: var(--radius-pill); border: 2px solid var(--color-text-dark); background: #fff; color: var(--color-text-dark); font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: all 0.3s; margin-top: 10px; }
+  .product-card__atc:hover { background: var(--color-text-dark); color: #fff; box-shadow: 0 12px 25px rgba(0,0,0,0.15); }
 
   @media (max-width: 1024px) { .collection-grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 768px) { .collection-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 16px; } .collection-header__title { font-size: 2.5rem; } }
+  @media (max-width: 768px) { .collection-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 15px; } .collection-header__title { font-size: 3rem; } .product-card__atc { padding: 14px; font-size: 0.75rem; } }
 </style>
 
 <section class="collection-page">
   <div class="container">
     
     <header class="collection-header animate-reveal">
-      <h1 class="collection-header__title">{{ collection.title | default: 'Collection Title' }}</h1>
+      <h1 class="collection-header__title">{{ collection.title | default: 'Sleep Bags' }}</h1>
       <p class="collection-header__description">{{ collection.description | default: 'The original bamboo essentials. Designed for safety, comfort, and a better night\'s rest for the whole family.' }}</p>
     </header>
 
     <div class="collection-filters">
       <button class="filter-btn">Filter</button>
-      <div class="collection-count" style="font-size: 0.85rem; color: #999;">{{ collection.products_count | default: 24 }} Products</div>
+      <div class="collection-count" style="font-size: 0.85rem; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.1em;">{{ collection.products_count }} Products</div>
       <button class="filter-btn">Sort By {% render 'icon', icon: 'chevron-down' %}</button>
     </div>
 
     <div class="collection-grid">
       {%- if collection.products.size > 0 -%}
         {%- for product in collection.products -%}
-          <div class="product-card animate-reveal">
+          <div class="product-card" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 50 }}">
             <a href="{{ product.url }}" class="product-card__media">
               {%- if product.compare_at_price > product.price -%}
                 <span class="product-card__badge product-card__badge--sale">Sale</span>
               {%- endif -%}
-              <img src="{{ product.featured_image | image_url: width: 800 }}" class="product-card__img" alt="{{ product.title | escape }}" loading="lazy">
+              
+              {%- if product.featured_image != blank -%}
+                <img src="{{ product.featured_image | image_url: width: 800 }}" class="product-card__img" alt="{{ product.title | escape }}" loading="lazy">
+              {%- else -%}
+                {%- comment -%} Premium Placeholder {%- endcomment -%}
+                <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=800" class="product-card__img" alt="Coming Soon">
+              {%- endif -%}
             </a>
             <div class="product-card__info">
               <h3 class="product-card__title">{{ product.title }}</h3>
@@ -66,7 +75,7 @@
         {%- endfor -%}
       {%- else -%}
         {%- for i in (1..8) -%}
-          <div class="product-card">
+          <div class="product-card" data-aos="fade-up">
             <div class="product-card__media">
               <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=800" class="product-card__img" alt="Demo Product">
             </div>
