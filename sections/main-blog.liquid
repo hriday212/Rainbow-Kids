@@ -1,0 +1,55 @@
+<style>
+  .blog-page { padding: 100px 0; background: #fff; }
+  .blog-header { text-align: center; margin-bottom: 80px; }
+  .blog-title { font-family: var(--font-heading); font-size: 4rem; color: #1a1a1a; margin-bottom: 20px; }
+  
+  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px 40px; }
+  .article-card { text-decoration: none; color: inherit; }
+  .article-card__img-wrap { aspect-ratio: 16/10; overflow: hidden; border-radius: 20px; background: #f9f9f9; margin-bottom: 25px; }
+  .article-card__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1); }
+  .article-card:hover .article-card__img { transform: scale(1.05); }
+  
+  .article-card__tag { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-primary); margin-bottom: 15px; display: block; }
+  .article-card__title { font-family: var(--font-heading); font-size: 1.6rem; color: #1a1a1a; margin-bottom: 15px; line-height: 1.2; }
+  .article-card__excerpt { font-size: 0.95rem; color: #666; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+
+  @media (max-width: 1024px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .blog-grid { grid-template-columns: 1fr; } }
+</style>
+
+<section class="blog-page">
+  <div class="container">
+    <header class="blog-header">
+      <h1 class="blog-title">{{ blog.title }}</h1>
+    </header>
+
+    <div class="blog-grid">
+      {%- for article in blog.articles -%}
+        <a href="{{ article.url }}" class="article-card animate-reveal">
+          <div class="article-card__img-wrap">
+            <img src="{{ article.image | image_url: width: 800 }}" class="article-card__img" alt="{{ article.title }}">
+          </div>
+          <span class="article-card__tag">{{ article.tags[0] | default: "Parenting" }}</span>
+          <h2 class="article-card__title">{{ article.title }}</h2>
+          <div class="article-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 30 }}</div>
+        </a>
+      {%- else -%}
+        {% comment %} Demo Articles {% endcomment %}
+        {%- for i in (1..3) -%}
+          <div class="article-card">
+            <div class="article-card__img-wrap">
+              <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=800" class="article-card__img">
+            </div>
+            <span class="article-card__tag">Life with Bamboo</span>
+            <h2 class="article-card__title">5 Tips for a Better Night's Sleep with Your Little One</h2>
+            <div class="article-card__excerpt">Discover how the right bamboo fabric can transform your baby's sleep routine and bring comfort to the whole family...</div>
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Boutique Blog", "settings": [] }
+{% endschema %}

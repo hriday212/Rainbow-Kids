@@ -1,0 +1,49 @@
+<style>
+  .article-page { padding: 80px 0; background: #fff; }
+  .article-header { text-align: center; max-width: 800px; margin: 0 auto 60px; }
+  .article-date { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #999; margin-bottom: 20px; display: block; }
+  .article-title { font-family: var(--font-heading); font-size: 3.5rem; color: #1a1a1a; margin-bottom: 30px; line-height: 1.1; }
+  
+  .article-featured-img { width: 100%; border-radius: 40px; margin-bottom: 80px; box-shadow: 0 40px 100px rgba(0,0,0,0.05); }
+  
+  .article-content { max-width: 800px; margin: 0 auto; font-size: 1.15rem; line-height: 1.8; color: #333; }
+  .article-content p { margin-bottom: 30px; }
+  .article-content h2 { font-family: var(--font-heading); font-size: 2.2rem; margin: 60px 0 30px; }
+  
+  .article-footer { border-top: 1px solid #f4f4f4; margin-top: 100px; padding-top: 40px; text-align: center; }
+  .share-title { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 20px; display: block; }
+</style>
+
+<article class="article-page">
+  <div class="container">
+    <header class="article-header animate-reveal">
+      <span class="article-date">{{ article.published_at | date: "%B %d, %Y" }}</span>
+      <h1 class="article-title">{{ article.title }}</h1>
+    </header>
+
+    {%- if article.image -%}
+      <img src="{{ article.image | image_url: width: 2000 }}" class="article-featured-img animate-reveal">
+    {%- else -%}
+      <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=2000" class="article-featured-img">
+    {%- endif -%}
+
+    <div class="article-content animate-reveal">
+      {{ article.content }}
+    </div>
+
+    <footer class="article-footer container--narrow">
+      <span class="share-title">Share this story</span>
+      <div style="display:flex; gap:15px; justify-content:center;">
+        <a href="#" class="boutique-link">Facebook</a>
+        <a href="#" class="boutique-link">Pinterest</a>
+      </div>
+      <div style="margin-top: 60px;">
+        <a href="{{ blog.url }}" class="boutique-link">Back to the Journal</a>
+      </div>
+    </footer>
+  </div>
+</article>
+
+{% schema %}
+{ "name": "Boutique Article", "settings": [] }
+{% endschema %}

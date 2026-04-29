@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "main": { "type": "main-page", "settings": {} },
+    "wholesale_form": { "type": "main-contact", "settings": {} }
+  },
+  "order": [ "main", "wholesale_form" ]
+}
