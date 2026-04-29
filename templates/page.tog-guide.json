@@ -1,0 +1,6 @@
+{
+  "sections": {
+    "main": { "type": "tog-guide" }
+  },
+  "order": ["main"]
+}
