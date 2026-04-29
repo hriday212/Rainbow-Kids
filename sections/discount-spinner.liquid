@@ -1,145 +1,110 @@
 <style>
-  .spinner-popup { position: fixed; inset: 0; z-index: 20000; display: flex; align-items: center; justify-content: center; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
-  .spinner-popup.active { opacity: 1; pointer-events: all; }
-  
-  .spinner-overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.5); backdrop-filter: blur(10px); }
-  
-  .spinner-card { position: relative; width: 95%; max-width: 850px; background: #fff; border-radius: 40px; overflow: hidden; display: grid; grid-template-columns: 1.1fr 1fr; z-index: 2; box-shadow: 0 30px 100px rgba(0,0,0,0.2); transform: scale(0.9) translateY(40px); transition: all 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); }
-  .spinner-popup.active .spinner-card { transform: scale(1) translateY(0); }
-  
-  .spinner-close { position: absolute; top: 24px; right: 24px; background: #fff; border: 1px solid #eee; width: 44px; height: 44px; border-radius: 50%; cursor: pointer; font-size: 1.2rem; z-index: 10; box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
-
-  /* Premium Wheel Side */
-  .spinner-wheel-side { background: #FDFBFF; display: flex; align-items: center; justify-content: center; position: relative; padding: 50px; overflow: hidden; }
-  .wheel-outer { position: relative; width: 340px; height: 340px; border-radius: 50%; background: #fff; padding: 12px; box-shadow: inset 0 0 20px rgba(0,0,0,0.05), 0 10px 40px rgba(0,0,0,0.1); }
-  .wheel-inner { position: relative; width: 100%; height: 100%; border-radius: 50%; overflow: hidden; transition: transform 5s cubic-bezier(0.1, 0, 0.1, 1); border: 4px solid #fff; }
-  
-  .wheel-pointer { position: absolute; top: -5px; left: 50%; transform: translateX(-50%); width: 36px; height: 46px; background: var(--color-text-dark); clip-path: polygon(50% 100%, 0 0, 100% 0); z-index: 15; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.2)); }
-  .wheel-center-cap { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 60px; height: 60px; background: #fff; border-radius: 50%; z-index: 10; box-shadow: 0 4px 15px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-
-  /* Content Side */
-  .spinner-content { padding: 60px 50px; display: flex; flex-direction: column; justify-content: center; gap: 24px; border-left: 1px solid #f4f4f4; }
-  .spinner-title { font-family: var(--font-heading); font-size: 3rem; line-height: 1.0; color: var(--color-text-dark); }
-  .spinner-input { padding: 18px 28px; border-radius: var(--radius-pill); border: 2px solid #f0f0f0; font-size: 1rem; outline: none; transition: all 0.3s; }
-  .spinner-input:focus { border-color: var(--color-primary); box-shadow: 0 0 0 4px rgba(248, 200, 220, 0.2); }
-  
-  .spinner-btn { padding: 18px; font-weight: 700; border-radius: var(--radius-pill); background: var(--color-text-dark); color: #fff; border: none; cursor: pointer; transition: all 0.3s; }
-  .spinner-btn:hover { background: var(--color-primary); color: var(--color-text-dark); transform: translateY(-2px); }
-
-  @media (max-width: 850px) {
-    .spinner-card { grid-template-columns: 1fr; width: 90%; max-height: 85vh; overflow-y: auto; }
-    .wheel-outer { width: 260px; height: 260px; }
-    .spinner-content { padding: 40px 24px; border-left: none; border-top: 1px solid #f4f4f4; }
-    .spinner-title { font-size: 2.2rem; }
+  .spinner-overlay {
+    position: fixed; inset: 0; width: 100vw; height: 100vh;
+    background: rgba(252, 248, 241, 0.8); backdrop-filter: blur(12px);
+    z-index: 10000; display: flex; align-items: center; justify-content: center;
+    opacity: 0; pointer-events: none; transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1);
   }
+  .spinner-overlay.show { opacity: 1; pointer-events: all; }
+
+  .spinner-modal {
+    background: #fff; padding: 60px 40px; border-radius: 40px; text-align: center;
+    position: relative; width: 480px; max-width: 90vw;
+    box-shadow: 0 40px 100px rgba(0,0,0,0.08);
+    transform: translateY(30px); transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    border: 1px solid rgba(255,255,255,0.5);
+  }
+  .spinner-overlay.show .spinner-modal { transform: translateY(0); }
+
+  .spinner-close { position: absolute; top: 25px; right: 25px; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #ccc; transition: color 0.3s; }
+  .spinner-close:hover { color: #1a1a1a; }
+
+  .spinner-wheel-wrap { position: relative; margin: 0 auto 40px; width: 300px; height: 300px; }
+  .spinner-pointer { 
+    width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent;
+    border-top: 20px solid #1a1a1a; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); z-index: 10;
+  }
+  .spinner-wheel {
+    width: 100%; height: 100%; border-radius: 50%;
+    background: conic-gradient(
+      #FDF4F2 0 120deg,
+      #F1F8FD 120deg 240deg,
+      #F6FDF1 240deg 360deg
+    );
+    position: relative; transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1);
+    border: 8px solid #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.05);
+  }
+  .s-label { position: absolute; top: 50%; left: 50%; font-weight: 800; font-size: 1.2rem; color: #1a1a1a; }
+  .s-label-1 { transform: rotate(60deg) translate(60px, -15px); }
+  .s-label-2 { transform: rotate(180deg) translate(60px, -15px); }
+  .s-label-3 { transform: rotate(300deg) translate(60px, -15px); }
+
+  .spinner-title { font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 10px; color: #1a1a1a; font-weight: 400; }
+  .spinner-text { font-size: 1rem; color: #666; margin-bottom: 30px; line-height: 1.6; }
+
+  .spinner-form input { width: 100%; padding: 18px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 15px; text-align: center; font-size: 1rem; }
+  .spinner-form .button { width: 100%; padding: 18px; background: #1a1a1a; color: #fff; border-radius: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; border: none; }
 </style>
 
-<div class="spinner-popup" id="SpinnerPopup">
-  <div class="spinner-overlay" onclick="closeSpinner()"></div>
-  
-  <div class="spinner-card">
-    <button class="spinner-close" onclick="closeSpinner()">&times;</button>
+<div class="spinner-overlay" id="SpinnerOverlay">
+  <div class="spinner-modal">
+    <button class="spinner-close" id="SpinnerClose">&times;</button>
+    <h2 class="spinner-title">Spin to Win</h2>
+    <p class="spinner-text">Unlock a special welcome gift for your little one.</p>
     
-    <!-- Left: The Premium Wheel -->
-    <div class="spinner-wheel-side">
-      <div class="wheel-pointer"></div>
-      <div class="wheel-outer">
-        <div class="wheel-center-cap">🌈</div>
-        <canvas id="WheelCanvas" class="wheel-inner"></canvas>
+    <div class="spinner-wheel-wrap">
+      <div class="spinner-pointer"></div>
+      <div class="spinner-wheel" id="Wheel">
+        <div class="s-label s-label-1">10%</div>
+        <div class="s-label s-label-2">15%</div>
+        <div class="s-label s-label-3">20%</div>
       </div>
     </div>
 
-    <!-- Right: Content -->
-    <div class="spinner-content" id="SpinnerInitial">
-      <h2 class="spinner-title">Spin for a Sweet Deal</h2>
-      <p class="spinner-text">Enter your email and give the wheel a spin to unlock a special discount on your first order!</p>
-      
-      <input type="email" id="SpinnerEmail" class="spinner-input" placeholder="Your email address">
-      <button class="spinner-btn" onclick="spinWheel()">Spin to Win</button>
-      <p style="font-size: 0.75rem; color: #999; text-align: center;">*Limited to one spin per new customer</p>
+    <div class="spinner-form" id="SpinnerForm">
+      <input type="email" id="SpinnerEmail" placeholder="Your email address" required>
+      <button type="button" class="button" id="SpinButton">Try My Luck</button>
     </div>
-
-    <div class="spinner-content" id="SpinnerSuccess" style="display: none; text-align: center;">
-      <h2 class="spinner-title">Hurray! 🌈</h2>
-      <p class="spinner-text">You've unlocked a special discount. Copy the code below:</p>
-      <div id="DiscountCode" style="background: var(--color-accent); padding: 24px; border-radius: 20px; font-weight: 900; font-size: 2rem; color: var(--color-text-dark); margin: 10px 0; border: 2px dashed rgba(0,0,0,0.1);">WELCOME10</div>
-      <button class="button" onclick="closeSpinner()" style="width: 100%;">Claim My Discount</button>
+    
+    <div id="SpinnerResult" style="display:none; animation: fadeUp 0.6s forwards;">
+      <h3 style="font-family:var(--font-heading); font-size: 2.2rem; color:#1a1a1a; margin-bottom:10px;">It's Your Lucky Day!</h3>
+      <p style="font-size: 1.1rem; color:#666;">You won <strong style="color:#1a1a1a;">20% OFF</strong> your first order.</p>
+      <div style="margin-top:20px; padding: 15px; background: #f9f9f9; border-radius: 8px; font-weight: 800; letter-spacing: 0.1em;">CODE: RAINBOW20</div>
     </div>
   </div>
 </div>
 
 <script>
-  const canvas = document.getElementById('WheelCanvas');
-  const ctx = canvas.getContext('2d');
-  const segments = ['5% OFF', '10% OFF', '5% OFF', '10% OFF', '5% OFF', '10% OFF', '5% OFF', '10% OFF'];
-  const colors = ['#F8C8DC', '#CDE7F0', '#F8C8DC', '#CDE7F0', '#F8C8DC', '#CDE7F0', '#F8C8DC', '#CDE7F0'];
-  
-  function drawWheel() {
-    const size = canvas.offsetWidth * 2; // High DPI
-    canvas.width = size;
-    canvas.height = size;
-    const center = size / 2;
-    const arc = Math.PI * 2 / segments.length;
-
-    segments.forEach((label, i) => {
-      const angle = i * arc;
-      ctx.beginPath();
-      ctx.fillStyle = colors[i];
-      ctx.moveTo(center, center);
-      ctx.arc(center, center, center, angle, angle + arc);
-      ctx.fill();
-
-      // Premium segment dividers
-      ctx.beginPath();
-      ctx.strokeStyle = '#fff';
-      ctx.lineWidth = 4;
-      ctx.moveTo(center, center);
-      ctx.lineTo(center + Math.cos(angle) * center, center + Math.sin(angle) * center);
-      ctx.stroke();
-
-      ctx.save();
-      ctx.translate(center, center);
-      ctx.rotate(angle + arc / 2);
-      ctx.textAlign = 'right';
-      ctx.fillStyle = '#2C2C2C';
-      ctx.font = 'bold 36px Playfair Display, serif';
-      ctx.fillText(label, center - 60, 15);
-      ctx.restore();
-    });
-  }
-
-  function spinWheel() {
-    const email = document.getElementById('SpinnerEmail').value;
-    if (!email.includes('@')) { alert('Please enter a valid email'); return; }
-
-    const wheel = document.getElementById('WheelCanvas');
-    const randomDeg = Math.floor(Math.random() * 360) + 1800; // 5 full rotations
-    wheel.style.transform = `rotate(${randomDeg}deg)`;
-
-    setTimeout(() => {
-      document.getElementById('SpinnerInitial').style.display = 'none';
-      document.getElementById('SpinnerSuccess').style.display = 'flex';
-      
-      const actualDeg = randomDeg % 360;
-      const prizeIdx = Math.floor((360 - actualDeg) / (360 / segments.length)) % segments.length;
-      const prize = segments[prizeIdx];
-      document.getElementById('DiscountCode').innerText = prize === '10% OFF' ? 'WELCOME10' : 'WELCOME5';
-      
-      if(window.celebrate) window.celebrate();
-    }, 5000);
-  }
-
-  function closeSpinner() {
-    document.getElementById('SpinnerPopup').classList.remove('active');
-    localStorage.setItem('spinner_seen', 'true');
-  }
-
-  window.addEventListener('load', () => {
-    drawWheel();
-    if (!localStorage.getItem('spinner_seen')) {
+  document.addEventListener('DOMContentLoaded', () => {
+    if (!localStorage.getItem('rainbow_spun')) {
       setTimeout(() => {
-        document.getElementById('SpinnerPopup').classList.add('active');
-      }, 5000);
+        const overlay = document.getElementById('SpinnerOverlay');
+        if (overlay) overlay.classList.add('show');
+      }, 4000);
+    }
+    const closeSpinner = () => {
+      document.getElementById('SpinnerOverlay').classList.remove('show');
+      localStorage.setItem('rainbow_spun', 'dismissed');
+    };
+    const closeBtn = document.getElementById('SpinnerClose');
+    if (closeBtn) closeBtn.addEventListener('click', closeSpinner);
+    
+    const spinBtn = document.getElementById('SpinButton');
+    if (spinBtn) {
+      spinBtn.addEventListener('click', () => {
+        const email = document.getElementById('SpinnerEmail').value;
+        if(!email || !email.includes('@')) return alert('Valid email please!');
+        document.getElementById('Wheel').style.transform = `rotate(1860deg)`;
+        setTimeout(() => {
+          document.getElementById('SpinnerForm').style.display = 'none';
+          document.getElementById('SpinnerResult').style.display = 'block';
+          localStorage.setItem('rainbow_spun', 'won');
+        }, 4000);
+      });
     }
   });
 </script>
+
+{% schema %}
+{ "name": "Boutique Spinner" }
+{% endschema %}
