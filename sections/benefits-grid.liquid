@@ -1,66 +1,74 @@
 <style>
-  .benefits { padding: 100px 0; background: #fff; text-align: center; }
-  .benefits__header { margin-bottom: 60px; }
+  .benefits { padding: 80px 0; background: #fff; border-bottom: 1px solid #f4f4f4; }
   .benefits__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
   
-  .benefit-item { display: flex; flex-direction: column; align-items: center; gap: 20px; padding: 20px; }
-  .benefit-item__icon { width: 80px; height: 80px; background: var(--color-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; transition: transform 0.4s var(--ease-smooth); }
-  .benefit-item:hover .benefit-item__icon { transform: scale(1.1) rotate(5deg); }
+  .benefit-card { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+  .benefit-card__icon { width: 80px; height: 80px; background: var(--color-background); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; transition: all 0.3s var(--ease-smooth); }
+  .benefit-card:hover .benefit-card__icon { transform: scale(1.1) rotate(5deg); background: var(--color-highlight); }
   
-  .benefit-item__title { font-size: 1.1rem; font-weight: 700; color: var(--color-text-dark); margin-bottom: 8px; }
-  .benefit-item__text { font-size: 0.9rem; color: var(--color-text-light); line-height: 1.6; }
+  .benefit-card__title { font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-dark); margin: 0; }
+  .benefit-card__text { font-size: 0.9rem; color: var(--color-text-light); line-height: 1.5; }
 
-  @media (max-width: 1024px) { .benefits__grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 560px) { .benefits__grid { grid-template-columns: 1fr; } }
+  @media (max-width: 1024px) { .benefits__grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .benefits__grid { grid-template-columns: 1fr; } }
 </style>
 
-<section class="benefits animate-reveal">
+<section class="benefits">
   <div class="container">
-    <div class="benefits__header">
-      <span class="section-tag">Why Us?</span>
-      <h2 style="font-size: 2.8rem;">Because we all need a good night’s sleep</h2>
-    </div>
-
     <div class="benefits__grid">
-      <!-- Item 1 -->
-      <div class="benefit-item">
-        <div class="benefit-item__icon">⏰</div>
-        <div class="benefit-item__info">
-          <h3 class="benefit-item__title">Get on a Sleep Routine</h3>
-          <p class="benefit-item__text">Zipping your littles into their sleep bags lets them know it’s time to go to sleep. Melatonin, activate.</p>
-        </div>
-      </div>
-
-      <!-- Item 2 -->
-      <div class="benefit-item">
-        <div class="benefit-item__icon">🌡️</div>
-        <div class="benefit-item__info">
-          <h3 class="benefit-item__title">Regulate Temperature</h3>
-          <p class="benefit-item__text">Our bamboo fabric is breathable and designed to keep your little one cool throughout the night.</p>
-        </div>
-      </div>
-
-      <!-- Item 3 -->
-      <div class="benefit-item">
-        <div class="benefit-item__icon">🌙</div>
-        <div class="benefit-item__info">
-          <h3 class="benefit-item__title">Learn from Parents</h3>
-          <p class="benefit-item__text">Informed by the latest sleep safety research and continuously improved by your feedback.</p>
-        </div>
-      </div>
-
-      <!-- Item 4 -->
-      <div class="benefit-item">
-        <div class="benefit-item__icon">☁️</div>
-        <div class="benefit-item__info">
-          <h3 class="benefit-item__title">Softness You Can Feel</h3>
-          <p class="benefit-item__text">So soft, you’ll have to touch it to believe it. Adds an extra layer of coziness to every snuggle.</p>
-        </div>
-      </div>
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <div class="benefit-card" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 100 }}" {{ block.shopify_attributes }}>
+            <div class="benefit-card__icon">
+              {%- if block.settings.custom_icon != blank -%}
+                <img src="{{ block.settings.custom_icon | image_url: width: 100 }}" style="width: 40px; height: 40px; object-fit: contain;">
+              {%- else -%}
+                <span>{{ block.settings.emoji | default: '✨' }}</span>
+              {%- endif -%}
+            </div>
+            <h3 class="benefit-card__title">{{ block.settings.title | default: 'Benefit Title' }}</h3>
+            <p class="benefit-card__text">{{ block.settings.text | default: 'Add a short description of this benefit here.' }}</p>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..4) -%}
+          <div class="benefit-card">
+            <div class="benefit-card__icon">✨</div>
+            <h3 class="benefit-card__title">Premium Quality</h3>
+            <p class="benefit-card__text">Designed with love for your little ones.</p>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
 </section>
 
 {% schema %}
-{ "name": "Benefits Grid" }
+{
+  "name": "Benefits Grid",
+  "max_blocks": 4,
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "Benefit",
+      "settings": [
+        { "type": "text", "id": "emoji", "label": "Emoji Icon", "default": "✨" },
+        { "type": "image_picker", "id": "custom_icon", "label": "Custom Icon (Optional)" },
+        { "type": "text", "id": "title", "label": "Heading", "default": "Free Shipping" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "On all orders over $85" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Benefits Grid",
+      "blocks": [
+        { "type": "benefit", "settings": { "emoji": "🚚", "title": "Free Shipping", "text": "On all orders over $85" } },
+        { "type": "benefit", "settings": { "emoji": "🌿", "title": "Bamboo Fabric", "text": "Soft, breathable & safe" } },
+        { "type": "benefit", "settings": { "emoji": "💖", "title": "Mama Founded", "text": "Designed by a mom of five" } },
+        { "type": "benefit", "settings": { "emoji": "🔒", "title": "Secure Pay", "text": "100% safe checkout" } }
+      ]
+    }
+  ]
+}
 {% endschema %}
