@@ -1,117 +1,105 @@
 <style>
-  .collection-page { padding: 60px 0; background: #fff; }
-  .collection-header { text-align: center; margin-bottom: 80px; }
-  .collection-title { font-family: var(--font-heading); font-size: 3.5rem; font-weight: 400; color: #1a1a1a; margin-bottom: 20px; }
-  .collection-desc { max-width: 600px; margin: 0 auto; color: #666; line-height: 1.6; font-size: 0.95rem; }
+  .collection-page { padding: 60px 0; background: var(--color-background); min-height: 100vh; }
+  .collection-layout { display: grid; grid-template-columns: 280px 1fr; gap: 60px; }
+  
+  /* Sort Header */
+  .collection-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.05); }
+  .sort-dropdown { border: none; background: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #1a1a1a; cursor: pointer; outline: none; }
 
-  .collection-layout { display: flex; gap: 60px; }
+  /* Elite Sidebar */
+  .collection-sidebar { position: sticky; top: 120px; height: fit-content; }
+  .filter-group { margin-bottom: 30px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 20px; }
+  .filter-group__title { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
   
-  /* Sidebar Filters - Kyte Style */
-  .collection-sidebar { width: 220px; flex-shrink: 0; position: sticky; top: 120px; height: fit-content; }
-  .sidebar-group { margin-bottom: 40px; border-top: 1px solid #f4f4f4; padding-top: 20px; }
-  .sidebar-group:first-child { border-top: none; padding-top: 0; }
-  .sidebar-title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #999; margin-bottom: 20px; display: block; }
-  .sidebar-link { display: block; font-size: 0.85rem; color: #1a1a1a; text-decoration: none; margin-bottom: 12px; transition: all 0.2s; font-weight: 500; }
-  .sidebar-link:hover { color: #888; transform: translateX(5px); }
-  .sidebar-link.active { font-weight: 800; text-decoration: underline; text-underline-offset: 4px; }
+  .filter-list { list-style: none; padding: 0; margin: 0; }
+  .filter-item { margin-bottom: 12px; }
+  .filter-link { font-size: 0.95rem; color: #666; text-decoration: none; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
+  .filter-link:hover { color: var(--color-primary); transform: translateX(5px); }
 
-  /* Luxury 3-Column Grid */
-  .collection-grid { flex: 1; display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px 25px; }
-  
-  .product-card { position: relative; text-decoration: none; color: inherit; display: flex; flex-direction: column; }
-  .product-card__image-wrap { aspect-ratio: 1/1.25; overflow: hidden; border-radius: 12px; background: #f9f9f9; position: relative; margin-bottom: 20px; }
-  .product-card__image { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1); }
-  .product-card:hover .product-card__image { transform: scale(1.08); }
-  
-  .product-card__info { display: flex; flex-direction: column; gap: 8px; }
-  .product-card__title { font-family: var(--font-heading); font-size: 1.15rem; margin: 0; color: #1a1a1a; font-weight: 400; line-height: 1.3; }
-  
-  .product-card__price { font-size: 1rem; font-weight: 700; color: #1a1a1a; letter-spacing: -0.01em; }
-  
-  .product-card__atc { 
-    margin-top: 15px; width: 100%; padding: 16px; background: var(--color-primary); color: #fff; border-radius: 12px; 
-    border: none; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; 
-    cursor: pointer; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1);
-  }
-  .product-card__atc:hover { background: #333; transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+  /* Availability Toggle */
+  .availability-wrap { display: flex; flex-direction: column; gap: 12px; }
+  .avail-item { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #666; cursor: pointer; }
+  .avail-item input { accent-color: var(--color-primary); width: 18px; height: 18px; }
 
-  @media (max-width: 1024px) { 
-    .collection-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 15px; } 
-    .collection-sidebar { display: none; }
-    .collection-layout { gap: 0; }
-  }
+  .collection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 20px; }
+
+  @media (max-width: 1024px) { .collection-layout { grid-template-columns: 1fr; } .collection-sidebar { display: none; } }
 </style>
 
-<div class="collection-page container">
-  <header class="collection-header">
-    <h1 class="collection-title">{{ collection.title | default: "Our Collection" }}</h1>
-    <p class="collection-desc">{{ collection.description | default: "Discover our premium bamboo essentials, crafted for comfort and designed for sweet dreams." }}</p>
-  </header>
+<section class="collection-page">
+  <div class="container">
+    <header style="margin-bottom: 40px;">
+      <h1 style="font-family:var(--font-heading); font-size: 3.5rem; margin:0;">{{ collection.title | default: "All Apparel" }}</h1>
+    </header>
 
-  <div class="collection-layout">
-    <aside class="collection-sidebar">
-      <div class="sidebar-group">
-        <span class="sidebar-title">Categories</span>
-        <a href="/collections/all" class="sidebar-link {% if collection.handle == 'all' %}active{% endif %}">Shop All</a>
-        <a href="/collections/sleep-bags" class="sidebar-link {% if collection.handle == 'sleep-bags' %}active{% endif %}">Sleep Bags</a>
-        <a href="/collections/pajamas" class="sidebar-link {% if collection.handle == 'pajamas' %}active{% endif %}">Pajamas</a>
-        <a href="/collections/bodysuits" class="sidebar-link {% if collection.handle == 'bodysuits' %}active{% endif %}">Bodysuits</a>
+    <div class="collection-toolbar">
+      <p style="color:#888; margin:0;">{{ collection.products_count | default: 24 }} Items</p>
+      <div style="display:flex; align-items:center; gap:10px;">
+        <span style="font-size:0.7rem; font-weight:800; color:#999; text-transform:uppercase;">Sort By:</span>
+        <select class="sort-dropdown">
+          <option>Featured</option>
+          <option>Best Selling</option>
+          <option>Newest</option>
+          <option>Price: Low to High</option>
+          <option>Price: High to Low</option>
+        </select>
       </div>
-      
-      <div class="sidebar-group">
-        <span class="sidebar-title">Shop by Age</span>
-        <a href="/collections/newborn" class="sidebar-link">Newborn</a>
-        <a href="/collections/baby" class="sidebar-link">Baby</a>
-        <a href="/collections/toddler" class="sidebar-link">Toddler</a>
-      </div>
+    </div>
 
-      <div class="sidebar-group">
-        <span class="sidebar-title">Sort</span>
-        <a href="?sort_by=manual" class="sidebar-link">Featured</a>
-        <a href="?sort_by=price-ascending" class="sidebar-link">Price: Low to High</a>
-        <a href="?sort_by=created-descending" class="sidebar-link">Newest Arrivals</a>
-      </div>
-    </aside>
-
-    <div class="collection-grid">
-      {%- if collection.products.size > 0 -%}
-        {% for product in collection.products %}
-          <div class="product-card">
-            <a href="{{ product.url }}" class="product-card__image-wrap">
-              <img src="{{ product.featured_image | image_url: width: 800 }}" 
-                   class="product-card__image" 
-                   loading="lazy"
-                   onerror="this.src='https://images.unsplash.com/photo-1522771917710-2ee211117f77?auto=format&fit=crop&q=80&w=800'; this.onerror=null;">
-            </a>
-            <div class="product-card__info">
-              <h3 class="product-card__title">{{ product.title }}</h3>
-              <p class="product-card__price">{{ product.price | money }}</p>
-              <button class="product-card__atc" data-variant-id="{{ product.selected_or_first_available_variant.id }}">Add to Bag</button>
-            </div>
+    <div class="collection-layout">
+      <!-- Elite Sidebar -->
+      <aside class="collection-sidebar animate-reveal">
+        <div class="filter-group">
+          <span class="filter-group__title">Availability</span>
+          <div class="availability-wrap">
+            <label class="avail-item"><input type="checkbox" checked> In Stock Only</label>
+            <label class="avail-item"><input type="checkbox"> Out of Stock</label>
           </div>
-        {% endfor %}
-      {%- else -%}
-        {% comment %} High-End Demo Grid for Development {% endcomment %}
-        {% for i in (1..9) %}
-          <div class="product-card">
-            <div class="product-card__image-wrap">
-              <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?auto=format&fit=crop&q=80&w=800" class="product-card__image">
-            </div>
-            <div class="product-card__info">
-              <h3 class="product-card__title">Bamboo Essential Item {{ i }}</h3>
-              <p class="product-card__price">$55.00</p>
-              <button class="product-card__atc">Add to Bag</button>
-            </div>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-group__title">Category</span>
+          <ul class="filter-list">
+            <li class="filter-item"><a href="/collections/sleep-bags" class="filter-link">Sleep Bags (12)</a></li>
+            <li class="filter-item"><a href="/collections/pajamas" class="filter-link">Pajamas (8)</a></li>
+            <li class="filter-item"><a href="/collections/bodysuits" class="filter-link">Bodysuits (15)</a></li>
+            <li class="filter-item"><a href="/collections/bundles" class="filter-link">Bundles (4)</a></li>
+          </ul>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-group__title">Color Palette</span>
+          <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px;">
+            <div style="width:30px;height:30px;border-radius:50%;background:#F8C8DC;border:1px solid #eee;"></div>
+            <div style="width:30px;height:30px;border-radius:50%;background:#CDE7F0;border:1px solid #eee;"></div>
+            <div style="width:30px;height:30px;border-radius:50%;background:#FF8C69;border:1px solid #eee;"></div>
+            <div style="width:30px;height:30px;border-radius:50%;background:#DFF5E1;border:1px solid #eee;"></div>
+            <div style="width:30px;height:30px;border-radius:50%;background:#FFF5EE;border:1px solid #eee;"></div>
           </div>
-        {% endfor %}
-      {%- endif -%}
+        </div>
+      </aside>
+
+      <!-- Main Grid -->
+      <main class="collection-main">
+        <div class="collection-grid">
+          {%- for i in (1..9) -%}
+            <div class="product-card">
+              <div class="product-card__image-wrap" style="aspect-ratio:1/1.2; border-radius:12px; overflow:hidden; background:#fff; margin-bottom:15px; position:relative;">
+                <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
+                {% if i < 3 %}
+                  <span style="position:absolute; top:10px; right:10px; background:#1a1a1a; color:#fff; font-size:0.6rem; font-weight:800; padding:4px 8px; border-radius:4px;">NEW</span>
+                {% endif %}
+              </div>
+              <h3 style="font-family:var(--font-heading); font-size:1.1rem; margin:0 0 5px;">Bamboo Sleep Bag {{ i }}</h3>
+              <p style="font-weight:700; color:var(--color-primary);">$55.00</p>
+            </div>
+          {%- endfor -%}
+        </div>
+      </main>
     </div>
   </div>
-</div>
+</section>
 
 {% schema %}
-{
-  "name": "Boutique Collection",
-  "settings": []
-}
+{ "name": "Elite Collection Grid", "settings": [] }
 {% endschema %}
