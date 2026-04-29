@@ -1,52 +1,42 @@
 <style>
-  .trust-bar { padding: 40px 0; background: #fff; border-top: 1px solid #f4f4f4; }
-  .trust-bar__grid { display: flex; justify-content: space-around; align-items: center; flex-wrap: wrap; gap: 30px; }
+  .trust-bar { padding: 60px 0; background: #fff; border-top: 1px solid #f4f4f4; border-bottom: 1px solid #f4f4f4; }
+  .trust-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; }
   
-  .trust-item { display: flex; align-items: center; gap: 12px; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light); }
-  .trust-item span { font-size: 1.2rem; }
+  .trust-item { text-align: center; }
+  .trust-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
+  .trust-text { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; display: block; margin-bottom: 8px; }
+  .trust-subtext { font-size: 0.85rem; color: #888; }
 
-  @media (max-width: 768px) { .trust-bar__grid { justify-content: center; gap: 20px; } .trust-item { font-size: 0.7rem; } }
+  @media (max-width: 768px) { .trust-grid { grid-template-columns: 1fr 1fr; gap: 40px 20px; } }
 </style>
 
 <section class="trust-bar">
-  <div class="container trust-bar__grid">
-    {%- if section.blocks.size > 0 -%}
-      {%- for block in section.blocks -%}
-        <div class="trust-item" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 100 }}">
-          <span>{{ block.settings.emoji | default: '✓' }}</span>
-          {{ block.settings.text }}
-        </div>
-      {%- endfor -%}
-    {%- else -%}
-      <div class="trust-item"><span>🚚</span> Free Shipping $85+</div>
-      <div class="trust-item"><span>📦</span> Easy Returns</div>
-      <div class="trust-item"><span>🛡️</span> Secure Checkout</div>
-    {%- endif -%}
+  <div class="container">
+    <div class="trust-grid">
+      <div class="trust-item animate-reveal">
+        <span class="trust-icon">🚚</span>
+        <span class="trust-text">Fast Shipping</span>
+        <span class="trust-subtext">Free over $85</span>
+      </div>
+      <div class="trust-item animate-reveal">
+        <span class="trust-icon">🌿</span>
+        <span class="trust-text">Eco-Friendly</span>
+        <span class="trust-subtext">100% Bamboo</span>
+      </div>
+      <div class="trust-item animate-reveal">
+        <span class="trust-icon">🛡️</span>
+        <span class="trust-text">Secure Shop</span>
+        <span class="trust-subtext">Buyer protection</span>
+      </div>
+      <div class="trust-item animate-reveal">
+        <span class="trust-icon">🤍</span>
+        <span class="trust-text">Family Owned</span>
+        <span class="trust-subtext">Made with love</span>
+      </div>
+    </div>
   </div>
 </section>
 
 {% schema %}
-{
-  "name": "Trust Bar",
-  "blocks": [
-    {
-      "type": "item",
-      "name": "Trust Item",
-      "settings": [
-        { "type": "text", "id": "emoji", "label": "Emoji", "default": "✓" },
-        { "type": "text", "id": "text", "label": "Text", "default": "Trust Message" }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Trust Bar",
-      "blocks": [
-        { "type": "item", "settings": { "emoji": "🚚", "text": "Free Shipping $85+" } },
-        { "type": "item", "settings": { "emoji": "📦", "text": "Easy 30-Day Returns" } },
-        { "type": "item", "settings": { "emoji": "🛡️", "text": "Secure Payment" } }
-      ]
-    }
-  ]
-}
+{ "name": "Boutique Trust Bar", "settings": [] }
 {% endschema %}

@@ -17,6 +17,7 @@
         "bg_color": "blue"
       } 
     },
+    "testimonials": { "type": "testimonials", "settings": { "title": "What Mamas are Saying" } },
     "marquee": { "type": "marquee-new-arrivals", "settings": {} },
     "story": { "type": "founder-story", "settings": {} },
     "benefits": { "type": "why-bamboo", "settings": {} }
@@ -27,6 +28,7 @@
     "gender_split",
     "pink_shop",
     "blue_shop",
+    "testimonials",
     "marquee",
     "story",
     "benefits"

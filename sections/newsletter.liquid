@@ -1,42 +1,42 @@
 <style>
-  .newsletter { padding: 80px 0; background: var(--color-primary); position: relative; overflow: hidden; }
-  .newsletter__grid { display: flex; justify-content: space-between; align-items: center; gap: 40px; }
-  .newsletter__content { max-width: 500px; }
-  .newsletter__title { font-size: 2.8rem; margin-bottom: 12px; }
-  .newsletter__text { font-size: 1.1rem; color: var(--color-text-dark); opacity: 0.8; }
+  .newsletter { padding: 120px 0; background: var(--color-background); text-align: center; }
+  .news-content { max-width: 700px; margin: 0 auto; background: #fff; padding: 60px; border-radius: 40px; box-shadow: 0 40px 100px rgba(0,0,0,0.05); }
   
-  .newsletter__form { display: flex; gap: 12px; flex: 1; max-width: 500px; }
-  .newsletter__input { flex: 1; padding: 20px 30px; border-radius: var(--radius-pill); border: none; font-size: 1rem; outline: none; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-  .newsletter__btn { background: var(--color-text-dark); color: #fff; padding: 0 40px; border-radius: var(--radius-pill); border: none; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
-  .newsletter__btn:hover { background: #000; transform: scale(1.05); }
+  .news-title { font-family: var(--font-heading); font-size: 3rem; color: #1a1a1a; margin-bottom: 20px; }
+  .news-text { font-size: 1.1rem; color: #666; margin-bottom: 40px; line-height: 1.6; }
+  
+  .news-form { display: flex; gap: 10px; max-width: 500px; margin: 0 auto; }
+  .news-input { flex: 1; padding: 18px 25px; border: 2px solid #eee; border-radius: 50px; outline: none; font-size: 1rem; transition: border-color 0.3s; }
+  .news-input:focus { border-color: var(--color-primary); }
+  .news-btn { padding: 18px 40px; background: var(--color-primary); color: #fff; border: none; border-radius: 50px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: all 0.3s; }
+  .news-btn:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(255,140,105,0.3); }
 
-  @media (max-width: 850px) {
-    .newsletter__grid { flex-direction: column; text-align: center; }
-    .newsletter__form { width: 100%; }
-  }
+  @media (max-width: 600px) { .news-form { flex-direction: column; } .news-content { padding: 40px 20px; } }
 </style>
 
-<section class="newsletter animate-reveal">
-  <div class="container newsletter__grid">
-    <div class="newsletter__content">
-      <h2 class="newsletter__title">{{ section.settings.title | default: 'Stay in the loop.' }}</h2>
-      <p class="newsletter__text">{{ section.settings.text | default: 'Join the Rainbow family for exclusive drops and parenting tips.' }}</p>
+<section class="newsletter">
+  <div class="container">
+    <div class="news-content animate-reveal">
+      <h2 class="news-title">{{ section.settings.title | default: "Join the Family" }}</h2>
+      <p class="news-text">Get 10% OFF your first order and stay updated on our newest bamboo drops!</p>
+      
+      <form action="#" class="news-form">
+        <input type="email" placeholder="Email Address" class="news-input" required>
+        <button type="submit" class="news-btn">Join</button>
+      </form>
+      <p style="margin-top:20px; font-size:0.75rem; color:#999; text-transform:uppercase; letter-spacing:0.1em;">No spam. Just sweetness.</p>
     </div>
-    
-    <form action="#" class="newsletter__form">
-      <input type="email" class="newsletter__input" placeholder="Your email address" required>
-      <button type="submit" class="newsletter__btn">Subscribe</button>
-    </form>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Newsletter",
+  "name": "Boutique Newsletter",
   "settings": [
-    { "type": "text", "id": "title", "label": "Heading", "default": "Stay in the loop." },
-    { "type": "textarea", "id": "text", "label": "Text", "default": "New arrivals and parenting tips." }
+    { "type": "text", "id": "title", "label": "Heading", "default": "Join the Family" }
   ],
-  "presets": [{ "name": "Newsletter" }]
+  "presets": [
+    { "name": "Boutique Newsletter" }
+  ]
 }
 {% endschema %}
