@@ -1,47 +1,77 @@
 <style>
-  .img-text { padding: 100px 0; background: #fff; }
-  .img-text__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-  .img-text__media { border-radius: var(--radius-soft); overflow: hidden; box-shadow: var(--shadow-soft); aspect-ratio: 4/5; }
-  .img-text__media img { width: 100%; height: 100%; object-fit: cover; }
+  .iwt { padding: 100px 0; background: #fff; overflow: hidden; }
+  .iwt__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
   
-  .img-text__eyebrow { color: var(--color-primary); font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.1em; display: block; margin-bottom: 16px; }
-  .img-text__title { font-size: 3rem; line-height: 1.1; margin-bottom: 24px; }
-  .img-text__content { font-size: 1.1rem; color: var(--color-text-light); line-height: 1.8; margin-bottom: 32px; }
+  .iwt__image { position: relative; border-radius: var(--radius-soft); overflow: hidden; aspect-ratio: 4/5; box-shadow: 0 20px 60px rgba(0,0,0,0.05); }
+  .iwt__image img { width: 100%; height: 100%; object-fit: cover; }
   
-  .img-text__features { display: flex; flex-direction: column; gap: 16px; list-style: none; padding: 0; margin: 0 0 40px; }
-  .img-text__feature { display: flex; align-items: center; gap: 12px; font-size: 0.95rem; font-weight: 500; }
-  .img-text__feature-icon { width: 20px; height: 20px; background: var(--color-accent); border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.7rem; }
+  .iwt__content { display: flex; flex-direction: column; gap: 24px; }
+  .iwt__title { font-size: clamp(2.5rem, 4vw, 3.5rem); line-height: 1.1; margin: 0; color: var(--color-text-dark); }
+  .iwt__text { font-size: 1.1rem; color: var(--color-text-light); line-height: 1.7; }
+  
+  .iwt__checklist { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 16px; }
+  .iwt__check-item { display: flex; align-items: center; gap: 12px; font-weight: 600; font-size: 0.95rem; }
+  .iwt__check-item span { color: var(--color-primary); filter: brightness(0.8); }
 
-  @media (max-width: 768px) {
-    .img-text__grid { grid-template-columns: 1fr; gap: 40px; }
-    .img-text { padding: 60px 0; }
-    .img-text__title { font-size: 2.2rem; }
+  @media (max-width: 850px) {
+    .iwt__grid { grid-template-columns: 1fr; gap: 40px; }
+    .iwt__content { text-align: center; align-items: center; }
   }
 </style>
 
-<section class="img-text animate-reveal">
-  <div class="container">
-    <div class="img-text__grid">
-      <div class="img-text__media">
-        <img src="https://images.unsplash.com/photo-1555008544-aa0f18826500?q=80&w=800" alt="Quality Craftsmanship">
-      </div>
-      <div class="img-text__body">
-        <span class="img-text__eyebrow">Our Philosophy</span>
-        <h2 class="img-text__title">The Softest Touch for Their Skin</h2>
-        <p class="img-text__content">We believe every child deserves clothing that feels like a hug. Our signature bamboo fabric is naturally breathable, moisture-wicking, and incredibly gentle on even the most sensitive skin.</p>
-        
-        <ul class="img-text__features">
-          <li class="img-text__feature"><span class="img-text__feature-icon">✓</span> Sustainably Sourced Bamboo</li>
-          <li class="img-text__feature"><span class="img-text__feature-icon">✓</span> Hypoallergenic & Gentle</li>
-          <li class="img-text__feature"><span class="img-text__feature-icon">✓</span> Designed for Better Sleep</li>
-        </ul>
-
-        <a href="/pages/about" class="button">Our Story</a>
-      </div>
+<section class="iwt animate-reveal">
+  <div class="container iwt__grid">
+    
+    <div class="iwt__image" style="{% if section.settings.layout == 'right' %}order: 2;{% endif %}">
+      {%- if section.settings.image != blank -%}
+        <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="{{ section.settings.title | escape }}">
+      {%- else -%}
+        <div style="width:100%; height:100%; background: #f4f4f4; display: flex; align-items: center; justify-content: center;">
+          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
+        </div>
+      {%- endif -%}
     </div>
+
+    <div class="iwt__content">
+      <span class="section-tag">{{ section.settings.tag | default: 'Our Philosophy' }}</span>
+      <h2 class="iwt__title">{{ section.settings.title | default: 'The Softest Touch for Their Skin' }}</h2>
+      <p class="iwt__text">{{ section.settings.text | default: 'We believe every child deserves clothing that feels like a hug. Our signature bamboo fabric is naturally breathable, moisture-wicking, and incredibly gentle.' }}</p>
+      
+      <ul class="iwt__checklist">
+        {%- if section.settings.item_1 != blank -%}<li class="iwt__check-item"><span>✔</span> {{ section.settings.item_1 }}</li>{%- endif -%}
+        {%- if section.settings.item_2 != blank -%}<li class="iwt__check-item"><span>✔</span> {{ section.settings.item_2 }}</li>{%- endif -%}
+        {%- if section.settings.item_3 != blank -%}<li class="iwt__check-item"><span>✔</span> {{ section.settings.item_3 }}</li>{%- endif -%}
+      </ul>
+      
+      {%- if section.settings.button_label != blank -%}
+        <a href="{{ section.settings.button_link }}" class="button" style="margin-top: 20px;">{{ section.settings.button_label }}</a>
+      {%- endif -%}
+    </div>
+
   </div>
 </section>
 
 {% schema %}
-{ "name": "Image with Text" }
+{
+  "name": "Image with Text",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Image" },
+    { "type": "select", "id": "layout", "label": "Image alignment", "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "right", "label": "Right" }
+      ], "default": "left" 
+    },
+    { "type": "text", "id": "tag", "label": "Eyebrow Label", "default": "Our Philosophy" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "The Softest Touch for Their Skin" },
+    { "type": "textarea", "id": "text", "label": "Text" },
+    { "type": "text", "id": "item_1", "label": "Checklist Item 1", "default": "Sustainably Sourced Bamboo" },
+    { "type": "text", "id": "item_2", "label": "Checklist Item 2", "default": "Hypoallergenic & Gentle" },
+    { "type": "text", "id": "item_3", "label": "Checklist Item 3", "default": "Designed for Better Sleep" },
+    { "type": "text", "id": "button_label", "label": "Button Label" },
+    { "type": "url", "id": "button_link", "label": "Button Link" }
+  ],
+  "presets": [
+    { "name": "Image with Text" }
+  ]
+}
 {% endschema %}
