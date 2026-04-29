@@ -76,12 +76,13 @@
 
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    if (!localStorage.getItem('rainbow_spun')) {
+    // Temporarily disabled check so you can see it pop up for testing
+    // if (!localStorage.getItem('rainbow_spun')) {
       setTimeout(() => {
         const overlay = document.getElementById('SpinnerOverlay');
         if (overlay) overlay.classList.add('show');
       }, 4000);
-    }
+    // }
     const closeSpinner = () => {
       document.getElementById('SpinnerOverlay').classList.remove('show');
       localStorage.setItem('rainbow_spun', 'dismissed');

@@ -28,7 +28,7 @@
     <script src="{{ 'cart-logic.js' | asset_url }}" defer></script>
   </head>
 
-  <body>
+  <body class="gradient">
     {% section 'announcement-bar' %}
     
     <!-- Cart Drawer -->
@@ -60,21 +60,6 @@
         const colors = ['#F8C8DC', '#CDE7F0', '#DFF5E1', '#FFF1B8'];
         confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: colors });
       }
-
-      // Global Add to Cart interceptor
-      document.addEventListener('click', (e) => {
-        const atcBtn = e.target.closest('.product-card__atc');
-        if (atcBtn) {
-          e.preventDefault();
-          const variantId = atcBtn.dataset.variantId || null;
-          if (variantId && window.cartLogic) {
-            window.cartLogic.addItem(variantId);
-          } else if (window.openCart) {
-            window.openCart();
-            celebrate();
-          }
-        }
-      });
     </script>
   </body>
 </html>

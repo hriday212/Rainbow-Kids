@@ -37,11 +37,11 @@
 <script>
   document.addEventListener('DOMContentLoaded', () => {
     const banner = document.getElementById('CookieBanner');
-    if (!localStorage.getItem('rainbow_cookies')) {
+    // if (!localStorage.getItem('rainbow_cookies')) {
       setTimeout(() => {
         banner.classList.add('active');
       }, 3000);
-    }
+    // }
 
     document.getElementById('CookieAccept').addEventListener('click', () => {
       localStorage.setItem('rainbow_cookies', 'accepted');
