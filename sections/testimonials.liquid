@@ -1,41 +1,93 @@
 <style>
-  .testimonials { padding: 100px 0; background: var(--color-highlight); }
+  .testimonials { padding: 100px 0; background: var(--color-background); overflow: hidden; }
   .testimonials__header { text-align: center; margin-bottom: 60px; }
+  
   .testimonials__grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
   
-  .review-card { background: #fff; padding: 40px 30px; border-radius: var(--radius-soft); box-shadow: var(--shadow-soft); text-align: center; display: flex; flex-direction: column; gap: 20px; }
-  .review-card__stars { color: #FFB800; font-size: 1.2rem; letter-spacing: 4px; }
-  .review-card__quote { font-style: italic; font-size: 1.05rem; line-height: 1.7; color: var(--color-text); }
-  .review-card__author { font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-dark); margin-top: auto; }
+  .testimonial-card { background: #fff; padding: 40px; border-radius: 24px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); display: flex; flex-direction: column; gap: 20px; transition: transform 0.3s; }
+  .testimonial-card:hover { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.05); }
+  
+  .testimonial-card__google { display: flex; align-items: center; gap: 8px; font-size: 0.75rem; font-weight: 700; color: #4285F4; text-transform: uppercase; letter-spacing: 0.05em; }
+  .testimonial-card__stars { color: #FFB800; font-size: 0.9rem; }
+  .testimonial-card__text { font-size: 1rem; line-height: 1.7; color: var(--color-text-light); font-style: italic; }
+  .testimonial-card__author { font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; margin-top: auto; }
+
+  .testimonials__footer { text-align: center; margin-top: 60px; }
+  .google-review-btn { display: inline-flex; align-items: center; gap: 12px; background: #fff; border: 2px solid #eee; padding: 16px 32px; border-radius: var(--radius-pill); font-weight: 700; font-size: 0.9rem; transition: all 0.3s; color: var(--color-text-dark); }
+  .google-review-btn:hover { border-color: #4285F4; color: #4285F4; transform: scale(1.05); }
+
+  @media (max-width: 1024px) { .testimonials__grid { grid-template-columns: 1fr 1fr; } }
+  @media (max-width: 768px) { .testimonials__grid { grid-template-columns: 1fr; } }
 </style>
 
 <section class="testimonials animate-reveal">
   <div class="container">
+    
     <div class="testimonials__header">
-      <span class="section-tag">Reviews</span>
-      <h2 style="font-size: 2.5rem;">Loved by 100,000+ Parents</h2>
+      <span class="section-tag">Social Proof</span>
+      <h2 style="font-size: 3rem;">Trusted by 10,000+ Mamas</h2>
     </div>
 
     <div class="testimonials__grid">
-      <div class="review-card">
-        <div class="review-card__stars">★★★★★</div>
-        <p class="review-card__quote">"Literally the softest thing I've ever felt. My baby sleeps so much longer in these sleep bags. Truly a lifesaver!"</p>
-        <span class="review-card__author">— Sarah M.</span>
-      </div>
-      <div class="review-card">
-        <div class="review-card__stars">★★★★★</div>
-        <p class="review-card__quote">"The colors are even more beautiful in person. They hold up so well in the wash, unlike other brands."</p>
-        <span class="review-card__author">— Emily R.</span>
-      </div>
-      <div class="review-card">
-        <div class="review-card__stars">★★★★★</div>
-        <p class="review-card__quote">"I was skeptical about the price, but the quality is night and day. We're officially a Rainbow Kids family now."</p>
-        <span class="review-card__author">— Jessica K.</span>
-      </div>
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <div class="testimonial-card" {{ block.shopify_attributes }}>
+            <div class="testimonial-card__google">
+              <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_logo_alphanumeric_2015.svg" style="height: 14px;" alt="Google">
+              Verified Review
+            </div>
+            <div class="testimonial-card__stars">★★★★★</div>
+            <p class="testimonial-card__text">"{{ block.settings.text | default: 'Best baby purchase ever! The fabric is so soft and my little one sleeps much better now.' }}"</p>
+            <span class="testimonial-card__author">— {{ block.settings.author | default: 'Happy Mama' }}</span>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..3) -%}
+          <div class="testimonial-card">
+            <div class="testimonial-card__google">Verified Review</div>
+            <div class="testimonial-card__stars">★★★★★</div>
+            <p class="testimonial-card__text">"Absolutely love the quality of these sleep bags. Highly recommend for any new parent!"</p>
+            <span class="testimonial-card__author">— Customer {{ i }}</span>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
     </div>
+
+    <div class="testimonials__footer">
+      <a href="{{ section.settings.google_link | default: 'https://share.google/3KW7AdBGh5ncM2c52' }}" class="google-review-btn" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/c/c1/Google_logo_alphanumeric_2015.svg" style="height: 18px;" alt="Google">
+        View all Google Reviews
+      </a>
+    </div>
+
   </div>
 </section>
 
 {% schema %}
-{ "name": "Testimonials" }
+{
+  "name": "Testimonials",
+  "settings": [
+    { "type": "url", "id": "google_link", "label": "Google Maps Review Link" }
+  ],
+  "blocks": [
+    {
+      "type": "testimonial",
+      "name": "Testimonial",
+      "settings": [
+        { "type": "textarea", "id": "text", "label": "Review Text" },
+        { "type": "text", "id": "author", "label": "Author Name" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Verified Testimonials",
+      "blocks": [
+        { "type": "testimonial" },
+        { "type": "testimonial" },
+        { "type": "testimonial" }
+      ]
+    }
+  ]
+}
 {% endschema %}

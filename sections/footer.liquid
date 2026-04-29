@@ -1,90 +1,85 @@
 <style>
-  .site-footer { background: #fff; padding: 80px 0 40px; border-top: 1px solid #eee; }
-  .footer__grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr 1.5fr; gap: 40px; margin-bottom: 60px; }
+  .footer { background: #fff; padding: 100px 0 40px; border-top: 1px solid #eee; color: var(--color-text-dark); }
+  .footer__grid { display: grid; grid-template-columns: 1.5fr repeat(3, 1fr) 1.5fr; gap: 40px; }
   
-  .footer__col-title { font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-dark); margin-bottom: 24px; }
-  .footer__link-list { display: flex; flex-direction: column; gap: 12px; }
-  .footer__link { font-size: 0.9rem; color: var(--color-text-light); }
+  .footer__col-title { font-weight: 800; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.1em; margin-bottom: 24px; display: block; }
+  .footer__link { display: block; font-size: 0.9rem; color: var(--color-text-light); margin-bottom: 12px; transition: color 0.2s; }
   .footer__link:hover { color: var(--color-primary); }
   
-  .footer__promo { background: var(--color-highlight); padding: 30px; border-radius: var(--radius-soft); }
-  .footer__promo-title { font-weight: 700; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
-  .footer__promo-text { font-size: 0.85rem; color: var(--color-text-light); margin-bottom: 20px; line-height: 1.6; }
+  .footer__socials { display: flex; gap: 15px; margin-top: 20px; }
+  .footer__social-icon { width: 40px; height: 40px; border-radius: 50%; border: 1px solid #eee; display: flex; align-items: center; justify-content: center; transition: all 0.3s; }
+  .footer__social-icon:hover { border-color: var(--color-primary); color: var(--color-primary); transform: translateY(-3px); }
   
-  .footer__bottom { border-top: 1px solid #f4f4f4; padding-top: 40px; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #999; }
-  .footer__socials { display: flex; gap: 20px; }
-  .footer__social-icon { width: 20px; height: 20px; opacity: 0.6; }
+  .footer__contact-item { display: flex; align-items: center; gap: 12px; font-size: 0.9rem; color: var(--color-text-light); margin-bottom: 12px; }
+
+  .footer__bottom { margin-top: 80px; padding-top: 30px; border-top: 1px solid #f4f4f4; display: flex; justify-content: space-between; align-items: center; font-size: 0.8rem; color: #999; }
 
   @media (max-width: 1024px) { .footer__grid { grid-template-columns: 1fr 1fr; } }
-  @media (max-width: 560px) { .footer__grid { grid-template-columns: 1fr; } .footer__bottom { flex-direction: column; gap: 20px; text-align: center; } }
+  @media (max-width: 600px) { .footer__grid { grid-template-columns: 1fr; } }
 </style>
 
-<footer class="site-footer">
-  <div class="container">
-    <div class="footer__grid">
-      <!-- Col 1: Customer Service -->
-      <div>
-        <h3 class="footer__col-title">Customer Service</h3>
-        <ul class="footer__link-list">
-          <li><a href="/pages/faqs" class="footer__link">FAQs</a></li>
-          <li><a href="/pages/contact" class="footer__link">Contact Us</a></li>
-          <li><a href="/pages/returns" class="footer__link">Returns</a></li>
-          <li><a href="/pages/shipping" class="footer__link">Shipping Policy</a></li>
-        </ul>
-      </div>
-
-      <!-- Col 2: Account -->
-      <div>
-        <h3 class="footer__col-title">Account</h3>
-        <ul class="footer__link-list">
-          <li><a href="/account/login" class="footer__link">Login</a></li>
-          <li><a href="/pages/rewards" class="footer__link">Refer a Friend</a></li>
-          <li><a href="/pages/rewards" class="footer__link">My Rewards</a></li>
-          <li><a href="/pages/wishlist" class="footer__link">My Wishlist</a></li>
-        </ul>
-      </div>
-
-      <!-- Col 3: Useful Links -->
-      <div>
-        <h3 class="footer__col-title">Useful Links</h3>
-        <ul class="footer__link-list">
-          <li><a href="/pages/sleep-safety" class="footer__link">Sleep Safety</a></li>
-          <li><a href="/pages/size-chart" class="footer__link">Sizing Chart</a></li>
-          <li><a href="/pages/fabric-guide" class="footer__link">Fabric Guide</a></li>
-          <li><a href="/pages/gift-cards" class="footer__link">Gift Cards</a></li>
-        </ul>
-      </div>
-
-      <!-- Col 4: About -->
-      <div>
-        <h3 class="footer__col-title">About</h3>
-        <ul class="footer__link-list">
-          <li><a href="/pages/our-story" class="footer__link">Our Story</a></li>
-          <li><a href="/pages/why-bamboo" class="footer__link">Why Bamboo</a></li>
-          <li><a href="/pages/press" class="footer__link">Press</a></li>
-          <li><a href="/pages/wholesale" class="footer__link">Wholesale</a></li>
-        </ul>
-      </div>
-
-      <!-- Col 5: Promo/Cares -->
-      <div>
-        <div class="footer__promo">
-          <h3 class="footer__promo-title">🪁 Kyte Cares</h3>
-          <p class="footer__promo-text">Every month, we donate a portion of our proceeds to NICUs across the United States. Join our community to learn more.</p>
-          <a href="/pages/kyte-cares" class="button button--outline" style="width: 100%; font-size: 0.7rem; padding: 10px;">Learn More</a>
-        </div>
+<footer class="footer">
+  <div class="container footer__grid">
+    
+    <!-- Branding -->
+    <div class="footer__col">
+      <a href="/" class="header__logo" style="display:block; margin-bottom: 20px;">Rainbow Kids Hub</a>
+      <p style="font-size: 0.9rem; line-height: 1.7; color: var(--color-text-light);">
+        Crafting comfort for your little ones with the softest bamboo fabrics. Join our community of happy mamas!
+      </p>
+      <div class="footer__socials">
+        <a href="https://www.instagram.com/rainbowkidshub26/" class="footer__social-icon" aria-label="Instagram">{% render 'icon', icon: 'instagram' %}</a>
+        <a href="https://share.google/3KW7AdBGh5ncM2c52" class="footer__social-icon" aria-label="Google Reviews">{% render 'icon', icon: 'star' %}</a>
       </div>
     </div>
 
-    <div class="footer__bottom">
-      <div>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved. Powered by Rainbow.</div>
-      <div class="footer__socials">
-        <span>IG</span> <span>FB</span> <span>PN</span> <span>TK</span>
-      </div>
+    <!-- Shop -->
+    <div class="footer__col">
+      <span class="footer__col-title">Shop</span>
+      <a href="/collections/sleep-bags" class="footer__link">Sleep Bags</a>
+      <a href="/collections/pajamas" class="footer__link">Pajamas</a>
+      <a href="/collections/new-arrivals" class="footer__link">New Arrivals</a>
+      <a href="/collections/all" class="footer__link">Shop All</a>
+    </div>
+
+    <!-- Support -->
+    <div class="footer__col">
+      <span class="footer__col-title">Support</span>
+      <a href="/pages/contact" class="footer__link">Contact Us</a>
+      <a href="/pages/shipping" class="footer__link">Shipping & Returns</a>
+      <a href="/pages/faq" class="footer__link">FAQs</a>
+      <a href="/pages/size-chart" class="footer__link">Size Chart</a>
+    </div>
+
+    <!-- Kyte Cares -->
+    <div class="footer__col">
+      <span class="footer__col-title">Reach Us</span>
+      <div class="footer__contact-item">📞 097025 72315</div>
+      <div class="footer__contact-item">📧 support@rainbowkidshub.com</div>
+      <div class="footer__contact-item">📍 Visit our Google Profile</div>
+    </div>
+
+    <!-- Newsletter -->
+    <div class="footer__col">
+      <span class="footer__col-title">Stay in the Loop</span>
+      <p style="font-size: 0.85rem; color: #999; margin-bottom: 15px;">Subscribe for exclusive drops and parenting tips.</p>
+      <form action="#" style="display:flex; gap: 8px;">
+        <input type="email" placeholder="Email" style="flex:1; padding: 12px; border-radius: 8px; border: 1px solid #eee;">
+        <button class="button" style="padding: 10px 15px; min-width: auto;">&rarr;</button>
+      </form>
+    </div>
+
+  </div>
+
+  <div class="container footer__bottom">
+    <p>&copy; {{ 'now' | date: '%Y' }} Rainbow Kids Hub. All Rights Reserved.</p>
+    <div style="display:flex; gap: 20px;">
+      <a href="/policies/privacy-policy">Privacy</a>
+      <a href="/policies/terms-of-service">Terms</a>
     </div>
   </div>
 </footer>
 
 {% schema %}
-{ "name": "Mega Footer" }
+{ "name": "Footer" }
 {% endschema %}
