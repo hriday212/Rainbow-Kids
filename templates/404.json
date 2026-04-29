@@ -1,0 +1,14 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-404",
+      "settings": {
+        "title": "Oops! We're lost.",
+        "text": "It looks like this little one wandered off. Let's get you back to the softness.",
+        "btn_label": "Back to the Shop",
+        "btn_link": "/collections/all"
+      }
+    }
+  },
+  "order": ["main"]
+}

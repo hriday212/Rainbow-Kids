@@ -1,0 +1,30 @@
+<style>
+  .error-page { padding: 150px 0; text-align: center; background: var(--color-background); min-height: 70vh; display: flex; align-items: center; justify-content: center; }
+  .error-content { max-width: 600px; }
+  .error-title { font-family: var(--font-heading); font-size: 4rem; color: #1a1a1a; margin-bottom: 20px; }
+  .error-text { font-size: 1.2rem; color: #666; margin-bottom: 40px; line-height: 1.6; }
+  .error-btn { display: inline-block; padding: 20px 45px; background: var(--color-primary); color: #fff; text-decoration: none; font-weight: 800; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.3s; }
+  .error-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(255,140,105,0.3); }
+</style>
+
+<section class="error-page">
+  <div class="container">
+    <div class="error-content animate-reveal">
+      <h1 class="error-title">{{ section.settings.title | default: "Oops! We're lost." }}</h1>
+      <p class="error-text">{{ section.settings.text | default: "It looks like this little one wandered off. Let's get you back to the softness." }}</p>
+      <a href="{{ section.settings.btn_link | default: '/' }}" class="error-btn">{{ section.settings.btn_label | default: "Back to Shop" }}</a>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Elite 404",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Oops! We're lost." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "It looks like this little one wandered off." },
+    { "type": "text", "id": "btn_label", "label": "Button Label", "default": "Back to Shop" },
+    { "type": "url", "id": "btn_link", "label": "Button Link" }
+  ]
+}
+{% endschema %}
