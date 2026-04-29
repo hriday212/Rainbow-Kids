@@ -1,0 +1,28 @@
+<style>
+  .why-bamboo { padding: 100px 0; background: #FCF8F1; }
+  .why-bamboo__header { text-align: center; margin-bottom: 60px; max-width: 700px; margin-left: auto; margin-right: auto; }
+  .why-bamboo__title { font-family: var(--font-heading); font-size: 3.5rem; font-weight: 400; color: var(--color-text-dark); line-height: 1.1; }
+  .why-bamboo__text { font-size: 1.1rem; color: #666; margin-top: 20px; line-height: 1.6; }
+  .bamboo-benefits { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; margin-top: 60px; }
+  .benefit-card { text-align: center; display: flex; flex-direction: column; align-items: center; gap: 20px; }
+  .benefit-card__icon { width: 80px; height: 80px; background: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 2rem; box-shadow: 0 10px 30px rgba(0,0,0,0.03); }
+  .benefit-card__title { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 400; color: var(--color-text-dark); margin: 0; }
+  .benefit-card__desc { font-size: 0.95rem; color: #777; line-height: 1.6; }
+  @media (max-width: 768px) { .bamboo-benefits { grid-template-columns: 1fr; } .why-bamboo__title { font-size: 2.5rem; } }
+</style>
+<section class="why-bamboo animate-reveal">
+  <div class="container">
+    <div class="why-bamboo__header">
+      <h2 class="why-bamboo__title">Why Bamboo?</h2>
+      <p class="why-bamboo__text">We chose bamboo because it’s the best for your baby and the planet. It’s naturally soft, hypoallergenic, and sustainable.</p>
+    </div>
+    <div class="bamboo-benefits">
+      <div class="benefit-card" data-aos="fade-up"><div class="benefit-card__icon">☁️</div><h3 class="benefit-card__title">Buttery Soft</h3><p class="benefit-card__desc">Feels like a second skin. Perfect for newborns and sensitive skin.</p></div>
+      <div class="benefit-card" data-aos="fade-up" data-aos-delay="100"><div class="benefit-card__icon">❄️</div><h3 class="benefit-card__title">Cooling Effect</h3><p class="benefit-card__desc">Naturally breathable and 3 degrees cooler than cotton.</p></div>
+      <div class="benefit-card" data-aos="fade-up" data-aos-delay="200"><div class="benefit-card__icon">🌱</div><h3 class="benefit-card__title">Eco-Friendly</h3><p class="benefit-card__desc">Bamboo is a fast-growing, renewable resource.</p></div>
+    </div>
+  </div>
+</section>
+{% schema %}
+{ "name": "Why Bamboo Section", "settings": [], "presets": [{ "name": "Why Bamboo Section" }] }
+{% endschema %}

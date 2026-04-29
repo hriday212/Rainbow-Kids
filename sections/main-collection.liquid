@@ -129,9 +129,9 @@
                   {%- endif -%}
                   
                   {%- if product.featured_image != blank -%}
-                    <img src="{{ product.featured_image | image_url: width: 800 }}" class="product-card__img" alt="{{ product.title | escape }}" loading="lazy">
+                    <img src="{{ product.featured_image | image_url: width: 800 }}" class="product-card__img" alt="{{ product.title | escape }}" onerror="this.src='https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=800'" loading="lazy">
                   {%- else -%}
-                    <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=800" class="product-card__img" alt="Coming Soon">
+                    <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=800" class="product-card__img" alt="Demo Product">
                   {%- endif -%}
                 </a>
                 

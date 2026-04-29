@@ -1,68 +1,31 @@
 <style>
-  .founder { padding: 120px 0; background: var(--color-secondary); overflow: hidden; position: relative; }
-  .founder__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-  
-  .founder__image { border-radius: 40px; overflow: hidden; box-shadow: 20px 20px 0 var(--color-primary); aspect-ratio: 4/5; }
-  .founder__image img { width: 100%; height: 100%; object-fit: cover; }
-  
-  .founder__content { padding-right: 40px; }
-  .founder__quote { font-size: 1.8rem; font-family: var(--font-heading); line-height: 1.4; color: var(--color-text-dark); margin-bottom: 30px; position: relative; }
-  .founder__quote::before { content: '“'; position: absolute; left: -40px; top: -20px; font-size: 5rem; color: var(--color-primary); opacity: 0.5; }
-  
-  .founder__name { font-weight: 800; font-size: 1.1rem; text-transform: uppercase; letter-spacing: 0.1em; display: block; margin-bottom: 4px; }
-  .founder__title { font-size: 0.9rem; color: var(--color-text-light); }
-
-  @media (max-width: 850px) {
-    .founder__grid { grid-template-columns: 1fr; text-align: center; gap: 60px; }
-    .founder__content { padding-right: 0; }
-    .founder__quote::before { left: 50%; transform: translateX(-50%); top: -60px; }
-  }
+  .founder-story { padding: 120px 0; background: #fff; }
+  .founder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .founder-image { position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 4/5; }
+  .founder-image img { width: 100%; height: 100%; object-fit: cover; }
+  .founder-content { display: flex; flex-direction: column; gap: 30px; }
+  .founder-tag { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #aaa; }
+  .founder-title { font-family: var(--font-heading); font-size: 3.5rem; color: var(--color-text-dark); line-height: 1.1; margin: 0; }
+  .founder-text { font-size: 1.1rem; color: #555; line-height: 1.8; font-style: italic; }
+  .founder-signature { font-family: 'Bodoni Moda', serif; font-size: 1.8rem; margin-top: 20px; color: var(--color-text-dark); }
+  @media (max-width: 1024px) { .founder-grid { grid-template-columns: 1fr; gap: 60px; } .founder-title { font-size: 2.8rem; } }
 </style>
-
-<section class="founder animate-reveal">
-  <div class="container founder__grid">
-    
-    <div class="founder__content">
-      <span class="section-tag">{{ section.settings.tag | default: 'A Message from our Founder' }}</span>
-      <blockquote class="founder__quote">
-        {{ section.settings.quote | default: 'As a mama of five, I know that sleep is the greatest gift. We created Rainbow Kids Hub to bring that comfort to every home.' }}
-      </blockquote>
-      <div class="founder__info">
-        <span class="founder__name">{{ section.settings.name | default: 'Ying Liu' }}</span>
-        <span class="founder__title">{{ section.settings.title | default: 'Founder & CEO' }}</span>
+<section class="founder-story">
+  <div class="container founder-grid">
+    <div class="founder-image animate-reveal" data-aos="fade-right">
+      <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800" alt="Our Founder">
+    </div>
+    <div class="founder-content animate-reveal" data-aos="fade-left">
+      <span class="founder-tag">A Message from our founder</span>
+      <h2 class="founder-title">Made for Moms, by a Mom.</h2>
+      <div class="founder-text">
+        <p>"Rainbow Kids was born from a simple need: I wanted the absolute best for my baby’s sensitive skin, without compromising on style or the planet."</p>
+        <p>Today, we are more than just a store. We are a community of parents dedicated to comfort, safety, and a brighter future for our children.</p>
       </div>
-      {%- if section.settings.button_label != blank -%}
-        <a href="{{ section.settings.button_link }}" class="button" style="margin-top: 40px;">{{ section.settings.button_label }}</a>
-      {%- endif -%}
+      <div class="founder-signature">— With love, M.</div>
     </div>
-
-    <div class="founder__image">
-      {%- if section.settings.image != blank -%}
-        <img src="{{ section.settings.image | image_url: width: 1200 }}" alt="{{ section.settings.name | escape }}">
-      {%- else -%}
-        <div style="width:100%; height:100%; background: #fff; display: flex; align-items: center; justify-content: center;">
-          {{ 'image' | placeholder_svg_tag: 'placeholder-svg' }}
-        </div>
-      {%- endif -%}
-    </div>
-
   </div>
 </section>
-
 {% schema %}
-{
-  "name": "Founder Story",
-  "settings": [
-    { "type": "image_picker", "id": "image", "label": "Founder Image" },
-    { "type": "text", "id": "tag", "label": "Eyebrow Label", "default": "A Message from our Founder" },
-    { "type": "textarea", "id": "quote", "label": "The Quote" },
-    { "type": "text", "id": "name", "label": "Founder Name", "default": "Ying Liu" },
-    { "type": "text", "id": "title", "label": "Founder Title", "default": "Founder & CEO" },
-    { "type": "text", "id": "button_label", "label": "Button Label" },
-    { "type": "url", "id": "button_link", "label": "Button Link" }
-  ],
-  "presets": [
-    { "name": "Founder Story" }
-  ]
-}
+{ "name": "Founder Story Section", "settings": [], "presets": [{ "name": "Founder Story Section" }] }
 {% endschema %}

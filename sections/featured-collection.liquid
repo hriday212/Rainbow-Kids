@@ -60,7 +60,7 @@
               {%- elsif product.compare_at_price > product.price -%}
                 <span class="product-card__badge" style="color:#d00;">Sale</span>
               {%- endif -%}
-              <img src="{{ product.featured_image | image_url: width: 800 }}" class="product-card__img" alt="{{ product.title | escape }}" loading="lazy">
+              <img src="{{ product.featured_image | image_url: width: 800 | default: 'https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=800' }}" class="product-card__img" alt="{{ product.title | escape }}" onerror="this.src='https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=800'" loading="lazy">
             </a>
             <div class="product-card__info">
               <h3 class="product-card__title">{{ product.title }}</h3>

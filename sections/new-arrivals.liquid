@@ -1,63 +1,105 @@
 <style>
-  .new-arrivals { padding: 120px 0; background: linear-gradient(to right, #CDE7F0, #DFF5E1); position: relative; overflow: hidden; margin: 40px 0; border-radius: 60px; }
+  .new-arrivals { padding: 100px 0; background: linear-gradient(to right, #FDFBFF, #F9F1F0); position: relative; overflow: hidden; }
   .new-arrivals__header { text-align: center; margin-bottom: 60px; }
-  .new-arrivals__title { font-size: 3.5rem; margin-top: 10px; color: var(--color-text-dark); }
+  .new-arrivals__title { font-family: var(--font-heading); font-size: 3.5rem; font-weight: 400; color: var(--color-text-dark); margin: 10px 0; }
   
-  .new-arrivals__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .new-arrivals-swiper { padding: 20px 5px 60px; overflow: visible !important; }
   
-  .arrival-card { background: #fff; padding: 20px; border-radius: 32px; text-decoration: none; display: flex; flex-direction: column; align-items: center; text-align: center; transition: all 0.5s var(--ease-smooth); box-shadow: 0 10px 40px rgba(0,0,0,0.05); }
-  .arrival-card:hover { transform: translateY(-15px); box-shadow: 0 20px 60px rgba(0,0,0,0.1); }
-  
-  .arrival-card__image { width: 100%; aspect-ratio: 1/1; border-radius: 20px; overflow: hidden; margin-bottom: 20px; background: #f9f9f9; }
-  .arrival-card__image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s; }
-  .arrival-card:hover img { transform: scale(1.1); }
-  
-  .arrival-card__title { font-size: 1.1rem; font-weight: 800; color: var(--color-text-dark); margin-bottom: 8px; }
-  .arrival-card__price { font-size: 1rem; color: var(--color-primary); font-weight: 700; filter: brightness(0.8); }
+  .swiper-slide { height: auto; transition: transform 0.4s var(--ease-smooth); }
+  .swiper-slide-active { transform: scale(1.02); }
 
-  @media (max-width: 1024px) { .new-arrivals__grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .new-arrivals__grid { grid-template-columns: 1fr; } .new-arrivals { border-radius: 0; padding: 80px 0; } }
+  /* Boutique Product Card for Slider */
+  .arrival-card { background: #fff; border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; gap: 16px; padding-bottom: 20px; transition: all 0.4s; box-shadow: 0 10px 30px rgba(0,0,0,0.02); text-decoration: none; height: 100%; }
+  .arrival-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.08); }
+  
+  .arrival-card__img-wrap { aspect-ratio: 4/5; overflow: hidden; background: #f9f9f9; }
+  .arrival-card__img-wrap img { width: 100%; height: 100%; object-fit: cover; }
+  
+  .arrival-card__info { padding: 0 20px; text-align: left; display: flex; flex-direction: column; gap: 6px; }
+  .arrival-card__title { font-size: 1rem; font-weight: 700; color: var(--color-text-dark); margin: 0; }
+  .arrival-card__price { font-size: 0.95rem; font-weight: 600; color: #888; }
+  
+  .swiper-button-next, .swiper-button-prev { color: #1a1a1a; background: #fff; width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 10px 30px rgba(0,0,0,0.1); z-index: 10; }
+  .swiper-button-next::after, .swiper-button-prev::after { font-size: 1.2rem; font-weight: 900; }
+  
+  @media (max-width: 768px) { .new-arrivals__title { font-size: 2.5rem; } }
 </style>
 
-<section class="new-arrivals animate-reveal" data-aos="zoom-in">
+<section class="new-arrivals">
   <div class="container">
-    <div class="new-arrivals__header" data-aos="fade-up">
-      <span class="section-tag">Recently trending</span>
+    <div class="new-arrivals__header animate-reveal">
+      <span class="section-tag">Recently Trending</span>
       <h2 class="new-arrivals__title">New Arrivals</h2>
     </div>
 
-    <div class="new-arrivals__grid">
-      {%- assign collection = collections[section.settings.collection] -%}
-      {%- if collection.products.size > 0 -%}
-        {%- for product in collection.products limit: 4 -%}
-          <a href="{{ product.url }}" class="arrival-card" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 100 }}">
-            <div class="arrival-card__image">
-              <img src="{{ product.featured_image | image_url: width: 600 }}" alt="{{ product.title }}">
+    <div class="swiper new-arrivals-swiper">
+      <div class="swiper-wrapper">
+        {%- assign collection = collections[section.settings.collection] -%}
+        {%- if collection.products.size > 0 -%}
+          {%- for product in collection.products limit: 10 -%}
+            <div class="swiper-slide">
+              <a href="{{ product.url }}" class="arrival-card">
+                <div class="arrival-card__img-wrap">
+                  <img src="{{ product.featured_image | image_url: width: 800 | default: 'https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=800' }}" alt="{{ product.title }}" loading="lazy">
+                </div>
+                <div class="arrival-card__info">
+                  <h3 class="arrival-card__title">{{ product.title }}</h3>
+                  <span class="arrival-card__price">{{ product.price | money }}</span>
+                </div>
+              </a>
             </div>
-            <h3 class="arrival-card__title">{{ product.title }}</h3>
-            <span class="arrival-card__price">{{ product.price | money }}</span>
-          </a>
-        {%- endfor -%}
-      {%- else -%}
-        {%- comment -%} Luxury Demo Mode {%- endcomment -%}
-        {%- for i in (1..4) -%}
-          <div class="arrival-card">
-            <div class="arrival-card__image"><img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=400"></div>
-            <h3 class="arrival-card__title">Bamboo Sleep Bag</h3>
-            <span class="arrival-card__price">$35.00</span>
-          </div>
-        {%- endfor -%}
-      {%- endif -%}
+          {%- endfor -%}
+        {%- else -%}
+          {%- for i in (1..6) -%}
+            <div class="swiper-slide">
+              <div class="arrival-card">
+                <div class="arrival-card__img-wrap">
+                  <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=800" alt="Demo">
+                </div>
+                <div class="arrival-card__info">
+                  <h3 class="arrival-card__title">Bamboo Sleep Bag {{ i }}</h3>
+                  <span class="arrival-card__price">$55.00</span>
+                </div>
+              </div>
+            </div>
+          {%- endfor -%}
+        {%- endif -%}
+      </div>
+      
+      <!-- Navigation -->
+      <div class="swiper-button-next"></div>
+      <div class="swiper-button-prev"></div>
+      <div class="swiper-pagination"></div>
     </div>
   </div>
 </section>
 
+<script>
+  function initNewArrivals() {
+    if (typeof Swiper !== 'undefined') {
+      new Swiper('.new-arrivals-swiper', {
+        slidesPerView: 1,
+        spaceBetween: 20,
+        loop: true,
+        pagination: { el: '.swiper-pagination', clickable: true },
+        navigation: { nextEl: '.swiper-button-next', prevEl: '.swiper-button-prev' },
+        breakpoints: {
+          640: { slidesPerView: 2 },
+          1024: { slidesPerView: 4 }
+        }
+      });
+    }
+  }
+  document.addEventListener('DOMContentLoaded', initNewArrivals);
+  document.addEventListener('shopify:section:load', initNewArrivals);
+</script>
+
 {% schema %}
 {
-  "name": "New Arrivals Section",
+  "name": "New Arrivals Slider",
   "settings": [
     { "type": "collection", "id": "collection", "label": "Select Collection" }
   ],
-  "presets": [{ "name": "New Arrivals Section" }]
+  "presets": [{ "name": "New Arrivals Slider" }]
 }
 {% endschema %}
