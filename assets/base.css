@@ -1,19 +1,19 @@
-/* Rainbow Kids Hub - Luxury Design System */
+/* Rainbow Kids Hub - Bold Mix Design System */
 :root {
   --color-primary: #F8C8DC;
   --color-secondary: #CDE7F0;
   --color-accent: #DFF5E1;
   --color-highlight: #FFF1B8;
+  --color-coral: #FF8282;         /* New Coral Accent from your screenshot */
   
-  --color-background: #FFFDF8;
+  --color-background: #FCF8F1;    /* Warm Cream from the original version */
   --color-text-dark: #1A1A1A;
   --color-text-light: #666666;
   
-  /* Luxury Fonts */
   --font-heading: "Bodoni Moda", serif;
   --font-body: "Inter", sans-serif;
   
-  --radius-soft: 20px;
+  --radius-soft: 24px;
   --radius-pill: 50px;
   --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
@@ -25,64 +25,37 @@ body {
   background-color: var(--color-background);
   line-height: 1.6;
   overflow-x: hidden;
-  font-weight: 400;
 }
 
 .container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
 
 /* Elite Typography */
-h1, h2, h3, h4 { 
-  font-family: var(--font-heading); 
-  font-weight: 700; 
-  color: var(--color-text-dark); 
-  line-height: 1.2;
-}
+h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 700; color: var(--color-text-dark); line-height: 1.1; }
+.heading-accent { color: var(--color-coral); }
 
-.section-tag { 
-  display: inline-block; 
-  font-size: 0.75rem; 
-  font-weight: 800; 
-  text-transform: uppercase; 
-  letter-spacing: 0.2em; 
-  color: var(--color-text-light); 
-  margin-bottom: 16px; 
-}
+.section-tag { display: inline-block; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-text-light); margin-bottom: 16px; }
 
-/* Bold Buttons */
+/* Premium Buttons */
 .button {
   display: inline-block;
-  padding: 18px 44px;
+  padding: 20px 48px;
   background: var(--color-text-dark);
   color: #fff;
   border-radius: var(--radius-pill);
   text-decoration: none;
   font-weight: 700;
-  font-size: 0.85rem;
+  font-size: 0.9rem;
   text-transform: uppercase;
   letter-spacing: 0.15em;
   transition: all 0.4s var(--ease-smooth);
-  border: 2.5px solid var(--color-text-dark);
+  border: 2px solid var(--color-text-dark);
   cursor: pointer;
   text-align: center;
 }
 
 .button:hover {
-  background: #fff;
+  background: var(--color-background);
   color: var(--color-text-dark);
   transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.15);
+  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
 }
-
-.button--outline {
-  background: transparent;
-  color: var(--color-text-dark);
-}
-
-/* Custom AOS Overrides */
-[data-aos] {
-  transition-property: transform, opacity;
-}
-
-/* Global Transitions */
-a { transition: color 0.3s; }
-img { transition: transform 0.5s var(--ease-smooth); }
