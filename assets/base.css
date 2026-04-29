@@ -1,80 +1,69 @@
-/* ── Design System (Kyte Baby Inspired) ────────────────── */
+/* Rainbow Kids Hub - Bold Mix Design System */
 :root {
-  /* Colors */
-  --color-primary:    #F8C8DC;   /* Baby Pink */
-  --color-secondary:  #CDE7F0;   /* Powder Blue */
-  --color-accent:     #DFF5E1;   /* Mint Green */
-  --color-highlight:  #FFF1B8;   /* Butter Yellow */
-  --color-background: #FFFDF8;   /* Warm White */
+  /* The "Mixed" Palette */
+  --color-primary: #F8C8DC;       /* Signature Pink */
+  --color-secondary: #CDE7F0;     /* Powder Blue */
+  --color-accent: #DFF5E1;        /* Mint Green */
+  --color-highlight: #FFF1B8;     /* Butter Yellow */
   
-  --color-text:       #2C2C2C;
-  --color-text-light: #6B6B6B;
-  --color-text-dark:  #1A1A1A;
+  --color-background: #FFFDF8;    /* Warm White */
+  --color-text-dark: #1A1A1A;      /* Deep Charcoal (From your screenshot) */
+  --color-text-light: #666666;
   
-  /* Typography */
-  --font-heading: 'Playfair Display', Georgia, serif;
-  --font-body:    'DM Sans', sans-serif;
+  --font-heading: 'Playfair Display', serif;
+  --font-body: 'DM Sans', sans-serif;
   
-  /* Layout */
-  --radius-soft: 16px;
-  --radius-pill: 99px;
-  --shadow-soft: 0 4px 20px rgba(0,0,0,0.04);
-  
-  --ease-smooth: cubic-bezier(0.25, 1, 0.5, 1);
+  --radius-soft: 20px;
+  --radius-pill: 50px;
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* ── Reset & Base ─────────────────────────────────────── */
-* { box-sizing: border-box; }
-body {
-  background: var(--color-background);
-  color: var(--color-text);
-  font-family: var(--font-body);
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { 
+  font-family: var(--font-body); 
+  color: var(--color-text-dark); 
+  background-color: var(--color-background);
   line-height: 1.6;
-  margin: 0;
-  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
-h1, h2, h3, h4 { font-family: var(--font-heading); color: var(--color-text-dark); margin: 0 0 1rem; }
-a { color: inherit; text-decoration: none; transition: opacity 0.2s; }
-a:hover { opacity: 0.8; }
-ul { list-style: none; padding: 0; margin: 0; }
-img { max-width: 100%; height: auto; display: block; }
 
-.container { max-width: 1280px; margin: 0 auto; padding: 0 24px; }
+.container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
 
-/* ── UI Elements ──────────────────────────────────────── */
+/* Bold Typography */
+h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 700; color: var(--color-text-dark); }
+.section-tag { display: inline-block; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-text-light); margin-bottom: 12px; }
+
+/* Bold Buttons (The "Appeal" fix) */
 .button {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  padding: 12px 32px;
-  border-radius: var(--radius-pill);
+  display: inline-block;
+  padding: 18px 40px;
   background: var(--color-text-dark);
   color: #fff;
+  border-radius: var(--radius-pill);
+  text-decoration: none;
+  font-weight: 700;
   font-size: 0.9rem;
-  font-weight: 600;
-  letter-spacing: 0.04em;
   text-transform: uppercase;
-  border: 1.5px solid var(--color-text-dark);
+  letter-spacing: 0.1em;
+  transition: all 0.3s var(--ease-smooth);
+  border: 2px solid var(--color-text-dark);
   cursor: pointer;
-  transition: all 0.25s var(--ease-smooth);
+  text-align: center;
 }
-.button:hover { background: var(--color-primary); color: var(--color-text-dark); border-color: var(--color-primary); transform: translateY(-2px); }
+
+.button:hover {
+  background: var(--color-primary);
+  color: var(--color-text-dark);
+  border-color: var(--color-primary);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+}
 
 .button--outline {
   background: transparent;
   color: var(--color-text-dark);
 }
 
-.section-tag {
-  display: inline-block;
-  font-size: 0.75rem;
-  font-weight: 600;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--color-text-light);
-  margin-bottom: 12px;
-}
-
 /* Animations */
-.animate-reveal { opacity: 0; transform: translateY(20px); transition: all 0.8s var(--ease-smooth); }
+.animate-reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s var(--ease-smooth); }
 .animate-reveal.reveal { opacity: 1; transform: translateY(0); }

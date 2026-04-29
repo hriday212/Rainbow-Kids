@@ -1,32 +1,42 @@
 <style>
-  .newsletter { padding: 100px 0; background: var(--color-secondary); text-align: center; }
-  .newsletter__container { max-width: 500px; margin: 0 auto; }
-  .newsletter__title { font-size: 2.5rem; margin-bottom: 16px; }
-  .newsletter__text { font-size: 1.1rem; color: var(--color-text-light); margin-bottom: 32px; }
+  .newsletter { padding: 80px 0; background: var(--color-primary); position: relative; overflow: hidden; }
+  .newsletter__grid { display: flex; justify-content: space-between; align-items: center; gap: 40px; }
+  .newsletter__content { max-width: 500px; }
+  .newsletter__title { font-size: 2.8rem; margin-bottom: 12px; }
+  .newsletter__text { font-size: 1.1rem; color: var(--color-text-dark); opacity: 0.8; }
   
-  .newsletter__form { display: flex; gap: 10px; }
-  .newsletter__input { flex: 1; padding: 14px 20px; border-radius: var(--radius-pill); border: 1.5px solid transparent; outline: none; font-size: 1rem; transition: border-color 0.2s; }
-  .newsletter__input:focus { border-color: var(--color-primary); }
-  .newsletter__submit { padding: 14px 30px; }
+  .newsletter__form { display: flex; gap: 12px; flex: 1; max-width: 500px; }
+  .newsletter__input { flex: 1; padding: 20px 30px; border-radius: var(--radius-pill); border: none; font-size: 1rem; outline: none; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+  .newsletter__btn { background: var(--color-text-dark); color: #fff; padding: 0 40px; border-radius: var(--radius-pill); border: none; font-weight: 700; text-transform: uppercase; cursor: pointer; transition: all 0.3s; }
+  .newsletter__btn:hover { background: #000; transform: scale(1.05); }
 
-  @media (max-width: 560px) {
-    .newsletter__form { flex-direction: column; }
+  @media (max-width: 850px) {
+    .newsletter__grid { flex-direction: column; text-align: center; }
+    .newsletter__form { width: 100%; }
   }
 </style>
 
-<section class="newsletter">
-  <div class="container">
-    <div class="newsletter__container animate-reveal">
-      <h2 class="newsletter__title">Stay in the Loop</h2>
-      <p class="newsletter__text">Join our community and get 10% off your first order, plus exclusive access to new drops.</p>
-      <form class="newsletter__form">
-        <input type="email" class="newsletter__input" placeholder="Enter your email" required>
-        <button type="submit" class="button newsletter__submit">Join Now</button>
-      </form>
+<section class="newsletter animate-reveal">
+  <div class="container newsletter__grid">
+    <div class="newsletter__content">
+      <h2 class="newsletter__title">{{ section.settings.title | default: 'Stay in the loop.' }}</h2>
+      <p class="newsletter__text">{{ section.settings.text | default: 'Join the Rainbow family for exclusive drops and parenting tips.' }}</p>
     </div>
+    
+    <form action="#" class="newsletter__form">
+      <input type="email" class="newsletter__input" placeholder="Your email address" required>
+      <button type="submit" class="newsletter__btn">Subscribe</button>
+    </form>
   </div>
 </section>
 
 {% schema %}
-{ "name": "Newsletter" }
+{
+  "name": "Newsletter",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "Stay in the loop." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "New arrivals and parenting tips." }
+  ],
+  "presets": [{ "name": "Newsletter" }]
+}
 {% endschema %}
