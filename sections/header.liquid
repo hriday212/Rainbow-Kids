@@ -9,7 +9,7 @@
   .header__nav-link { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-light); padding: 20px 0; border-bottom: 2px solid transparent; transition: all 0.2s; }
   .nav-item:hover .header__nav-link { color: var(--color-text-dark); border-color: var(--color-primary); }
   
-  .mega-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 100vw; max-width: 1200px; background: #fff; padding: 40px; border-radius: 0 0 20px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); display: none; grid-template-columns: repeat(4, 1fr); gap: 30px; opacity: 0; transition: opacity 0.3s; }
+  .mega-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 100vw; max-width: 1200px; background: #fff; padding: 40px; border-radius: 0 0 20px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); display: none; grid-template-columns: repeat(4, 1fr); gap: 30px; opacity: 0; transition: opacity 0.3s; z-index: 100; }
   .nav-item:hover .mega-menu { display: grid; opacity: 1; }
   
   .mega-col__title { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 15px; display: block; border-bottom: 1px solid #f4f4f4; padding-bottom: 8px; }
@@ -18,51 +18,56 @@
   
   .mega-image { border-radius: 12px; overflow: hidden; aspect-ratio: 1/1; position: relative; }
   .mega-image img { width: 100%; height: 100%; object-fit: cover; }
-  .mega-image__label { position: absolute; bottom: 15px; left: 15px; color: #fff; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
 
   .header__actions { display: flex; gap: 20px; align-items: center; }
   .header__action-btn { background: none; border: none; cursor: pointer; color: var(--color-text-dark); position: relative; padding: 5px; }
   .header__cart-count { position: absolute; top: -2px; right: -2px; background: var(--color-primary); color: var(--color-text-dark); font-size: 0.65rem; font-weight: 800; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
+  /* Search Overlay */
+  .search-overlay { position: fixed; inset: 0; background: #fff; z-index: 10000; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 40px; transform: translateY(-100%); transition: transform 0.5s var(--ease-smooth); }
+  .search-overlay.active { transform: translateY(0); }
+  .search-overlay__close { position: absolute; top: 40px; right: 40px; background: none; border: none; font-size: 2rem; cursor: pointer; }
+  .search-overlay__input { width: 100%; max-width: 800px; border: none; border-bottom: 3px solid #eee; font-size: 3rem; font-family: var(--font-heading); padding: 20px 0; outline: none; text-align: center; }
+  .search-overlay__input:focus { border-color: var(--color-primary); }
+
   @media (max-width: 1024px) { .header__nav { display: none; } }
 </style>
+
+<div class="search-overlay" id="SearchOverlay">
+  <button class="search-overlay__close" id="SearchClose">&times;</button>
+  <form action="/search" method="get" role="search" style="width: 100%; display: flex; flex-direction: column; align-items: center;">
+    <input type="search" name="q" class="search-overlay__input" placeholder="What are you looking for?" id="SearchInput">
+    <p style="margin-top: 20px; color: #999; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.8rem;">Press Enter to Search</p>
+  </form>
+</div>
 
 <header class="header">
   <div class="container header__grid">
     <!-- Logo -->
     <a href="/" class="header__logo">{{ shop.name }}</a>
 
-    <!-- Advanced Nav -->
+    <!-- Nav -->
     <nav class="header__nav">
       <div class="nav-item">
         <a href="/collections/all" class="header__nav-link">Shop All</a>
         <div class="mega-menu">
           <div>
-            <span class="mega-col__title">By Product</span>
+            <span class="mega-col__title">Essentials</span>
             <a href="/collections/sleep-bags" class="mega-link">Sleep Bags</a>
             <a href="/collections/pajamas" class="mega-link">Pajamas</a>
             <a href="/collections/bodysuits" class="mega-link">Bodysuits</a>
-            <a href="/collections/accessories" class="mega-link">Accessories</a>
           </div>
           <div>
-            <span class="mega-col__title">By Age</span>
-            <a href="/collections/newborn" class="mega-link">Newborn (0-3M)</a>
-            <a href="/collections/baby" class="mega-link">Baby (3-24M)</a>
-            <a href="/collections/toddler" class="mega-link">Toddler (2-4Y)</a>
-            <a href="/collections/kids" class="mega-link">Kids (5Y+)</a>
+            <span class="mega-col__title">Shop by Age</span>
+            <a href="/collections/newborn" class="mega-link">Newborn</a>
+            <a href="/collections/baby" class="mega-link">Baby</a>
+            <a href="/collections/toddler" class="mega-link">Toddler</a>
           </div>
-          <div class="mega-image">
-            <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=400" alt="Newborn">
-            <span class="mega-image__label">Newborn Shop</span>
-          </div>
-          <div class="mega-image">
-            <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=400" alt="Sleep Bags">
-            <span class="mega-image__label">Sleep Solutions</span>
-          </div>
+          <div class="mega-image"><img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=400"></div>
+          <div class="mega-image"><img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=400"></div>
         </div>
       </div>
       <div class="nav-item"><a href="/collections/new" class="header__nav-link">New Arrivals</a></div>
-      <div class="nav-item"><a href="/collections/sleep" class="header__nav-link">Sleep Bags</a></div>
       <div class="nav-item"><a href="/pages/about" class="header__nav-link">Our Story</a></div>
     </nav>
 
@@ -76,6 +81,43 @@
     </div>
   </div>
 </header>
+
+<script>
+  // 1. Cart Toggle
+  const cartToggle = document.getElementById('CartToggle');
+  const cartDrawer = document.getElementById('CartDrawer');
+  const cartOverlay = document.getElementById('CartOverlay');
+  const cartClose = document.getElementById('CartClose');
+
+  if(cartToggle) cartToggle.onclick = () => { 
+    cartDrawer.classList.add('active'); 
+    cartOverlay.classList.add('active'); 
+  };
+  if(cartClose) cartClose.onclick = () => { 
+    cartDrawer.classList.remove('active'); 
+    cartOverlay.classList.remove('active'); 
+  };
+
+  // 2. Search Toggle
+  const searchToggle = document.getElementById('SearchToggle');
+  const searchOverlay = document.getElementById('SearchOverlay');
+  const searchClose = document.getElementById('SearchClose');
+  const searchInput = document.getElementById('SearchInput');
+
+  if(searchToggle) searchToggle.onclick = () => { 
+    searchOverlay.classList.add('active'); 
+    setTimeout(() => searchInput.focus(), 300);
+  };
+  if(searchClose) searchClose.onclick = () => { 
+    searchOverlay.classList.remove('active'); 
+  };
+
+  // Global Cart Open Function
+  window.openCart = () => { 
+    cartDrawer.classList.add('active'); 
+    cartOverlay.classList.add('active'); 
+  };
+</script>
 
 {% schema %}
 { "name": "Header" }

@@ -19,8 +19,9 @@
     <!-- Styles -->
     {{ 'base.css' | asset_url | stylesheet_tag }}
 
-    <!-- Confetti Library -->
+    <!-- Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="{{ 'cart-logic.js' | asset_url }}" defer></script>
   </head>
 
   <body>
@@ -52,10 +53,19 @@
         confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: colors });
       }
 
-      // Global Add to Cart interceptor
+      // Global Add to Cart interceptor (for dynamic cards)
       document.addEventListener('click', (e) => {
-        if (e.target.closest('.product-card__atc') || e.target.closest('[type="submit"][name="add"]')) {
-          if(window.openCart) { window.openCart(); celebrate(); }
+        const atcBtn = e.target.closest('.product-card__atc');
+        if (atcBtn) {
+          e.preventDefault();
+          const variantId = atcBtn.dataset.variantId || null;
+          if (variantId && window.cartLogic) {
+            window.cartLogic.addItem(variantId);
+          } else if (window.openCart) {
+            // Fallback for demo products
+            window.openCart();
+            celebrate();
+          }
         }
       });
     </script>

@@ -1,0 +1,55 @@
+<style>
+  .list-collections { padding: 80px 0; background: #fff; }
+  .list-collections__header { text-align: center; margin-bottom: 60px; }
+  .list-collections__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+  
+  .collection-bubble { display: flex; flex-direction: column; align-items: center; gap: 16px; transition: transform 0.3s var(--ease-smooth); }
+  .collection-bubble:hover { transform: translateY(-8px); }
+  
+  .collection-bubble__img { width: 100%; aspect-ratio: 1/1; border-radius: 50%; overflow: hidden; background: var(--color-background); border: 4px solid #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+  .collection-bubble__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+  .collection-bubble:hover .collection-bubble__img img { transform: scale(1.1); }
+  
+  .collection-bubble__title { font-family: var(--font-heading); font-size: 1.4rem; color: var(--color-text-dark); }
+
+  @media (max-width: 1024px) { .list-collections__grid { grid-template-columns: repeat(3, 1fr); } }
+  @media (max-width: 600px) { .list-collections__grid { grid-template-columns: repeat(2, 1fr); } }
+</style>
+
+<section class="list-collections animate-reveal">
+  <div class="container">
+    <div class="list-collections__header">
+      <span class="section-tag">Collections</span>
+      <h2 style="font-size: 3rem;">Shop by Category</h2>
+    </div>
+
+    <div class="list-collections__grid">
+      {%- for collection in collections -%}
+        {%- unless collection.handle == 'frontpage' -%}
+          <a href="{{ collection.url }}" class="collection-bubble">
+            <div class="collection-bubble__img">
+              {%- if collection.image != blank -%}
+                <img src="{{ collection.image | image_url: width: 600 }}" alt="{{ collection.title }}">
+              {%- else -%}
+                <div style="width:100%; height:100%; background: var(--color-secondary); opacity:0.2;"></div>
+              {%- endif -%}
+            </div>
+            <h3 class="collection-bubble__title">{{ collection.title }}</h3>
+          </a>
+        {%- endunless -%}
+      {%- else -%}
+        {%- comment -%} Placeholder if no collections exist {%- endcomment -%}
+        {%- for i in (1..4) -%}
+          <div class="collection-bubble">
+            <div class="collection-bubble__img" style="background:#eee;"></div>
+            <h3 class="collection-bubble__title">Category {{ i }}</h3>
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "List Collections" }
+{% endschema %}

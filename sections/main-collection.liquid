@@ -4,48 +4,80 @@
   .collection-header__title { font-size: 3.5rem; margin-bottom: 16px; }
   .collection-header__description { max-width: 600px; margin: 0 auto; color: var(--color-text-light); line-height: 1.7; }
   
-  .collection-filters { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin-bottom: 40px; }
+  .collection-filters { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-top: 1px solid #eee; border-bottom: 1px solid #eee; margin-bottom: 60px; }
   .filter-btn { background: none; border: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; display: flex; align-items: center; gap: 8px; }
   
-  .collection-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 24px; }
+  .collection-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 60px 24px; }
+
+  /* Premium Product Card Redesign */
+  .product-card { position: relative; display: flex; flex-direction: column; gap: 20px; }
+  .product-card__media { position: relative; aspect-ratio: 1/1; border-radius: var(--radius-soft); overflow: hidden; background: #FDFBFF; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+  .product-card__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1); }
+  .product-card:hover .product-card__img { transform: scale(1.08); }
+  
+  .product-card__badge { position: absolute; top: 12px; left: 12px; background: var(--color-primary); color: var(--color-text-dark); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; padding: 6px 12px; border-radius: var(--radius-pill); z-index: 2; letter-spacing: 0.05em; }
+  .product-card__badge--sale { background: var(--color-secondary); }
+  
+  .product-card__info { display: flex; flex-direction: column; gap: 8px; text-align: center; }
+  .product-card__title { font-size: 1.1rem; font-weight: 600; color: var(--color-text-dark); margin: 0; line-height: 1.4; min-height: 2.8em; }
+  .product-card__price { font-size: 1rem; color: var(--color-text-light); font-weight: 500; }
+  
+  .product-card__atc { width: 100%; padding: 14px; border-radius: var(--radius-pill); border: 1.5px solid #eee; background: #fff; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.3s; margin-top: 10px; }
+  .product-card__atc:hover { background: var(--color-text-dark); color: #fff; border-color: var(--color-text-dark); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
 
   @media (max-width: 1024px) { .collection-grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 768px) { .collection-grid { grid-template-columns: repeat(2, 1fr); } .collection-header__title { font-size: 2.5rem; } }
+  @media (max-width: 768px) { .collection-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 16px; } .collection-header__title { font-size: 2.5rem; } }
 </style>
 
 <section class="collection-page">
   <div class="container">
     
-    <!-- Header -->
-    <header class="collection-header">
-      <h1 class="collection-header__title">Sleep Bags</h1>
-      <p class="collection-header__description">The original bamboo sleep bags. Designed for safety, comfort, and a better night's rest for the whole family.</p>
+    <header class="collection-header animate-reveal">
+      <h1 class="collection-header__title">{{ collection.title | default: 'Collection Title' }}</h1>
+      <p class="collection-header__description">{{ collection.description | default: 'The original bamboo essentials. Designed for safety, comfort, and a better night\'s rest for the whole family.' }}</p>
     </header>
 
-    <!-- Filter/Sort Bar -->
     <div class="collection-filters">
       <button class="filter-btn">Filter</button>
-      <div class="collection-count" style="font-size: 0.85rem; color: #999;">24 Products</div>
+      <div class="collection-count" style="font-size: 0.85rem; color: #999;">{{ collection.products_count | default: 24 }} Products</div>
       <button class="filter-btn">Sort By {% render 'icon', icon: 'chevron-down' %}</button>
     </div>
 
-    <!-- Grid -->
     <div class="collection-grid">
-      {%- comment -%} Hardcoded Demo Grid {%- endcomment -%}
-      {%- for i in (1..8) -%}
-        <div class="product-card">
-          <a href="/products/test-product" class="product-card__media">
-            {%- if i == 2 -%}<span class="product-card__badge">New</span>{%- endif -%}
-            {%- if i == 4 -%}<span class="product-card__badge" style="background:var(--color-secondary);">Sale</span>{%- endif -%}
-            <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=500" class="product-card__img" alt="Product">
-          </a>
-          <div class="product-card__info" style="margin-top: 16px;">
-            <h3 class="product-card__title">Bamboo Sleep Bag in Blossom {{ i }}</h3>
-            <span class="product-card__price">$55.00</span>
-            <button class="product-card__atc" onclick="window.openCart()">Add to Bag</button>
+      {%- if collection.products.size > 0 -%}
+        {%- for product in collection.products -%}
+          <div class="product-card animate-reveal">
+            <a href="{{ product.url }}" class="product-card__media">
+              {%- if product.compare_at_price > product.price -%}
+                <span class="product-card__badge product-card__badge--sale">Sale</span>
+              {%- endif -%}
+              <img src="{{ product.featured_image | image_url: width: 800 }}" class="product-card__img" alt="{{ product.title | escape }}" loading="lazy">
+            </a>
+            <div class="product-card__info">
+              <h3 class="product-card__title">{{ product.title }}</h3>
+              <span class="product-card__price">{{ product.price | money }}</span>
+              <button class="product-card__atc" 
+                      data-variant-id="{{ product.selected_or_first_available_variant.id }}"
+                      onclick="if(window.cartLogic) window.cartLogic.addItem({{ product.selected_or_first_available_variant.id }})">
+                Add to Bag
+              </button>
+            </div>
           </div>
-        </div>
-      {%- endfor -%}
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..8) -%}
+          <div class="product-card">
+            <div class="product-card__media">
+              <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=800" class="product-card__img" alt="Demo Product">
+            </div>
+            <div class="product-card__info">
+              <h3 class="product-card__title">Bamboo Essentials Item {{ i }}</h3>
+              <span class="product-card__price">$35.00</span>
+              <button class="product-card__atc">Add to Bag</button>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
     </div>
 
   </div>
