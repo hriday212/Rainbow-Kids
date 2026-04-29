@@ -5,19 +5,33 @@
   .cart-drawer__overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.2); backdrop-filter: blur(4px); z-index: 9999; opacity: 0; pointer-events: none; transition: opacity 0.4s; }
   .cart-drawer__overlay.active { opacity: 1; pointer-events: all; }
   
-  .cart-drawer__header { padding: 24px; border-bottom: 1px solid #eee; display: flex; justify-content: space-between; align-items: center; }
-  .cart-drawer__title { font-family: var(--font-heading); font-size: 1.5rem; margin: 0; }
-  .cart-drawer__close { background: none; border: none; font-size: 1.5rem; cursor: pointer; color: var(--color-text-light); }
+  .cart-drawer__header { padding: 24px; border-bottom: 1px solid #f9f9f9; display: flex; justify-content: space-between; align-items: center; }
+  .cart-drawer__title { font-family: var(--font-heading); font-size: 1.4rem; font-weight: 400; margin: 0; }
+  
+  /* Shipping Progress Bar */
+  .shipping-bar { padding: 20px 24px; background: #fff; border-bottom: 1px solid #f9f9f9; }
+  .shipping-bar__message { font-size: 0.8rem; font-weight: 700; color: #1a1a1a; margin-bottom: 10px; text-transform: uppercase; letter-spacing: 0.05em; }
+  .shipping-bar__container { height: 6px; background: #f0f0f0; border-radius: 10px; overflow: hidden; position: relative; }
+  .shipping-bar__progress { height: 100%; background: #1a1a1a; transition: width 0.8s cubic-bezier(0.19, 1, 0.22, 1); }
   
   .cart-drawer__content { flex: 1; overflow-y: auto; padding: 24px; display: flex; flex-direction: column; gap: 20px; }
-  .cart-item-empty { text-align: center; margin-top: 100px; color: var(--color-text-light); }
+  .cart-item-empty { text-align: center; margin-top: 60px; color: #aaa; }
   
-  .cart-drawer__footer { padding: 24px; border-top: 1px solid #eee; background: #fdfdfd; }
-  .cart-drawer__subtotal { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 20px; font-size: 1.1rem; }
-  .cart-drawer__checkout { width: 100%; padding: 16px; background: var(--color-text-dark); color: #fff; border-radius: var(--radius-pill); font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; border: none; cursor: pointer; }
-  .cart-drawer__checkout:hover { background: var(--color-primary); color: var(--color-text-dark); }
-
-  @media (max-width: 450px) { .cart-drawer { width: 100%; right: -100%; } }
+  /* Footer Upgrade */
+  .cart-drawer__footer { padding: 30px 24px; border-top: 1px solid #f9f9f9; background: #fff; box-shadow: 0 -10px 30px rgba(0,0,0,0.02); }
+  .cart-drawer__subtotal { display: flex; justify-content: space-between; font-weight: 700; margin-bottom: 12px; font-size: 1.1rem; color: #1a1a1a; }
+  .cart-drawer__checkout { width: 100%; padding: 20px; background: #1a1a1a; color: #fff; border-radius: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; border: none; cursor: pointer; transition: all 0.3s; font-size: 0.85rem; }
+  .cart-drawer__checkout:hover { background: #333; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+  
+  /* Upsell Styling */
+  .cart-upsell { padding: 24px; border-top: 1px solid #f9f9f9; background: #fafafa; }
+  .cart-upsell__title { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 15px; }
+  .upsell-card { display: flex; align-items: center; gap: 15px; background: #fff; padding: 12px; border-radius: 8px; border: 1px solid #eee; }
+  .upsell-card__img { width: 60px; height: 60px; border-radius: 4px; overflow: hidden; flex-shrink: 0; }
+  .upsell-card__img img { width: 100%; height: 100%; object-fit: cover; }
+  .upsell-card__info { flex: 1; }
+  .upsell-card__name { font-size: 0.85rem; font-weight: 700; color: #1a1a1a; margin: 0 0 5px; }
+  .upsell-card__add { background: none; border: none; font-size: 0.75rem; font-weight: 800; color: #1a1a1a; text-decoration: underline; cursor: pointer; padding: 0; }
 </style>
 
 <div class="cart-drawer__overlay" id="CartOverlay"></div>
@@ -27,21 +41,42 @@
     <button class="cart-drawer__close" id="CartClose">&times;</button>
   </div>
 
+  <div class="shipping-bar">
+    <div class="shipping-bar__message" id="ShippingMessage">You are $45.00 away from FREE Shipping!</div>
+    <div class="shipping-bar__container">
+      <div class="shipping-bar__progress" id="ShippingProgress" style="width: 55%;"></div>
+    </div>
+  </div>
+
   <div class="cart-drawer__content" id="CartContent">
-    <!-- This will be populated by JS -->
     <div class="cart-item-empty">
-      <span style="font-size: 3rem; display: block; margin-bottom: 20px;">🛍️</span>
-      <p>Your bag is currently empty.</p>
-      <a href="/collections/all" class="button button--outline" style="margin-top: 20px;">Start Shopping</a>
+      <span style="font-size: 3rem; display: block; margin-bottom: 15px;">🧸</span>
+      <p style="font-size: 1.1rem; color: #1a1a1a; font-family: var(--font-heading);">Your bag is empty</p>
+      <p style="font-size: 0.9rem; margin-top: 5px;">But the possibilities are endless!</p>
+      <a href="/collections/all" class="button button--outline" style="margin-top: 30px; padding: 15px 30px; border-radius: 8px;">Start Shopping</a>
+    </div>
+  </div>
+
+  <!-- Complete the Look (Upsell) -->
+  <div class="cart-upsell">
+    <h3 class="cart-upsell__title">Complete the look</h3>
+    <div class="cart-upsell__list">
+      <div class="upsell-card">
+        <div class="upsell-card__img"><img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=100"></div>
+        <div class="upsell-card__info">
+          <p class="upsell-card__name">Bamboo Washcloth Set</p>
+          <button class="upsell-card__add">+ Add $15.00</button>
+        </div>
+      </div>
     </div>
   </div>
 
   <div class="cart-drawer__footer">
     <div class="cart-drawer__subtotal">
       <span>Subtotal</span>
-      <span>$0.00</span>
+      <span id="CartSubtotal">$0.00</span>
     </div>
-    <p style="font-size: 0.75rem; color: #999; margin-bottom: 20px; text-align: center;">Taxes and shipping calculated at checkout</p>
+    <p style="font-size: 0.75rem; color: #999; margin-bottom: 25px; text-align: center;">Taxes and shipping calculated at checkout</p>
     <button class="cart-drawer__checkout">Check Out</button>
   </div>
 </div>
