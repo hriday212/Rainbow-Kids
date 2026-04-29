@@ -2,24 +2,16 @@
   .collection-page { padding: 60px 0; background: var(--color-background); min-height: 100vh; }
   .collection-layout { display: grid; grid-template-columns: 280px 1fr; gap: 60px; }
   
-  /* Sort Header */
   .collection-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.05); }
   .sort-dropdown { border: none; background: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #1a1a1a; cursor: pointer; outline: none; }
 
-  /* Elite Sidebar */
   .collection-sidebar { position: sticky; top: 120px; height: fit-content; }
   .filter-group { margin-bottom: 30px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 20px; }
-  .filter-group__title { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; cursor: pointer; }
+  .filter-group__title { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
   
-  .filter-list { list-style: none; padding: 0; margin: 0; }
-  .filter-item { margin-bottom: 12px; }
-  .filter-link { font-size: 0.95rem; color: #666; text-decoration: none; transition: all 0.2s; display: flex; align-items: center; gap: 10px; }
-  .filter-link:hover { color: var(--color-primary); transform: translateX(5px); }
-
-  /* Availability Toggle */
-  .availability-wrap { display: flex; flex-direction: column; gap: 12px; }
-  .avail-item { display: flex; align-items: center; gap: 10px; font-size: 0.9rem; color: #666; cursor: pointer; }
-  .avail-item input { accent-color: var(--color-primary); width: 18px; height: 18px; }
+  .swatch-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .swatch { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #eee; cursor: pointer; transition: transform 0.2s; }
+  .swatch:hover { transform: scale(1.2); }
 
   .collection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 20px; }
 
@@ -47,50 +39,49 @@
     </div>
 
     <div class="collection-layout">
-      <!-- Elite Sidebar -->
-      <aside class="collection-sidebar animate-reveal">
+      <aside class="collection-sidebar">
         <div class="filter-group">
           <span class="filter-group__title">Availability</span>
-          <div class="availability-wrap">
-            <label class="avail-item"><input type="checkbox" checked> In Stock Only</label>
-            <label class="avail-item"><input type="checkbox"> Out of Stock</label>
+          <label style="display:flex;align-items:center;gap:10px;font-size:0.9rem;color:#666;margin-bottom:10px;"><input type="checkbox" checked> In Stock</label>
+          <label style="display:flex;align-items:center;gap:10px;font-size:0.9rem;color:#666;"><input type="checkbox"> Out of Stock</label>
+        </div>
+
+        <div class="filter-group">
+          <span class="filter-group__title">Color Palette</span>
+          <div class="swatch-grid">
+            <div class="swatch" style="background: var(--color-pink);" title="Blossom"></div>
+            <div class="swatch" style="background: var(--color-blue);" title="Cloud"></div>
+            <div class="swatch" style="background: var(--color-lavender);" title="Lavender"></div>
+            <div class="swatch" style="background: var(--color-primary);" title="Coral"></div>
+            <div class="swatch" style="background: var(--color-mint);" title="Sage"></div>
           </div>
         </div>
 
         <div class="filter-group">
           <span class="filter-group__title">Category</span>
-          <ul class="filter-list">
-            <li class="filter-item"><a href="/collections/sleep-bags" class="filter-link">Sleep Bags (12)</a></li>
-            <li class="filter-item"><a href="/collections/pajamas" class="filter-link">Pajamas (8)</a></li>
-            <li class="filter-item"><a href="/collections/bodysuits" class="filter-link">Bodysuits (15)</a></li>
-            <li class="filter-item"><a href="/collections/bundles" class="filter-link">Bundles (4)</a></li>
+          <ul style="list-style:none;padding:0;margin:0;">
+            <li style="margin-bottom:10px;"><a href="#" style="text-decoration:none;color:#666;font-size:0.9rem;">Sleep Bags</a></li>
+            <li style="margin-bottom:10px;"><a href="#" style="text-decoration:none;color:#666;font-size:0.9rem;">Pajamas</a></li>
+            <li style="margin-bottom:10px;"><a href="#" style="text-decoration:none;color:#666;font-size:0.9rem;">Bodysuits</a></li>
           </ul>
-        </div>
-
-        <div class="filter-group">
-          <span class="filter-group__title">Color Palette</span>
-          <div style="display:grid; grid-template-columns: repeat(5, 1fr); gap:10px;">
-            <div style="width:30px;height:30px;border-radius:50%;background:#F8C8DC;border:1px solid #eee;"></div>
-            <div style="width:30px;height:30px;border-radius:50%;background:#CDE7F0;border:1px solid #eee;"></div>
-            <div style="width:30px;height:30px;border-radius:50%;background:#FF8C69;border:1px solid #eee;"></div>
-            <div style="width:30px;height:30px;border-radius:50%;background:#DFF5E1;border:1px solid #eee;"></div>
-            <div style="width:30px;height:30px;border-radius:50%;background:#FFF5EE;border:1px solid #eee;"></div>
-          </div>
         </div>
       </aside>
 
-      <!-- Main Grid -->
       <main class="collection-main">
         <div class="collection-grid">
           {%- for i in (1..9) -%}
             <div class="product-card">
               <div class="product-card__image-wrap" style="aspect-ratio:1/1.2; border-radius:12px; overflow:hidden; background:#fff; margin-bottom:15px; position:relative;">
                 <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
-                {% if i < 3 %}
-                  <span style="position:absolute; top:10px; right:10px; background:#1a1a1a; color:#fff; font-size:0.6rem; font-weight:800; padding:4px 8px; border-radius:4px;">NEW</span>
+                {% if i == 1 %}
+                  <span class="badge badge--new" style="position:absolute; top:10px; right:10px;">NEW</span>
+                {% elsif i == 2 %}
+                  <span class="badge badge--sale" style="position:absolute; top:10px; right:10px;">SALE</span>
+                {% elsif i == 3 %}
+                  <span class="badge badge--exclusive" style="position:absolute; top:10px; right:10px;">LIMIT</span>
                 {% endif %}
               </div>
-              <h3 style="font-family:var(--font-heading); font-size:1.1rem; margin:0 0 5px;">Bamboo Sleep Bag {{ i }}</h3>
+              <h3 style="font-family:var(--font-heading); font-size:1.1rem; margin:0 0 5px;">Bamboo Apparel {{ i }}</h3>
               <p style="font-weight:700; color:var(--color-primary);">$55.00</p>
             </div>
           {%- endfor -%}

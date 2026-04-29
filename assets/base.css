@@ -2,14 +2,19 @@
   --font-heading: 'Bodoni Moda', serif;
   --font-body: 'Inter', sans-serif;
   
-  /* The Coral & Peach Palette */
+  /* The Coral & Peach Core */
   --color-primary: #FF8C69; /* Coral */
   --color-secondary: #FFDAB9; /* Peach */
   --color-background: #FFF5EE; /* Peach Cream */
+  
+  /* The Boutique Rainbow Accents */
+  --color-pink: #F8C8DC;
+  --color-blue: #CDE7F0;
+  --color-lavender: #E6E6FA;
+  --color-mint: #DFF5E1;
+  
   --color-text-dark: #1a1a1a;
   --color-text-light: #666;
-  --color-accent-pink: #F8C8DC;
-  --color-accent-mint: #CDE7F0;
   
   --ease-smooth: cubic-bezier(0.19, 1, 0.22, 1);
 }
@@ -39,10 +44,18 @@ body {
   transition: all 0.3s;
 }
 
-.boutique-link:hover {
-  color: var(--color-text-dark);
-  text-underline-offset: 12px;
+.badge {
+  padding: 4px 10px;
+  border-radius: 4px;
+  font-size: 0.65rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  color: #fff;
 }
+
+.badge--new { background: var(--color-blue); color: #1a1a1a; }
+.badge--sale { background: var(--color-pink); color: #1a1a1a; }
+.badge--exclusive { background: var(--color-lavender); color: #1a1a1a; }
 
 /* Global Animations */
 .animate-reveal {
@@ -56,5 +69,4 @@ body {
   transform: translateY(0);
 }
 
-/* Premium Typography */
 h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 400; }

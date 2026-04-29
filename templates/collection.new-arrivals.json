@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "marquee": { "type": "marquee-new-arrivals", "settings": { "title": "New This Week" } },
+    "main": { "type": "main-collection", "settings": {} }
+  },
+  "order": [ "marquee", "main" ]
+}

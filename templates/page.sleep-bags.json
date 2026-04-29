@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "header": { "type": "interactive-banner", "settings": { "title": "Bamboo Sleep Bags" } },
+    "marquee": { "type": "marquee-new-arrivals", "settings": { "title": "New in Sleep" } },
+    "grid": { "type": "main-collection", "settings": {} }
+  },
+  "order": [ "header", "marquee", "grid" ]
+}

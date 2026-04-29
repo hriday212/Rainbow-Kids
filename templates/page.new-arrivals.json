@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "hero": { "type": "hero-slider", "settings": { "title": "The New Arrivals" } },
+    "marquee": { "type": "marquee-new-arrivals", "settings": {} },
+    "grid": { "type": "featured-collection", "settings": { "title": "Shop the Drop" } }
+  },
+  "order": [ "hero", "marquee", "grid" ]
+}

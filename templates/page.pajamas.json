@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "header": { "type": "interactive-banner", "settings": { "title": "Buttery Soft Pajamas" } },
+    "grid": { "type": "main-collection", "settings": {} },
+    "benefits": { "type": "why-bamboo", "settings": { "title": "Why our Pajamas?" } }
+  },
+  "order": [ "header", "grid", "benefits" ]
+}

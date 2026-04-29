@@ -3,7 +3,11 @@
   .announcement-bar__scroller { display: flex; white-space: nowrap; animation: scroll 40s linear infinite; gap: 80px; }
   
   .announcement-bar__item { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #1a1a1a; display: flex; align-items: center; gap: 15px; }
-  .announcement-bar__dot { font-size: 1.2rem; color: var(--color-primary); }
+  
+  .announcement-bar__dot { font-size: 1.5rem; line-height: 0; margin-top: -5px; }
+  .dot--1 { color: var(--color-pink); }
+  .dot--2 { color: var(--color-blue); }
+  .dot--3 { color: var(--color-lavender); }
 
   @keyframes scroll {
     0% { transform: translateX(0); }
@@ -16,11 +20,11 @@
     {%- for i in (1..10) -%}
       <div class="announcement-bar__item">
         Free shipping on orders over $85 🌈
-        <span class="announcement-bar__dot">•</span>
+        <span class="announcement-bar__dot dot--1">•</span>
         Shop Our New Bamboo Essentials
-        <span class="announcement-bar__dot">•</span>
-        10% OFF your first order with code: RAINBOW10
-        <span class="announcement-bar__dot">•</span>
+        <span class="announcement-bar__dot dot--2">•</span>
+        10% OFF with code: RAINBOW10
+        <span class="announcement-bar__dot dot--3">•</span>
       </div>
     {%- endfor -%}
   </div>
@@ -31,7 +35,7 @@
   "name": "Announcement Bar",
   "settings": [],
   "presets": [
-    { "name": "Fun Announcement Bar" }
+    { "name": "Boutique Announcement Bar" }
   ]
 }
 {% endschema %}

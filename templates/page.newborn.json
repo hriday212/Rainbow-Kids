@@ -1,0 +1,8 @@
+{
+  "sections": {
+    "header": { "type": "interactive-banner", "settings": { "title": "The Newborn Shop" } },
+    "grid": { "type": "main-collection", "settings": {} },
+    "story": { "type": "founder-story", "settings": { "subtitle": "Made for your newest arrival" } }
+  },
+  "order": [ "header", "grid", "story" ]
+}
