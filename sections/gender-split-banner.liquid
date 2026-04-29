@@ -1,0 +1,69 @@
+<style>
+  .gender-split { display: grid; grid-template-columns: 1fr 1fr; height: 600px; }
+  
+  .split-side { display: flex; align-items: center; justify-content: center; text-align: center; padding: 60px; text-decoration: none; position: relative; overflow: hidden; }
+  
+  .side--girls { background: var(--color-pink); color: #1a1a1a; }
+  .side--boys { background: var(--color-blue); color: #1a1a1a; }
+  
+  .split-img { position: absolute; inset: 0; opacity: 0.3; z-index: 1; transition: transform 1s var(--ease-smooth); }
+  .split-side:hover .split-img { transform: scale(1.1); opacity: 0.5; }
+  .split-img img { width: 100%; height: 100%; object-fit: cover; }
+  
+  .split-content { position: relative; z-index: 2; }
+  .split-subtitle { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 15px; }
+  .split-title { font-family: var(--font-heading); font-size: 3.5rem; margin-bottom: 25px; line-height: 1; }
+  .split-btn { display: inline-block; padding: 15px 35px; border: 2px solid #1a1a1a; text-transform: uppercase; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.1em; transition: all 0.3s; }
+  .split-side:hover .split-btn { background: #1a1a1a; color: #fff; }
+
+  @media (max-width: 768px) { .gender-split { grid-template-columns: 1fr; height: auto; } .split-side { height: 400px; } }
+</style>
+
+<section class="gender-split animate-reveal">
+  <!-- The Pink Side (Girls) -->
+  <a href="{{ section.settings.link_girls | default: '#' }}" class="split-side side--girls">
+    <div class="split-img">
+      {% if section.settings.image_girls != blank %}
+        <img src="{{ section.settings.image_girls | image_url: width: 1000 }}">
+      {% else %}
+        <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=1000">
+      {% endif %}
+    </div>
+    <div class="split-content">
+      <span class="split-subtitle">The Collection</span>
+      <h2 class="split-title">For Her</h2>
+      <span class="split-btn">Shop Girls</span>
+    </div>
+  </a>
+
+  <!-- The Blue Side (Boys) -->
+  <a href="{{ section.settings.link_boys | default: '#' }}" class="split-side side--boys">
+    <div class="split-img">
+      {% if section.settings.image_boys != blank %}
+        <img src="{{ section.settings.image_boys | image_url: width: 1000 }}">
+      {% else %}
+        <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=1000">
+      {% endif %}
+    </div>
+    <div class="split-content">
+      <span class="split-subtitle">The Essentials</span>
+      <h2 class="split-title">For Him</h2>
+      <span class="split-btn">Shop Boys</span>
+    </div>
+  </a>
+</section>
+
+{% schema %}
+{
+  "name": "Gender Split Banner",
+  "settings": [
+    { "type": "image_picker", "id": "image_girls", "label": "Girls Image" },
+    { "type": "url", "id": "link_girls", "label": "Girls Link" },
+    { "type": "image_picker", "id": "image_boys", "label": "Boys Image" },
+    { "type": "url", "id": "link_boys", "label": "Boys Link" }
+  ],
+  "presets": [
+    { "name": "Boutique Gender Split" }
+  ]
+}
+{% endschema %}

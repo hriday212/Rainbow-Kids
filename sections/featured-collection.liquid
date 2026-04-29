@@ -1,40 +1,44 @@
 <style>
-  .featured-collection { padding: 100px 0; background: #fff; }
-  .featured-collection__header { text-align: center; margin-bottom: 60px; }
-  .featured-collection__title { font-family: var(--font-heading); font-size: 3.5rem; color: #1a1a1a; margin-bottom: 20px; font-weight: 400; }
+  .featured-collection { padding: 100px 0; }
+  .featured-collection--pink { background: var(--color-pink); }
+  .featured-collection--blue { background: var(--color-blue); }
+  .featured-collection--lavender { background: var(--color-lavender); }
+  .featured-collection--peach { background: var(--color-background); }
+  .featured-collection--white { background: #fff; }
   
-  .featured-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 20px; }
+  .fc-header { text-align: center; margin-bottom: 60px; }
+  .fc-title { font-family: var(--font-heading); font-size: 3rem; color: #1a1a1a; margin-bottom: 10px; }
+  .fc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
   
-  @media (max-width: 1024px) { .featured-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 1024px) { .fc-grid { grid-template-columns: 1fr 1fr; } }
 </style>
 
-<section class="featured-collection">
+<section class="featured-collection featured-collection--{{ section.settings.bg_color | default: 'white' }}">
   <div class="container">
-    <div class="featured-collection__header animate-reveal">
-      <h2 class="featured-collection__title">{{ section.settings.title | default: "Best Sellers" }}</h2>
-      <a href="{{ section.settings.collection.url | default: '#' }}" class="boutique-link">Shop All</a>
+    <div class="fc-header animate-reveal">
+      <h2 class="fc-title">{{ section.settings.title | default: "Featured Collection" }}</h2>
+      <a href="{{ section.settings.collection.url | default: '/collections/all' }}" class="boutique-link">View All</a>
     </div>
 
-    <div class="featured-grid">
-      {%- assign collection = section.settings.collection -%}
-      {%- if collection != blank -%}
-        {%- for product in collection.products limit: 8 -%}
-          <div class="product-card" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 50 }}">
-            <div class="product-card__image-wrap" style="aspect-ratio:1/1.2; overflow:hidden; border-radius:12px; background:#f9f9f9; margin-bottom:15px;">
+    <div class="fc-grid">
+      {%- if section.settings.collection.products.size > 0 -%}
+        {%- for product in section.settings.collection.products limit: 4 -%}
+          <div class="product-card" data-aos="fade-up">
+            <div class="product-card__image-wrap" style="aspect-ratio:1/1.2; border-radius:12px; overflow:hidden; background:#fff; margin-bottom:15px;">
               <img src="{{ product.featured_image | image_url: width: 600 }}" style="width:100%; height:100%; object-fit:cover;">
             </div>
             <h3 style="font-family:var(--font-heading); font-size:1.1rem; margin:0 0 5px;">{{ product.title }}</h3>
-            <p style="font-weight:700; margin:0;">{{ product.price | money }}</p>
+            <p style="font-weight:700; color:var(--color-primary);">{{ product.price | money }}</p>
           </div>
         {%- endfor -%}
       {%- else -%}
         {%- for i in (1..4) -%}
           <div class="product-card">
-            <div class="product-card__image-wrap" style="aspect-ratio:1/1.2; overflow:hidden; border-radius:12px; background:#f9f9f9; margin-bottom:15px;">
+            <div class="product-card__image-wrap" style="aspect-ratio:1/1.2; border-radius:12px; overflow:hidden; background:#fff; margin-bottom:15px;">
               <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
             </div>
-            <h3 style="font-family:var(--font-heading); font-size:1.1rem; margin:0 0 5px;">Bamboo Sleep Bag {{ i }}</h3>
-            <p style="font-weight:700; margin:0;">$55.00</p>
+            <h3 style="font-family:var(--font-heading); font-size:1.1rem; margin:0 0 5px;">Boutique Essential {{ i }}</h3>
+            <p style="font-weight:700; color:var(--color-primary);">$45.00</p>
           </div>
         {%- endfor -%}
       {%- endif -%}
@@ -46,11 +50,24 @@
 {
   "name": "Featured Collection",
   "settings": [
-    { "type": "text", "id": "title", "label": "Heading", "default": "Best Sellers" },
-    { "type": "collection", "id": "collection", "label": "Collection" }
+    { "type": "text", "id": "title", "label": "Heading", "default": "Featured Collection" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    {
+      "type": "select",
+      "id": "bg_color",
+      "label": "Background Color",
+      "options": [
+        { "value": "white", "label": "Pure White" },
+        { "value": "pink", "label": "Boutique Pink" },
+        { "value": "blue", "label": "Boutique Blue" },
+        { "value": "lavender", "label": "Boutique Lavender" },
+        { "value": "peach", "label": "Peach Cream" }
+      ],
+      "default": "white"
+    }
   ],
   "presets": [
-    { "name": "Boutique Featured Collection" }
+    { "name": "Boutique Collection Grid" }
   ]
 }
 {% endschema %}
