@@ -4,8 +4,9 @@
   
   .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
   
+  /* Shared with collection-list */
   .product-card { position: relative; display: flex; flex-direction: column; gap: 16px; }
-  .product-card__media { position: relative; aspect-ratio: 1/1; border-radius: var(--radius-soft); overflow: hidden; background: #f4f4f4; }
+  .product-card__media { position: relative; aspect-ratio: 1/1; border-radius: var(--radius-soft); overflow: hidden; background: #f4f4f4; display: block; }
   .product-card__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-smooth); }
   .product-card:hover .product-card__img { transform: scale(1.06); }
   
@@ -24,65 +25,65 @@
 <section class="featured-coll animate-reveal">
   <div class="container">
     <div class="featured-coll__header">
-      <span class="section-tag">Bestsellers</span>
-      <h2 style="font-size: 2.5rem;">Shop Our Favorites</h2>
+      {%- if section.settings.tag != blank -%}<span class="section-tag">{{ section.settings.tag }}</span>{%- endif -%}
+      <h2 style="font-size: 2.5rem;">{{ section.settings.title | default: 'Shop Our Favorites' }}</h2>
     </div>
 
     <div class="product-grid">
-      <!-- Product 1 -->
-      <div class="product-card">
-        <div class="product-card__media">
-          <span class="product-card__badge">New</span>
-          <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=500" class="product-card__img" alt="Product">
-        </div>
-        <div class="product-card__info">
-          <h3 class="product-card__title">Bamboo Sleep Bag in Blossom</h3>
-          <span class="product-card__price">$35.00</span>
-          <button class="product-card__atc">Add to Cart</button>
-        </div>
-      </div>
-
-      <!-- Product 2 -->
-      <div class="product-card">
-        <div class="product-card__media">
-          <span class="product-card__badge">Sale</span>
-          <img src="https://images.unsplash.com/photo-1544126592-807daa2b565b?q=80&w=500" class="product-card__img" alt="Product">
-        </div>
-        <div class="product-card__info">
-          <h3 class="product-card__title">Ribbed Pajama Set</h3>
-          <span class="product-card__price"><s style="opacity:0.5;">$42.00</s> $29.00</span>
-          <button class="product-card__atc">Add to Cart</button>
-        </div>
-      </div>
-
-      <!-- Product 3 -->
-      <div class="product-card">
-        <div class="product-card__media">
-          <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=500" class="product-card__img" alt="Product">
-        </div>
-        <div class="product-card__info">
-          <h3 class="product-card__title">Organic Cotton Bodysuit</h3>
-          <span class="product-card__price">$24.00</span>
-          <button class="product-card__atc">Add to Cart</button>
-        </div>
-      </div>
-
-      <!-- Product 4 -->
-      <div class="product-card">
-        <div class="product-card__media">
-          <span class="product-card__badge product-card__badge--sold">Sold Out</span>
-          <img src="https://images.unsplash.com/photo-1555008544-aa0f18826500?q=80&w=500" class="product-card__img" alt="Product">
-        </div>
-        <div class="product-card__info">
-          <h3 class="product-card__title">Bamboo Swaddle Blanket</h3>
-          <span class="product-card__price">$18.00</span>
-          <button class="product-card__atc" disabled>Sold Out</button>
-        </div>
-      </div>
+      {%- assign collection = collections[section.settings.collection] -%}
+      {%- if collection.products.size > 0 -%}
+        {%- for product in collection.products limit: section.settings.limit -%}
+          <div class="product-card">
+            <a href="{{ product.url }}" class="product-card__media">
+              {%- if product.available == false -%}
+                <span class="product-card__badge product-card__badge--sold">Sold Out</span>
+              {%- elsif product.compare_at_price > product.price -%}
+                <span class="product-card__badge">Sale</span>
+              {%- endif -%}
+              <img src="{{ product.featured_image | image_url: width: 600 }}" class="product-card__img" alt="{{ product.title | escape }}" loading="lazy">
+            </a>
+            <div class="product-card__info">
+              <h3 class="product-card__title">{{ product.title }}</h3>
+              <span class="product-card__price">
+                {%- if product.compare_at_price > product.price -%}
+                  <s style="opacity:0.5;">{{ product.compare_at_price | money }}</s>&ensp;
+                {%- endif -%}
+                {{ product.price | money }}
+              </span>
+              <button class="product-card__atc" onclick="window.openCart()">Add to Bag</button>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {%- comment -%} Placeholders if no collection is selected {%- endcomment -%}
+        {%- for i in (1..4) -%}
+          <div class="product-card">
+            <div class="product-card__media" style="background: #eee; display: flex; align-items: center; justify-content: center;">
+              {{ 'product-' | append: i | placeholder_svg_tag: 'placeholder-svg' }}
+            </div>
+            <div class="product-card__info">
+              <h3 class="product-card__title">Example Product {{ i }}</h3>
+              <span class="product-card__price">$35.00</span>
+              <button class="product-card__atc">Add to Bag</button>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
 </section>
 
 {% schema %}
-{ "name": "Featured Collection" }
+{
+  "name": "Featured Collection",
+  "settings": [
+    { "type": "text", "id": "tag", "label": "Eyebrow Label", "default": "Bestsellers" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Shop Our Favorites" },
+    { "type": "collection", "id": "collection", "label": "Collection" },
+    { "type": "range", "id": "limit", "min": 4, "max": 12, "step": 4, "default": 4, "label": "Products to show" }
+  ],
+  "presets": [
+    { "name": "Featured Collection" }
+  ]
+}
 {% endschema %}

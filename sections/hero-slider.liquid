@@ -1,80 +1,116 @@
 <style>
-  .hero-slider { position: relative; width: 100%; overflow: hidden; background: var(--color-secondary); }
-  .hero-slider__track { display: flex; transition: transform 0.7s var(--ease-smooth); height: clamp(500px, 75vh, 750px); }
+  .hero-slider { position: relative; width: 100%; overflow: hidden; background: var(--color-background); }
+  .hero-slider__track { display: flex; transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1); height: clamp(600px, 85vh, 900px); }
   .hero-slide { flex-shrink: 0; width: 100%; position: relative; display: flex; align-items: center; overflow: hidden; }
-  .hero-slide__bg { position: absolute; inset: 0; background-size: cover; background-position: center; }
-  .hero-slide__overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,253,248,0.85) 0%, rgba(255,253,248,0.3) 60%, transparent 100%); }
-  .hero-slide__content { position: relative; z-index: 2; padding: 60px; max-width: 600px; }
   
-  .hero-slide__eyebrow { display: block; font-size: 0.8rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-text-light); margin-bottom: 20px; }
-  .hero-slide__title { font-size: clamp(2.5rem, 5vw, 4rem); line-height: 1.05; margin-bottom: 24px; color: var(--color-text-dark); }
-  .hero-slide__text { font-size: 1.1rem; color: var(--color-text-light); margin-bottom: 36px; max-width: 440px; }
+  .hero-slide__bg { position: absolute; inset: 0; z-index: 1; }
+  .hero-slide__bg img { width: 100%; height: 100%; object-fit: cover; }
   
-  .hero-dots { position: absolute; bottom: 30px; left: 60px; display: flex; gap: 10px; z-index: 10; }
-  .hero-dot { width: 10px; height: 10px; border-radius: 50%; background: rgba(44,44,44,0.2); border: none; cursor: pointer; transition: all 0.3s; padding:0; }
-  .hero-dot.active { background: var(--color-text-dark); width: 30px; border-radius: 5px; }
+  .hero-slide__overlay { position: absolute; inset: 0; z-index: 2; background: linear-gradient(90deg, rgba(255,253,248,0.9) 0%, rgba(255,253,248,0.4) 50%, transparent 100%); }
+  
+  .hero-slide__content { position: relative; z-index: 3; padding: 60px; max-width: 700px; }
+  .hero-slide__eyebrow { display: block; font-size: 0.9rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-primary); margin-bottom: 24px; filter: brightness(0.8); }
+  .hero-slide__title { font-size: clamp(3rem, 6vw, 5rem); line-height: 1.0; margin-bottom: 24px; color: var(--color-text-dark); }
+  .hero-slide__text { font-size: 1.25rem; color: var(--color-text-light); margin-bottom: 40px; max-width: 480px; }
+  
+  .hero-dots { position: absolute; bottom: 40px; left: 50%; transform: translateX(-50%); display: flex; gap: 12px; z-index: 10; }
+  .hero-dot { width: 12px; height: 12px; border-radius: 50%; background: rgba(0,0,0,0.15); border: 2px solid transparent; cursor: pointer; transition: all 0.3s; padding: 0; }
+  .hero-dot.active { background: var(--color-primary); width: 32px; border-radius: 6px; }
 
   @media (max-width: 768px) {
-    .hero-slider__track { height: 500px; }
+    .hero-slider__track { height: 600px; }
     .hero-slide__content { padding: 40px 24px; text-align: center; }
-    .hero-slide__overlay { background: rgba(255,253,248,0.7); }
-    .hero-dots { left: 50%; transform: translateX(-50%); }
+    .hero-slide__overlay { background: rgba(255,253,248,0.8); }
+    .hero-slide__title { font-size: 2.5rem; }
   }
 </style>
 
-<section class="hero-slider">
-  <div class="hero-slider__track" id="HeroTrack">
+<section class="hero-slider" id="Hero-{{ section.id }}">
+  <div class="hero-slider__track" id="Track-{{ section.id }}">
     
-    <!-- Slide 1 -->
-    <div class="hero-slide">
-      <div class="hero-slide__bg" style="background-image: url('https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=2070&auto=format&fit=crop');"></div>
-      <div class="hero-slide__overlay"></div>
-      <div class="hero-slide__content container">
-        <span class="hero-slide__eyebrow">New Arrivals</span>
-        <h2 class="hero-slide__title">Made for Little Ones</h2>
-        <p class="hero-slide__text">Buttery soft fabrics your baby will love. Discover our new season essentials in pastel palettes.</p>
-        <a href="/collections/all" class="button">Shop Now</a>
+    {%- for block in section.blocks -%}
+      <div class="hero-slide" {{ block.shopify_attributes }}>
+        <div class="hero-slide__bg">
+          {%- if block.settings.image != blank -%}
+            <img src="{{ block.settings.image | image_url: width: 2000 }}" alt="{{ block.settings.title | escape }}" loading="{% if forloop.first %}eager{% else %}lazy{% endif %}">
+          {%- else -%}
+            <div style="width:100%; height:100%; background: {{ block.settings.bg_color | default: 'var(--color-secondary)' }}; opacity: 0.3;"></div>
+          {%- endif -%}
+        </div>
+        
+        <div class="hero-slide__overlay"></div>
+        
+        <div class="hero-slide__content container">
+          {%- if block.settings.eyebrow != blank -%}
+            <span class="hero-slide__eyebrow" style="color: {{ block.settings.accent_color | default: 'var(--color-primary)' }};">
+              {{ block.settings.eyebrow }}
+            </span>
+          {%- endif -%}
+          <h2 class="hero-slide__title">{{ block.settings.title }}</h2>
+          <p class="hero-slide__text">{{ block.settings.text }}</p>
+          {%- if block.settings.button_label != blank -%}
+            <a href="{{ block.settings.button_link }}" class="button" style="background: {{ block.settings.accent_color | default: 'var(--color-text-dark)' }}; border-color: {{ block.settings.accent_color | default: 'var(--color-text-dark)' }};">
+              {{ block.settings.button_label }}
+            </a>
+          {%- endif -%}
+        </div>
       </div>
-    </div>
-
-    <!-- Slide 2 -->
-    <div class="hero-slide">
-      <div class="hero-slide__bg" style="background-image: url('https://images.unsplash.com/photo-1544126592-807daa2b565b?q=80&w=2070&auto=format&fit=crop');"></div>
-      <div class="hero-slide__overlay"></div>
-      <div class="hero-slide__content container">
-        <span class="hero-slide__eyebrow">Sleep Better</span>
-        <h2 class="hero-slide__title">A Softer Way to Soothe</h2>
-        <p class="hero-slide__text">The original bamboo sleep bags. Designed for safety, comfort, and a better night's rest.</p>
-        <a href="/collections/all-sleep-bags" class="button">Shop Sleep</a>
-      </div>
-    </div>
+    {%- endfor -%}
 
   </div>
 
-  <div class="hero-dots" id="HeroDots">
-    <button class="hero-dot active" onclick="goSlide(0)"></button>
-    <button class="hero-dot" onclick="goSlide(1)"></button>
+  <div class="hero-dots">
+    {%- for block in section.blocks -%}
+      <button class="hero-dot {% if forloop.first %}active{% endif %}" data-index="{{ forloop.index0 }}"></button>
+    {%- endfor -%}
   </div>
 </section>
 
 <script>
-  let currentSlide = 0;
-  const track = document.getElementById('HeroTrack');
-  const dots = document.querySelectorAll('.hero-dot');
-  
-  function goSlide(index) {
-    currentSlide = index;
-    track.style.transform = `translateX(-${index * 100}%)`;
-    dots.forEach((dot, i) => dot.classList.toggle('active', i === index));
-  }
+  (function() {
+    const section = document.getElementById('Hero-{{ section.id }}');
+    const track = document.getElementById('Track-{{ section.id }}');
+    const dots = section.querySelectorAll('.hero-dot');
+    let current = 0;
+    
+    function go(idx) {
+      current = idx;
+      track.style.transform = `translateX(-${idx * 100}%)`;
+      dots.forEach((dot, i) => dot.classList.toggle('active', i === idx));
+    }
 
-  // Auto-slide every 6 seconds
-  setInterval(() => {
-    let next = (currentSlide + 1) % 2;
-    goSlide(next);
-  }, 6000);
+    dots.forEach(dot => dot.addEventListener('click', () => go(parseInt(dot.dataset.index))));
+    setInterval(() => { go((current + 1) % {{ section.blocks.size }}); }, 7000);
+  })();
 </script>
 
 {% schema %}
-{ "name": "Hero Slider" }
+{
+  "name": "Premium Hero Slider",
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Background Image" },
+        { "type": "color", "id": "bg_color", "label": "Fallback Color", "default": "#CDE7F0" },
+        { "type": "color", "id": "accent_color", "label": "Accent Color (Text/Btn)", "default": "#F8C8DC" },
+        { "type": "text", "id": "eyebrow", "label": "Eyebrow Label", "default": "Buttery Soft Essentials" },
+        { "type": "text", "id": "title", "label": "Heading", "default": "Made for Little Ones" },
+        { "type": "textarea", "id": "text", "label": "Subtext", "default": "Discover our signature bamboo sleep bags and pajamas." },
+        { "type": "text", "id": "button_label", "label": "Button Label", "default": "Shop New Arrivals" },
+        { "type": "url", "id": "button_link", "label": "Button Link" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Rainbow Hero Slider",
+      "blocks": [
+        { "type": "slide", "settings": { "title": "Dream in Bamboo", "bg_color": "#F8C8DC", "accent_color": "#2C2C2C" } },
+        { "type": "slide", "settings": { "title": "Safe Sleep, Every Stage", "bg_color": "#CDE7F0", "accent_color": "#2C2C2C" } }
+      ]
+    }
+  ]
+}
 {% endschema %}
