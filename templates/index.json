@@ -9,7 +9,8 @@
     "founder": { "type": "founder-story" },
     "testimonials": { "type": "testimonials" },
     "trust": { "type": "trust-bar" },
-    "newsletter": { "type": "newsletter" }
+    "newsletter": { "type": "newsletter" },
+    "spinner": { "type": "discount-spinner" }
   },
-  "order": ["hero", "marquee", "collections", "featured", "benefits", "story", "founder", "testimonials", "trust", "newsletter"]
+  "order": ["hero", "marquee", "collections", "featured", "benefits", "story", "founder", "testimonials", "trust", "newsletter", "spinner"]
 }
