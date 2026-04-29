@@ -11,16 +11,20 @@
 
     {{ content_for_header }}
 
-    <!-- Fonts -->
+    <!-- Elite Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:ital,wght@0,400..900;1,400..900&family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
     <!-- Styles -->
     {{ 'base.css' | asset_url | stylesheet_tag }}
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 
     <!-- Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@next/dist/aos.js"></script>
     <script src="{{ 'cart-logic.js' | asset_url }}" defer></script>
   </head>
 
@@ -39,13 +43,15 @@
     {% section 'footer' %}
 
     <script>
-      // Reveal Animations
-      const observer = new IntersectionObserver((entries) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) entry.target.classList.add('reveal');
+      // Initialize AOS (Animations)
+      document.addEventListener('DOMContentLoaded', function() {
+        AOS.init({
+          duration: 1000,
+          once: true,
+          easing: 'ease-in-out',
+          offset: 100
         });
-      }, { threshold: 0.1 });
-      document.querySelectorAll('.animate-reveal').forEach(el => observer.observe(el));
+      });
 
       // Confetti Celebration
       function celebrate() {
@@ -53,7 +59,7 @@
         confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: colors });
       }
 
-      // Global Add to Cart interceptor (for dynamic cards)
+      // Global Add to Cart interceptor
       document.addEventListener('click', (e) => {
         const atcBtn = e.target.closest('.product-card__atc');
         if (atcBtn) {
@@ -62,7 +68,6 @@
           if (variantId && window.cartLogic) {
             window.cartLogic.addItem(variantId);
           } else if (window.openCart) {
-            // Fallback for demo products
             window.openCart();
             celebrate();
           }
