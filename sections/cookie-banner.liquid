@@ -1,0 +1,59 @@
+<style>
+  .cookie-banner {
+    position: fixed; bottom: 30px; left: 30px; width: 350px;
+    background: #fff; border-radius: 16px; padding: 24px;
+    box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+    z-index: 10001; border: 1px solid #f0f0f0;
+    display: none; transform: translateY(20px); opacity: 0;
+    transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1);
+  }
+  .cookie-banner.active { display: block; transform: translateY(0); opacity: 1; }
+  
+  .cookie-banner__text { font-size: 0.85rem; color: #666; line-height: 1.6; margin-bottom: 20px; }
+  .cookie-banner__btns { display: flex; gap: 10px; }
+  .cookie-banner__btn { flex: 1; padding: 12px; border-radius: 8px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: all 0.3s; }
+  
+  .cookie-banner__btn--accept { background: #1a1a1a; color: #fff; border: none; }
+  .cookie-banner__btn--accept:hover { background: #333; }
+  
+  .cookie-banner__btn--decline { background: none; border: 1px solid #eee; color: #888; }
+  .cookie-banner__btn--decline:hover { background: #f9f9f9; }
+
+  @media (max-width: 480px) {
+    .cookie-banner { left: 15px; right: 15px; width: auto; bottom: 15px; }
+  }
+</style>
+
+<div class="cookie-banner" id="CookieBanner">
+  <p class="cookie-banner__text">
+    We use cookies to ensure you get the best experience on our boutique store. By continuing, you agree to our privacy policy.
+  </p>
+  <div class="cookie-banner__btns">
+    <button class="cookie-banner__btn cookie-banner__btn--accept" id="CookieAccept">Accept</button>
+    <button class="cookie-banner__btn cookie-banner__btn--decline" id="CookieDecline">Decline</button>
+  </div>
+</div>
+
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const banner = document.getElementById('CookieBanner');
+    if (!localStorage.getItem('rainbow_cookies')) {
+      setTimeout(() => {
+        banner.classList.add('active');
+      }, 3000);
+    }
+
+    document.getElementById('CookieAccept').addEventListener('click', () => {
+      localStorage.setItem('rainbow_cookies', 'accepted');
+      banner.classList.remove('active');
+    });
+
+    document.getElementById('CookieDecline').addEventListener('click', () => {
+      banner.classList.remove('active');
+    });
+  });
+</script>
+
+{% schema %}
+{ "name": "Cookie Banner" }
+{% endschema %}

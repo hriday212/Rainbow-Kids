@@ -1,77 +1,44 @@
 <style>
-  .tog-guide { padding: 100px 0; background: #fff; }
-  .tog-header { text-align: center; margin-bottom: 80px; }
-  .tog-header h1 { font-size: 4rem; margin-bottom: 20px; }
+  .tog-guide { padding: 100px 0; background: #FCF8F1; }
+  .tog-header { text-align: center; margin-bottom: 60px; max-width: 800px; margin-left: auto; margin-right: auto; }
+  .tog-title { font-family: var(--font-heading); font-size: 3rem; margin-bottom: 20px; }
   
-  .tog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; margin-bottom: 100px; }
-  .tog-card { padding: 50px 30px; border-radius: 32px; text-align: center; display: flex; flex-direction: column; gap: 24px; transition: transform 0.3s; }
-  .tog-card:hover { transform: translateY(-10px); }
-  
-  .tog-card--light { background: var(--color-secondary); }
-  .tog-card--mid { background: var(--color-accent); }
-  .tog-card--warm { background: var(--color-highlight); }
-  
-  .tog-card__value { font-size: 3rem; font-weight: 800; font-family: var(--font-heading); color: var(--color-text-dark); }
-  .tog-card__temp { font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; font-size: 0.9rem; }
-  .tog-card__text { font-size: 1rem; color: var(--color-text-dark); opacity: 0.8; line-height: 1.6; }
+  .tog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  .tog-card { background: #fff; padding: 40px; border-radius: 20px; text-align: center; display: flex; flex-direction: column; gap: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
+  .tog-card__value { font-size: 2.5rem; font-weight: 800; color: #1a1a1a; }
+  .tog-card__temp { font-size: 0.9rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #888; }
+  .tog-card__desc { font-size: 0.95rem; color: #666; line-height: 1.6; }
 
-  .dress-guide { background: var(--color-background); padding: 80px 40px; border-radius: 40px; text-align: center; }
-  .dress-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 50px; }
-  .dress-item { background: #fff; padding: 30px 20px; border-radius: 20px; font-size: 0.85rem; font-weight: 700; color: var(--color-text-dark); box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
-
-  @media (max-width: 1024px) { .tog-grid { grid-template-columns: 1fr; } .dress-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px) { .tog-grid { grid-template-columns: 1fr; } }
 </style>
 
-<section class="tog-guide animate-reveal">
+<section class="tog-guide">
   <div class="container">
-    
-    <header class="tog-header">
-      <span class="section-tag">Sleep Safety</span>
-      <h1>TOG & Temperature Guide</h1>
-      <p style="max-width: 700px; margin: 0 auto; color: var(--color-text-light);">A TOG (Thermal Overall Grade) rating helps you choose the right weight for your baby's sleep bag based on the temperature of their nursery.</p>
-    </header>
+    <div class="tog-header animate-reveal">
+      <h2 class="tog-title">Sleep Bag TOG Guide</h2>
+      <p>TOG is a rating system that measures warmth and calculates how quickly a fabric uses heat. It is the standard for determining which sleep bag your baby should wear based on the ambient temperature in their nursery.</p>
+    </div>
 
     <div class="tog-grid">
-      <!-- 0.5 TOG -->
-      <div class="tog-card tog-card--light" data-aos="fade-up">
-        <span class="tog-card__temp">Warm Weather</span>
+      <div class="tog-card animate-reveal" data-aos="fade-up">
         <div class="tog-card__value">0.5 TOG</div>
-        <p class="tog-card__temp">23°C - 26°C (74°F - 78°F)</p>
-        <p class="tog-card__text">Our thinnest layer. Perfect for hot summer nights and nursery temperatures above 23°C.</p>
+        <div class="tog-card__temp">74 - 78°F / 23 - 26°C</div>
+        <p class="tog-card__desc">Ideal for summer and warm nurseries. Pair with a short sleeve bodysuit.</p>
       </div>
-
-      <!-- 1.0 TOG -->
-      <div class="tog-card tog-card--mid" data-aos="fade-up" data-aos-delay="100">
-        <span class="tog-card__temp">Year Round</span>
+      <div class="tog-card animate-reveal" data-aos="fade-up" data-aos-delay="100">
         <div class="tog-card__value">1.0 TOG</div>
-        <p class="tog-card__temp">20°C - 23°C (69°F - 73°F)</p>
-        <p class="tog-card__text">The most versatile weight. Ideal for spring, autumn, and nurseries with moderate temperatures.</p>
+        <div class="tog-card__temp">69 - 73°F / 21 - 23°C</div>
+        <p class="tog-card__desc">Our most popular year-round rating. Perfect for air-conditioned nurseries.</p>
       </div>
-
-      <!-- 2.5 TOG -->
-      <div class="tog-card tog-card--warm" data-aos="fade-up" data-aos-delay="200">
-        <span class="tog-card__temp">Cold Weather</span>
+      <div class="tog-card animate-reveal" data-aos="fade-up" data-aos-delay="200">
         <div class="tog-card__value">2.5 TOG</div>
-        <p class="tog-card__temp">16°C - 20°C (61°F - 68°F)</p>
-        <p class="tog-card__text">Our cozy quilted weight. Designed for winter and cooler nurseries to keep baby warm without bulky blankets.</p>
+        <div class="tog-card__temp">61 - 68°F / 16 - 20°C</div>
+        <p class="tog-card__desc">Perfect for cold winter months and nurseries kept below 68°F.</p>
       </div>
     </div>
-
-    <div class="dress-guide" data-aos="fade-up">
-      <h2 style="font-size: 2.5rem;">What should baby wear?</h2>
-      <p style="margin-top: 10px; color: var(--color-text-light);">Pair your sleep bag with the right base layers for maximum comfort.</p>
-      
-      <div class="dress-grid">
-        <div class="dress-item">Short Sleeve Onesie</div>
-        <div class="dress-item">Long Sleeve Bodysuit</div>
-        <div class="dress-item">Bamboo Pajamas</div>
-        <div class="dress-item">Full Footie Romper</div>
-      </div>
-    </div>
-
   </div>
 </section>
 
 {% schema %}
-{ "name": "TOG Guide Content" }
+{ "name": "TOG Guide Section", "settings": [], "presets": [{ "name": "TOG Guide Section" }] }
 {% endschema %}

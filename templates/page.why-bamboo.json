@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "main": { "type": "main-page", "settings": {} },
+    "bamboo": { "type": "why-bamboo", "settings": {} }
+  },
+  "order": [ "main", "bamboo" ]
+}

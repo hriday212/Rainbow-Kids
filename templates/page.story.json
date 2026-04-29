@@ -1,0 +1,26 @@
+{
+  "sections": {
+    "main": {
+      "type": "main-page",
+      "settings": {}
+    },
+    "founder": {
+      "type": "founder-story",
+      "settings": {}
+    },
+    "bamboo": {
+      "type": "why-bamboo",
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {}
+    }
+  },
+  "order": [
+    "main",
+    "founder",
+    "bamboo",
+    "testimonials"
+  ]
+}
