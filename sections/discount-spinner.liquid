@@ -61,27 +61,34 @@
 <script>
   let hasSpun = false;
   
-  function spinWheel() {
-    if (hasSpun) return;
-    const email = document.getElementById('SpinnerEmail').value;
-    if (!email.includes('@')) { alert('Please enter a valid email'); return; }
-    
-    hasSpun = true;
-    const wheel = document.getElementById('LuckyWheel');
-    const randomDeg = 1800 + Math.floor(Math.random() * 360);
-    wheel.style.transform = `rotate(${randomDeg}deg)`;
-    
+  document.addEventListener('DOMContentLoaded', () => {
+    // FORCED POPUP FOR TESTING
     setTimeout(() => {
-      if (window.celebrate) window.celebrate();
-      document.getElementById('SpinAction').style.display = 'none';
-      document.getElementById('SpinResult').style.display = 'block';
-    }, 5000);
-  }
+      const overlay = document.getElementById('SpinnerOverlay');
+      if (overlay) overlay.classList.add('show');
+    }, 4000);
+    
+    window.spinWheel = function() {
+      if (hasSpun) return;
+      const email = document.getElementById('SpinnerEmail').value;
+      if (!email.includes('@')) { alert('Please enter a valid email'); return; }
+      
+      hasSpun = true;
+      const wheel = document.getElementById('LuckyWheel');
+      const randomDeg = 1800 + Math.floor(Math.random() * 360);
+      wheel.style.transform = `rotate(${randomDeg}deg)`;
+      
+      setTimeout(() => {
+        if (window.celebrate) window.celebrate();
+        document.getElementById('SpinAction').style.display = 'none';
+        document.getElementById('SpinResult').style.display = 'block';
+      }, 5000);
+    }
 
-  function closeSpinner() {
-    document.getElementById('SpinnerOverlay').classList.remove('show');
-    localStorage.setItem('rainbow_spun', 'true');
-  }
+    window.closeSpinner = function() {
+      document.getElementById('SpinnerOverlay').classList.remove('show');
+    }
+  });
 </script>
 
 {% schema %}

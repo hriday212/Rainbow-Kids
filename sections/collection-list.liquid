@@ -1,73 +1,65 @@
 <style>
-  .collection-list { padding: 100px 0; background: #fff; }
-  .collection-list__header { text-align: center; margin-bottom: 80px; }
+  .collection-list { padding: 80px 0; background: #fff; }
+  .collection-list__header { text-align: center; margin-bottom: 50px; }
+  .collection-list__title { font-family: var(--font-heading); font-size: 3rem; color: #1a1a1a; margin-bottom: 10px; font-weight: 400; }
   
-  .collection-list__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; }
+  .collection-list__grid { display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; }
+  .collection-item { width: 180px; text-align: center; text-decoration: none; color: inherit; }
+  .collection-item__image-wrap { width: 180px; height: 180px; border-radius: 50%; overflow: hidden; background: #f9f9f9; margin-bottom: 20px; transition: transform 0.6s cubic-bezier(0.19, 1, 0.22, 1); border: 2px solid transparent; }
+  .collection-item:hover .collection-item__image-wrap { transform: scale(1.05); border-color: var(--color-primary); }
   
-  .collection-card { position: relative; aspect-ratio: 4/5; border-radius: var(--radius-soft); overflow: hidden; display: flex; align-items: flex-end; justify-content: center; padding: 30px; text-decoration: none; transition: all 0.6s var(--ease-smooth); box-shadow: 0 10px 40px rgba(0,0,0,0.03); }
-  .collection-card:hover { transform: translateY(-15px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
-  .collection-card:hover img { transform: scale(1.15); }
-  
-  .collection-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; transition: transform 0.8s var(--ease-smooth); }
-  .collection-card__overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.5), transparent); z-index: 2; }
-  
-  .collection-card__title { position: relative; z-index: 3; color: #fff; font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; background: rgba(255,255,255,0.15); backdrop-filter: blur(12px); padding: 14px 28px; border-radius: var(--radius-pill); border: 1.5px solid rgba(255,255,255,0.2); text-align: center; width: 100%; }
+  .collection-item__image { width: 100%; height: 100%; object-fit: cover; }
+  .collection-item__title { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #1a1a1a; }
 
-  @media (max-width: 1024px) { .collection-list__grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .collection-list__grid { grid-template-columns: 1fr; } }
+  @media (max-width: 600px) { .collection-item { width: 140px; } .collection-item__image-wrap { width: 140px; height: 140px; } }
 </style>
 
 <section class="collection-list">
   <div class="container">
-    <div class="collection-list__header" data-aos="fade-up">
-      <span class="section-tag">Explore</span>
-      <h2 style="font-size: 3.5rem;">Shop by Category</h2>
+    <div class="collection-list__header">
+      <h2 class="collection-list__title">{{ section.settings.title | default: "Shop by Category" }}</h2>
     </div>
 
     <div class="collection-list__grid">
-      {%- if section.blocks.size > 0 -%}
-        {%- for block in section.blocks -%}
-          {%- assign collection = collections[block.settings.collection] -%}
-          <a href="{{ collection.url | default: '/collections/all' }}" class="collection-card" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 100 }}" {{ block.shopify_attributes }}>
-            {%- if collection.image != blank -%}
-              <img src="{{ collection.image | image_url: width: 800 }}" alt="{{ collection.title }}">
+      {%- for block in section.blocks -%}
+        {%- assign collection = block.settings.collection -%}
+        <a href="{{ collection.url | default: '#' }}" class="collection-item">
+          <div class="collection-item__image-wrap">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 400 }}" class="collection-item__image" alt="{{ collection.title }}">
+            {%- elsif collection.image != blank -%}
+              <img src="{{ collection.image | image_url: width: 400 }}" class="collection-item__image" alt="{{ collection.title }}">
             {%- else -%}
-              <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=800" alt="Placeholder">
+              <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=400" class="collection-item__image" alt="Demo">
             {%- endif -%}
-            <div class="collection-card__overlay"></div>
-            <span class="collection-card__title">{{ collection.title | default: 'Category' }}</span>
-          </a>
-        {%- endfor -%}
-      {%- else -%}
-        {%- comment -%} Premium Demo Mode {%- endcomment -%}
-        {%- for i in (1..4) -%}
-          <div class="collection-card" data-aos="fade-up" data-aos-delay="{{ i | times: 100 }}">
-            <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=800" alt="Demo">
-            <div class="collection-card__overlay"></div>
-            <span class="collection-card__title">Category {{ i }}</span>
           </div>
-        {%- endfor -%}
-      {%- endif -%}
+          <span class="collection-item__title">{{ block.settings.title | default: collection.title | default: "Category" }}</span>
+        </a>
+      {%- endfor -%}
     </div>
   </div>
 </section>
 
 {% schema %}
 {
-  "name": "Collection List",
-  "settings": [],
+  "name": "Boutique Collection List",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Heading", "default": "Shop by Category" }
+  ],
   "blocks": [
     {
       "type": "collection",
       "name": "Collection",
       "settings": [
-        { "type": "collection", "id": "collection", "label": "Collection" }
+        { "type": "collection", "id": "collection", "label": "Collection" },
+        { "type": "image_picker", "id": "image", "label": "Custom Image (Optional)" },
+        { "type": "text", "id": "title", "label": "Custom Title (Optional)" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Collection List",
+      "name": "Boutique Collection List",
       "blocks": [
         { "type": "collection" },
         { "type": "collection" },

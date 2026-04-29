@@ -1,77 +1,65 @@
 <style>
-  .hero-swiper { width: 100%; height: 100vh; position: relative; overflow: hidden; background: #000; }
-  .swiper { width: 100%; height: 100%; }
-  .swiper-slide { position: relative; overflow: hidden; }
+  .hero-slider { position: relative; width: 100%; height: 80vh; min-height: 600px; overflow: hidden; background: #fdfdfd; }
+  .swiper-hero { width: 100%; height: 100%; }
   
-  .hero__bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; transition: transform 10s ease-out; }
-  .swiper-slide-active .hero__bg { transform: scale(1.1); } /* Slow zoom effect */
+  .hero-slide { position: relative; width: 100%; height: 100%; display: flex; align-items: center; }
+  .hero-slide__image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
+  .hero-slide__overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.15); z-index: 2; }
   
-  .hero__overlay { position: absolute; inset: 0; background: linear-gradient(rgba(0,0,0,0.1), rgba(0,0,0,0.35)); z-index: 2; }
+  .hero-slide__content { position: relative; z-index: 3; color: #fff; max-width: 800px; padding: 0 40px; }
+  .hero-slide__subtitle { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 20px; }
+  .hero-slide__title { font-family: var(--font-heading); font-size: 5rem; line-height: 1; margin: 0 0 40px; font-weight: 400; }
   
-  .hero__content { position: relative; z-index: 3; height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; color: #fff; padding: 0 40px; }
-  .hero__tag { font-weight: 800; text-transform: uppercase; letter-spacing: 0.3em; font-size: 0.9rem; margin-bottom: 24px; text-shadow: 0 2px 15px rgba(0,0,0,0.2); }
-  .hero__title { font-size: clamp(3.5rem, 8vw, 6.5rem); line-height: 1.05; margin-bottom: 40px; text-shadow: 0 4px 30px rgba(0,0,0,0.3); font-weight: 700; max-width: 900px; }
-  
-  .hero__actions .button { padding: 22px 50px; font-size: 1rem; background: #fff; color: var(--color-text-dark); border: none; }
-  .hero__actions .button:hover { background: var(--color-primary); transform: translateY(-8px) scale(1.05); }
+  .hero-btn { display: inline-block; padding: 22px 50px; background: #fff; color: #1a1a1a; text-decoration: none; border-radius: 50px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.8rem; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
+  .hero-btn:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); background: var(--color-primary); color: #fff; }
 
-  /* Premium Navigation */
-  .swiper-pagination-bullet { background: #fff !important; opacity: 0.4; width: 12px; height: 12px; transition: all 0.3s; }
-  .swiper-pagination-bullet-active { opacity: 1; transform: scale(1.3); background: var(--color-primary) !important; }
-  
-  .hero-nav { position: absolute; width: 60px; height: 60px; border-radius: 50%; background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); color: #fff !important; display: flex !important; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.2); transition: all 0.3s; z-index: 10; cursor: pointer; }
-  .hero-nav:hover { background: #fff; color: #000 !important; }
-  .hero-nav::after { font-size: 1.2rem !important; }
-  
-  .hero-nav--prev { left: 40px; }
-  .hero-nav--next { right: 40px; }
-
-  @media (max-width: 768px) { 
-    .hero-swiper { height: 100vh; } 
-    .hero__title { font-size: 3rem; }
-    .hero-nav { display: none !important; }
-  }
+  @media (max-width: 768px) { .hero-slide__title { font-size: 3rem; } .hero-slider { height: 70vh; } }
 </style>
 
-<section class="hero-swiper">
-  <div class="swiper mySwiper">
+<div class="hero-slider">
+  <div class="swiper swiper-hero">
     <div class="swiper-wrapper">
-      {%- for block in section.blocks -%}
-        <div class="swiper-slide" {{ block.shopify_attributes }}>
-          {%- if block.settings.image != blank -%}
-            <img src="{{ block.settings.image | image_url: width: 2400 }}" class="hero__bg" alt="{{ block.settings.title | escape }}">
-          {%- else -%}
-            <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=2400" class="hero__bg" alt="Placeholder">
-          {%- endif -%}
-          
-          <div class="hero__overlay"></div>
-          
-          <div class="hero__content">
-            {%- if block.settings.tag != blank -%}<span class="hero__tag" data-aos="fade-up" data-aos-delay="100">{{ block.settings.tag }}</span>{%- endif -%}
-            <h1 class="hero__title" data-aos="fade-up" data-aos-delay="300">{{ block.settings.title | default: 'Softness Beyond Belief' }}</h1>
-            <div class="hero__actions" data-aos="fade-up" data-aos-delay="500">
-              <a href="{{ block.settings.button_link | default: '/collections/all' }}" class="button">{{ block.settings.button_label | default: 'Shop Now' }}</a>
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <div class="swiper-slide hero-slide">
+            {%- if block.settings.image != blank -%}
+              <img src="{{ block.settings.image | image_url: width: 2000 }}" class="hero-slide__image" alt="{{ block.settings.title }}">
+            {%- else -%}
+              <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?auto=format&fit=crop&q=80&w=2000" class="hero-slide__image" alt="Demo">
+            {%- endif -%}
+            <div class="hero-slide__overlay"></div>
+            <div class="hero-slide__content animate-reveal">
+              <span class="hero-slide__subtitle">{{ block.settings.subtitle | default: "The Bamboo Collection" }}</span>
+              <h2 class="hero-slide__title">{{ block.settings.title | default: "Buttery Soft Essentials" }}</h2>
+              <a href="{{ block.settings.link | default: '#' }}" class="hero-btn">Shop Now</a>
             </div>
           </div>
+        {%- endfor -%}
+      {%- else -%}
+        {% comment %} Final Fallback for Blank State {% endcomment %}
+        <div class="swiper-slide hero-slide">
+          <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?auto=format&fit=crop&q=80&w=2000" class="hero-slide__image" alt="Demo">
+          <div class="hero-slide__overlay"></div>
+          <div class="hero-slide__content">
+            <span class="hero-slide__subtitle">The Spring Collection</span>
+            <h2 class="hero-slide__title">Made for Sweet Dreams</h2>
+            <a href="/collections/all" class="hero-btn">Shop Collection</a>
+          </div>
         </div>
-      {%- endfor -%}
+      {%- endif -%}
     </div>
-    
     <div class="swiper-pagination"></div>
-    <div class="hero-nav hero-nav--prev swiper-button-prev"></div>
-    <div class="hero-nav hero-nav--next swiper-button-next"></div>
   </div>
-</section>
+</div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    const swiper = new Swiper(".mySwiper", {
+  document.addEventListener('DOMContentLoaded', () => {
+    new Swiper('.swiper-hero', {
       loop: true,
-      effect: "fade",
-      speed: 1500,
-      autoplay: { delay: 6000, disableOnInteraction: false },
-      pagination: { el: ".swiper-pagination", clickable: true },
-      navigation: { nextEl: ".swiper-button-next", prevEl: ".swiper-button-prev" },
+      autoplay: { delay: 5000 },
+      pagination: { el: '.swiper-pagination', clickable: true },
+      effect: 'fade',
+      fadeEffect: { crossFade: true }
     });
   });
 </script>
@@ -79,25 +67,22 @@
 {% schema %}
 {
   "name": "Hero Slider",
-  "settings": [],
   "blocks": [
     {
       "type": "slide",
       "name": "Slide",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Background Image" },
-        { "type": "text", "id": "tag", "label": "Eyebrow Label", "default": "The Original Bamboo" },
-        { "type": "text", "id": "title", "label": "Heading", "default": "Softness Beyond Belief" },
-        { "type": "text", "id": "button_label", "label": "Button Label", "default": "Shop Now" },
-        { "type": "url", "id": "button_link", "label": "Button Link" }
+        { "type": "image_picker", "id": "image", "label": "Slide Image" },
+        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "The Bamboo Collection" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Buttery Soft Essentials" },
+        { "type": "url", "id": "link", "label": "Link" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Hero Slider",
+      "name": "Boutique Hero Slider",
       "blocks": [
-        { "type": "slide" },
         { "type": "slide" }
       ]
     }

@@ -49,15 +49,16 @@
           <img src="{{ image | image_url: width: 1200 }}" alt="{{ product.title }}" loading="lazy">
         {% endfor %}
       {%- else -%}
-        <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=1200" alt="Demo">
-        <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=1200" alt="Demo">
+        <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?auto=format&fit=crop&q=80&w=1200" alt="Boutique Demo 1">
+        <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?auto=format&fit=crop&q=80&w=1200" alt="Boutique Demo 2">
+        <img src="https://images.unsplash.com/photo-1484860137485-0666042bc64d?auto=format&fit=crop&q=80&w=1200" alt="Boutique Demo 3">
       {%- endif -%}
     </div>
 
     <!-- Right: Sticky Info -->
     <div class="product-info-sticky">
-      <h1 class="product-title">{{ product.title }}</h1>
-      <p class="product-price">{{ product.price | money }}</p>
+      <h1 class="product-title">{{ product.title | default: "Bamboo Sleep Bag in Blossom" }}</h1>
+      <p class="product-price">{{ product.price | money | default: "$55.00" }}</p>
 
       <div class="tog-badge">
         <div class="tog-circle">1.0</div>

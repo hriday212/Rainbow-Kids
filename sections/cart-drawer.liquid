@@ -54,10 +54,10 @@
 
   <!-- Complete the Look (Upsell) -->
   {%- assign upsell = section.settings.upsell_product -%}
-  {%- if upsell != blank -%}
-    <div class="cart-upsell">
-      <h3 class="cart-upsell__title">{{ section.settings.upsell_title }}</h3>
-      <div class="cart-upsell__list">
+  <div class="cart-upsell">
+    <h3 class="cart-upsell__title">{{ section.settings.upsell_title }}</h3>
+    <div class="cart-upsell__list">
+      {%- if upsell != blank -%}
         <div class="upsell-card">
           <div class="upsell-card__img"><img src="{{ upsell.featured_image | image_url: width: 100 }}"></div>
           <div class="upsell-card__info">
@@ -65,9 +65,17 @@
             <button class="upsell-card__add js-add-to-cart" data-variant-id="{{ upsell.selected_or_first_available_variant.id }}">+ Add {{ upsell.price | money }}</button>
           </div>
         </div>
-      </div>
+      {%- else -%}
+        <div class="upsell-card">
+          <div class="upsell-card__img"><img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=100"></div>
+          <div class="upsell-card__info">
+            <p class="upsell-card__name">Bamboo Knotted Hat</p>
+            <button class="upsell-card__add">+ Add $15.00</button>
+          </div>
+        </div>
+      {%- endif -%}
     </div>
-  {%- endif -%}
+  </div>
 
   <div class="cart-drawer__footer">
     <div class="cart-drawer__subtotal">

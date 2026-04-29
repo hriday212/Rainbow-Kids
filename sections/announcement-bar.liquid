@@ -13,14 +13,25 @@
 
 <div class="announcement-bar">
   <div class="announcement-bar__scroller">
-    {%- for i in (1..4) -%}
-      {%- for block in section.blocks -%}
+    {%- if section.blocks.size > 0 -%}
+      {%- for i in (1..4) -%}
+        {%- for block in section.blocks -%}
+          <div class="announcement-bar__item">
+            {{ block.settings.text }}
+            <span class="announcement-bar__dot"></span>
+          </div>
+        {%- endfor -%}
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..10) -%}
         <div class="announcement-bar__item">
-          {{ block.settings.text }}
+          Free shipping on orders over $100
+          <span class="announcement-bar__dot"></span>
+          Shop the New Spring Collection
           <span class="announcement-bar__dot"></span>
         </div>
       {%- endfor -%}
-    {%- endfor -%}
+    {%- endif -%}
   </div>
 </div>
 
