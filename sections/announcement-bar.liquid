@@ -1,9 +1,9 @@
 <style>
-  .announcement-bar { background: var(--color-secondary); overflow: hidden; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.05); }
-  .announcement-bar__scroller { display: flex; white-space: nowrap; animation: scroll 30s linear infinite; gap: 60px; }
+  .announcement-bar { background: var(--color-secondary); overflow: hidden; padding: 12px 0; border-bottom: 1px solid rgba(0,0,0,0.1); }
+  .announcement-bar__scroller { display: flex; white-space: nowrap; animation: scroll 40s linear infinite; gap: 80px; }
   
-  .announcement-bar__item { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; display: flex; align-items: center; gap: 10px; }
-  .announcement-bar__dot { width: 4px; height: 4px; background: #1a1a1a; border-radius: 50%; opacity: 0.3; }
+  .announcement-bar__item { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #1a1a1a; display: flex; align-items: center; gap: 15px; }
+  .announcement-bar__dot { font-size: 1.2rem; color: var(--color-primary); }
 
   @keyframes scroll {
     0% { transform: translateX(0); }
@@ -13,48 +13,25 @@
 
 <div class="announcement-bar">
   <div class="announcement-bar__scroller">
-    {%- if section.blocks.size > 0 -%}
-      {%- for i in (1..4) -%}
-        {%- for block in section.blocks -%}
-          <div class="announcement-bar__item">
-            {{ block.settings.text }}
-            <span class="announcement-bar__dot"></span>
-          </div>
-        {%- endfor -%}
-      {%- endfor -%}
-    {%- else -%}
-      {%- for i in (1..10) -%}
-        <div class="announcement-bar__item">
-          Free shipping on orders over $100
-          <span class="announcement-bar__dot"></span>
-          Shop the New Spring Collection
-          <span class="announcement-bar__dot"></span>
-        </div>
-      {%- endfor -%}
-    {%- endif -%}
+    {%- for i in (1..10) -%}
+      <div class="announcement-bar__item">
+        Free shipping on orders over $85 🌈
+        <span class="announcement-bar__dot">•</span>
+        Shop Our New Bamboo Essentials
+        <span class="announcement-bar__dot">•</span>
+        10% OFF your first order with code: RAINBOW10
+        <span class="announcement-bar__dot">•</span>
+      </div>
+    {%- endfor -%}
   </div>
 </div>
 
 {% schema %}
 {
   "name": "Announcement Bar",
-  "blocks": [
-    {
-      "type": "message",
-      "name": "Message",
-      "settings": [
-        { "type": "text", "id": "text", "label": "Message", "default": "Free shipping on orders over $100" }
-      ]
-    }
-  ],
+  "settings": [],
   "presets": [
-    {
-      "name": "Boutique Announcement Bar",
-      "blocks": [
-        { "type": "message", "settings": { "text": "Free shipping on orders over $100" } },
-        { "type": "message", "settings": { "text": "Shop New Arrivals" } }
-      ]
-    }
+    { "name": "Fun Announcement Bar" }
   ]
 }
 {% endschema %}

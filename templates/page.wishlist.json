@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "main": { "type": "main-page", "settings": {} },
+    "wishlist_grid": { "type": "featured-collection", "settings": { "title": "Your Favorites" } }
+  },
+  "order": [ "main", "wishlist_grid" ]
+}

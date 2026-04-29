@@ -2,7 +2,7 @@
   .spinner-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 10002; display: none; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.4s; }
   .spinner-overlay.show { display: flex; opacity: 1; }
   
-  .spinner-modal { background: #fff; width: 450px; padding: 40px; border-radius: 20px; text-align: center; position: relative; border: 4px solid #F8C8DC; }
+  .spinner-modal { background: #fff; width: 450px; padding: 40px; border-radius: 20px; text-align: center; position: relative; border: 4px solid var(--color-primary); }
   .spinner-close { position: absolute; top: 15px; right: 15px; background: none; border: none; font-size: 2rem; cursor: pointer; color: #888; }
   
   .spinner-title { font-family: var(--font-heading); font-size: 2.5rem; color: #1a1a1a; margin-bottom: 10px; }
@@ -10,24 +10,25 @@
   /* Fun Rainbow Wheel */
   .wheel-container { position: relative; width: 300px; height: 300px; margin: 30px auto; }
   .wheel { 
-    width: 100%; height: 100%; border-radius: 50%; border: 8px solid #333; position: relative; overflow: hidden; 
+    width: 100%; height: 100%; border-radius: 50%; border: 6px solid #333; position: relative; overflow: hidden; 
     transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1);
     background: conic-gradient(
       #FF6B6B 0deg 60deg, 
       #FFD93D 60deg 120deg, 
       #6BCB77 120deg 180deg, 
       #4D96FF 180deg 240deg, 
-      #F8C8DC 240deg 300deg, 
+      #FFDAB9 240deg 300deg, 
       #B983FF 300deg 360deg
     );
   }
   
   .wheel-line { position: absolute; top: 0; left: 50%; width: 2px; height: 100%; background: #333; transform-origin: 50% 50%; z-index: 2; }
   
+  .wheel-label-wrap { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 3; }
   .wheel-label { 
-    position: absolute; top: 20%; left: 50%; transform: translateX(-50%); 
-    font-weight: 900; font-size: 1.1rem; color: #fff; text-shadow: 2px 2px 0px rgba(0,0,0,0.2); 
-    z-index: 3; pointer-events: none;
+    position: absolute; top: 50%; left: 50%; 
+    font-weight: 900; font-size: 1rem; color: #fff; text-shadow: 1px 1px 0px rgba(0,0,0,0.3); 
+    width: 100px; text-align: center;
   }
 
   .wheel-pointer { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 20px solid transparent; border-right: 20px solid transparent; border-top: 30px solid #333; z-index: 10; }
@@ -35,7 +36,7 @@
   .wheel-center { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 40px; height: 40px; background: #fff; border: 4px solid #333; border-radius: 50%; z-index: 11; }
 
   .spinner-input { width: 100%; padding: 15px; border: 2px solid #eee; border-radius: 10px; margin-bottom: 15px; font-size: 1rem; }
-  .spinner-btn { width: 100%; padding: 18px; background: #FF6B6B; color: #fff; border: none; border-radius: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; }
+  .spinner-btn { width: 100%; padding: 18px; background: var(--color-primary); color: #fff; border: none; border-radius: 10px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; }
 </style>
 
 <div class="spinner-overlay" id="SpinnerOverlay">
@@ -52,12 +53,13 @@
         <div class="wheel-line" style="transform: rotate(120deg);"></div>
         <div class="wheel-line" style="transform: rotate(180deg);"></div>
         
-        <div class="wheel-label" style="transform: translateX(-50%) rotate(30deg) translateY(0);">10%</div>
-        <div class="wheel-label" style="transform: translateX(-50%) rotate(90deg) translateY(0);">20%</div>
-        <div class="wheel-label" style="transform: translateX(-50%) rotate(150deg) translateY(0);">15%</div>
-        <div class="wheel-label" style="transform: translateX(-50%) rotate(210deg) translateY(0);">5%</div>
-        <div class="wheel-label" style="transform: translateX(-50%) rotate(270deg) translateY(0);">FREE</div>
-        <div class="wheel-label" style="transform: translateX(-50%) rotate(330deg) translateY(0);">SURPRISE</div>
+        <!-- Properly Rotated and Positioned Labels -->
+        <div class="wheel-label-wrap" style="transform: rotate(30deg);"><div class="wheel-label" style="transform: translate(-50%, -100px);">10% OFF</div></div>
+        <div class="wheel-label-wrap" style="transform: rotate(90deg);"><div class="wheel-label" style="transform: translate(-50%, -100px);">20% OFF</div></div>
+        <div class="wheel-label-wrap" style="transform: rotate(150deg);"><div class="wheel-label" style="transform: translate(-50%, -100px);">FREE GIFT</div></div>
+        <div class="wheel-label-wrap" style="transform: rotate(210deg);"><div class="wheel-label" style="transform: translate(-50%, -100px);">5% OFF</div></div>
+        <div class="wheel-label-wrap" style="transform: rotate(270deg);"><div class="wheel-label" style="transform: translate(-50%, -100px);">15% OFF</div></div>
+        <div class="wheel-label-wrap" style="transform: rotate(330deg);"><div class="wheel-label" style="transform: translate(-50%, -100px);">SURPRISE</div></div>
       </div>
     </div>
     
