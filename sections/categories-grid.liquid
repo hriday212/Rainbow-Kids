@@ -1,45 +1,37 @@
 <style>
-  .categories-grid { padding: 80px 0; background: #fff; }
-  .categories-grid__header { text-align: center; margin-bottom: 50px; }
-  .categories-grid__title { font-family: var(--font-heading); font-size: 3rem; font-weight: 400; color: var(--color-text-dark); }
+  .categories-section { padding: 80px 0; background: #fff; }
+  .categories-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
   
-  .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+  .category-card { position: relative; aspect-ratio: 1/1.4; border-radius: 20px; overflow: hidden; text-decoration: none; display: flex; align-items: flex-end; padding: 30px; }
+  .category-card__img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s cubic-bezier(0.19, 1, 0.22, 1); z-index: 1; }
+  .category-card:hover .category-card__img { transform: scale(1.08); }
   
-  .cat-card { position: relative; aspect-ratio: 1/1; border-radius: 12px; overflow: hidden; text-decoration: none; display: flex; align-items: flex-end; padding: 30px; }
-  .cat-card img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-smooth); z-index: 1; }
-  .cat-card:hover img { transform: scale(1.08); }
+  .category-card__overlay { position: absolute; inset: 0; background: linear-gradient(transparent, rgba(0,0,0,0.5)); z-index: 2; }
   
-  .cat-card__overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,0.4), transparent); z-index: 2; transition: opacity 0.3s; }
-  .cat-card:hover .cat-card__overlay { opacity: 0.6; }
-  
-  .cat-card__info { position: relative; z-index: 3; color: #fff; }
-  .cat-card__title { font-size: 1.5rem; font-weight: 400; font-family: var(--font-heading); margin-bottom: 5px; }
-  .cat-card__link { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; text-decoration: underline; text-underline-offset: 4px; }
+  .category-card__info { position: relative; z-index: 3; color: #fff; }
+  .category-card__title { font-family: var(--font-heading); font-size: 1.8rem; margin: 0; font-weight: 400; }
+  .category-card__link { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; margin-top: 10px; display: block; }
 
-  @media (max-width: 1024px) { .cat-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 1024px) { .categories-grid { grid-template-columns: 1fr 1fr; } }
 </style>
 
-<section class="categories-grid">
+<section class="categories-section">
   <div class="container">
-    <div class="categories-grid__header animate-reveal">
-      <h2 class="categories-grid__title">{{ section.settings.title | default: 'Shop by Category' }}</h2>
-    </div>
-
-    <div class="cat-grid">
-      {%- for block in section.blocks -%}
-        <a href="{{ block.settings.link }}" class="cat-card animate-reveal" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 100 }}">
-          {%- if block.settings.image -%}
-            <img src="{{ block.settings.image | image_url: width: 800 }}" alt="{{ block.settings.title }}">
-          {%- else -%}
-            <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=800" alt="Demo">
-          {%- endif -%}
-          <div class="cat-card__overlay"></div>
-          <div class="cat-card__info">
-            <h3 class="cat-card__title">{{ block.settings.title }}</h3>
-            <span class="cat-card__link">Shop Now</span>
+    <div class="categories-grid">
+      {% for block in section.blocks %}
+        <a href="{{ block.settings.link | default: '#' }}" class="category-card animate-reveal" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 100 }}">
+          {% if block.settings.image != blank %}
+            <img src="{{ block.settings.image | image_url: width: 800 }}" class="category-card__img" alt="{{ block.settings.title }}">
+          {% else %}
+            <img src="{{ 'https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=800' }}" class="category-card__img" alt="Demo">
+          {% endif %}
+          <div class="category-card__overlay"></div>
+          <div class="category-card__info">
+            <h3 class="category-card__title">{{ block.settings.title }}</h3>
+            <span class="category-card__link">Shop Now</span>
           </div>
         </a>
-      {%- endfor -%}
+      {% endfor %}
     </div>
   </div>
 </section>
@@ -47,28 +39,26 @@
 {% schema %}
 {
   "name": "Categories Grid",
-  "settings": [
-    { "type": "text", "id": "title", "label": "Heading", "default": "Shop by Category" }
-  ],
+  "max_blocks": 4,
   "blocks": [
     {
       "type": "category",
-      "name": "Category Card",
+      "name": "Category",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Image" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Sleep Bags" },
-        { "type": "url", "id": "link", "label": "Link" }
+        { "type": "image_picker", "id": "image", "label": "Category Image" },
+        { "type": "text", "id": "title", "label": "Category Title", "default": "Sleep Bags" },
+        { "type": "url", "id": "link", "label": "Category Link" }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Categories Grid",
+      "name": "Boutique Categories Grid",
       "blocks": [
         { "type": "category", "settings": { "title": "Sleep Bags" } },
-        { "type": "category", "settings": { "title": "Clothing" } },
-        { "type": "category", "settings": { "title": "Bedding" } },
-        { "type": "category", "settings": { "title": "Accessories" } }
+        { "type": "category", "settings": { "title": "Pajamas" } },
+        { "type": "category", "settings": { "title": "Bodysuits" } },
+        { "type": "category", "settings": { "title": "Bundles" } }
       ]
     }
   ]

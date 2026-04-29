@@ -1,31 +1,52 @@
 <style>
-  .founder-story { padding: 120px 0; background: #fff; }
-  .founder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
-  .founder-image { position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 4/5; }
-  .founder-image img { width: 100%; height: 100%; object-fit: cover; }
-  .founder-content { display: flex; flex-direction: column; gap: 30px; }
-  .founder-tag { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #aaa; }
-  .founder-title { font-family: var(--font-heading); font-size: 3.5rem; color: var(--color-text-dark); line-height: 1.1; margin: 0; }
-  .founder-text { font-size: 1.1rem; color: #555; line-height: 1.8; font-style: italic; }
-  .founder-signature { font-family: 'Bodoni Moda', serif; font-size: 1.8rem; margin-top: 20px; color: var(--color-text-dark); }
-  @media (max-width: 1024px) { .founder-grid { grid-template-columns: 1fr; gap: 60px; } .founder-title { font-size: 2.8rem; } }
+  .founder-story { padding: 120px 0; background: #FCF8F1; }
+  .founder-grid { display: grid; grid-template-columns: 0.8fr 1.2fr; gap: 80px; align-items: center; }
+  
+  .founder-image-wrap { position: relative; border-radius: 40px; overflow: hidden; box-shadow: 0 40px 100px rgba(0,0,0,0.1); }
+  .founder-image { width: 100%; display: block; }
+  
+  .founder-content { max-width: 600px; }
+  .founder-subtitle { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: #888; margin-bottom: 20px; display: block; }
+  .founder-title { font-family: var(--font-heading); font-size: 3.5rem; color: #1a1a1a; margin-bottom: 30px; font-weight: 400; line-height: 1.1; }
+  .founder-text { font-size: 1.15rem; line-height: 1.8; color: #555; margin-bottom: 40px; font-style: italic; }
+  .founder-sig { font-family: 'Bodoni Moda', serif; font-size: 1.5rem; color: #1a1a1a; }
+
+  @media (max-width: 1024px) { .founder-grid { grid-template-columns: 1fr; gap: 60px; text-align: center; } .founder-content { margin: 0 auto; } }
 </style>
+
 <section class="founder-story">
-  <div class="container founder-grid">
-    <div class="founder-image animate-reveal" data-aos="fade-right">
-      <img src="https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=800" alt="Our Founder">
-    </div>
-    <div class="founder-content animate-reveal" data-aos="fade-left">
-      <span class="founder-tag">A Message from our founder</span>
-      <h2 class="founder-title">Made for Moms, by a Mom.</h2>
-      <div class="founder-text">
-        <p>"Rainbow Kids was born from a simple need: I wanted the absolute best for my baby’s sensitive skin, without compromising on style or the planet."</p>
-        <p>Today, we are more than just a store. We are a community of parents dedicated to comfort, safety, and a brighter future for our children.</p>
+  <div class="container">
+    <div class="founder-grid">
+      <div class="founder-image-wrap animate-reveal">
+        {% if section.settings.image != blank %}
+          <img src="{{ section.settings.image | image_url: width: 1000 }}" class="founder-image" alt="Founder">
+        {% else %}
+          <img src="https://images.unsplash.com/photo-1484860137485-0666042bc64d?q=80&w=1000" class="founder-image" alt="Demo">
+        {% endif %}
       </div>
-      <div class="founder-signature">— With love, M.</div>
+      
+      <div class="founder-content animate-reveal" data-aos="fade-left">
+        <span class="founder-subtitle">{{ section.settings.subtitle }}</span>
+        <h2 class="founder-title">{{ section.settings.title }}</h2>
+        <div class="founder-text">{{ section.settings.content }}</div>
+        <div class="founder-sig">{{ section.settings.signature }}</div>
+      </div>
     </div>
   </div>
 </section>
+
 {% schema %}
-{ "name": "Founder Story Section", "settings": [], "presets": [{ "name": "Founder Story Section" }] }
+{
+  "name": "Founder Story",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Founder Image" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "A Letter From Our Founder" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Made with love, from one mama to another." },
+    { "type": "richtext", "id": "content", "label": "Content", "default": "<p>I started Rainbow Kids Hub because I wanted the softest, safest bamboo fabrics for my own little ones. Every piece we make is a promise of quality and comfort.</p>" },
+    { "type": "text", "id": "signature", "label": "Signature", "default": "- With Love, Hriday" }
+  ],
+  "presets": [
+    { "name": "Boutique Founder Story" }
+  ]
+}
 {% endschema %}

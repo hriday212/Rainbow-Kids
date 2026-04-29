@@ -1,111 +1,119 @@
 <style>
-  .spinner-overlay {
-    position: fixed; inset: 0; width: 100vw; height: 100vh;
-    background: rgba(252, 248, 241, 0.8); backdrop-filter: blur(12px);
-    z-index: 10000; display: flex; align-items: center; justify-content: center;
-    opacity: 0; pointer-events: none; transition: opacity 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-  }
-  .spinner-overlay.show { opacity: 1; pointer-events: all; }
+  .spinner-overlay { position: fixed; inset: 0; background: rgba(255,255,255,0.8); backdrop-filter: blur(10px); z-index: 10002; display: none; align-items: center; justify-content: center; opacity: 0; transition: all 0.6s cubic-bezier(0.19, 1, 0.22, 1); }
+  .spinner-overlay.show { display: flex; opacity: 1; }
+  
+  .spinner-modal { background: #fff; width: 500px; padding: 60px; border-radius: 40px; text-align: center; position: relative; box-shadow: 0 40px 100px rgba(0,0,0,0.1); border: 1px solid #f0f0f0; }
+  .spinner-close { position: absolute; top: 30px; right: 30px; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #ccc; }
+  
+  .spinner-title { font-family: var(--font-heading); font-size: 2.8rem; color: #1a1a1a; margin-bottom: 10px; font-weight: 400; }
+  .spinner-subtitle { font-size: 1rem; color: #888; margin-bottom: 40px; }
+  
+  /* The Professional Wheel */
+  .wheel-container { position: relative; width: 320px; height: 320px; margin: 0 auto 40px; }
+  .wheel { width: 100%; height: 100%; border-radius: 50%; position: relative; overflow: hidden; transition: transform 5s cubic-bezier(0.15, 0, 0.15, 1); border: 8px solid #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.1); }
+  
+  .wheel-center-cap { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 50px; height: 50px; background: #fdfdfd; border-radius: 50%; z-index: 10; box-shadow: inset 0 2px 5px rgba(0,0,0,0.1), 0 5px 15px rgba(0,0,0,0.05); border: 2px solid var(--color-primary); display: flex; align-items: center; justify-content: center; }
+  .wheel-center-cap::after { content: ''; width: 10px; height: 10px; background: var(--color-primary); border-radius: 50%; }
 
-  .spinner-modal {
-    background: #fff; padding: 60px 40px; border-radius: 40px; text-align: center;
-    position: relative; width: 480px; max-width: 90vw;
-    box-shadow: 0 40px 100px rgba(0,0,0,0.08);
-    transform: translateY(30px); transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1);
-    border: 1px solid rgba(255,255,255,0.5);
-  }
-  .spinner-overlay.show .spinner-modal { transform: translateY(0); }
+  .wheel-pointer { position: absolute; top: -15px; left: 50%; transform: translateX(-50%); width: 0; height: 0; border-left: 15px solid transparent; border-right: 15px solid transparent; border-top: 25px solid #1a1a1a; z-index: 11; filter: drop-shadow(0 4px 5px rgba(0,0,0,0.2)); }
+  
+  .wheel-section { position: absolute; width: 50%; height: 50%; transform-origin: 100% 100%; display: flex; align-items: center; justify-content: center; font-family: var(--font-heading); font-size: 1.2rem; color: #1a1a1a; font-weight: 400; }
+  
+  .spinner-input { width: 100%; padding: 18px; border: 1px solid #eee; border-radius: 12px; margin-bottom: 15px; font-size: 1rem; text-align: center; background: #fdfdfd; }
+  .spinner-btn { width: 100%; padding: 18px; background: #1a1a1a; color: #fff; border: none; border-radius: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: all 0.3s; }
+  .spinner-btn:hover { background: #333; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
 
-  .spinner-close { position: absolute; top: 25px; right: 25px; background: none; border: none; font-size: 1.8rem; cursor: pointer; color: #ccc; transition: color 0.3s; }
-  .spinner-close:hover { color: #1a1a1a; }
-
-  .spinner-wheel-wrap { position: relative; margin: 0 auto 40px; width: 300px; height: 300px; }
-  .spinner-pointer { 
-    width: 0; height: 0; border-left: 12px solid transparent; border-right: 12px solid transparent;
-    border-top: 20px solid #1a1a1a; position: absolute; top: -10px; left: 50%; transform: translateX(-50%); z-index: 10;
-  }
-  .spinner-wheel {
-    width: 100%; height: 100%; border-radius: 50%;
-    background: conic-gradient(
-      #FDF4F2 0 120deg,
-      #F1F8FD 120deg 240deg,
-      #F6FDF1 240deg 360deg
-    );
-    position: relative; transition: transform 4s cubic-bezier(0.15, 0, 0.15, 1);
-    border: 8px solid #fff; box-shadow: 0 10px 40px rgba(0,0,0,0.05);
-  }
-  .s-label { position: absolute; top: 50%; left: 50%; font-weight: 800; font-size: 1.2rem; color: #1a1a1a; }
-  .s-label-1 { transform: rotate(60deg) translate(60px, -15px); }
-  .s-label-2 { transform: rotate(180deg) translate(60px, -15px); }
-  .s-label-3 { transform: rotate(300deg) translate(60px, -15px); }
-
-  .spinner-title { font-family: var(--font-heading); font-size: 2.5rem; margin-bottom: 10px; color: #1a1a1a; font-weight: 400; }
-  .spinner-text { font-size: 1rem; color: #666; margin-bottom: 30px; line-height: 1.6; }
-
-  .spinner-form input { width: 100%; padding: 18px; border-radius: 12px; border: 1px solid #eee; margin-bottom: 15px; text-align: center; font-size: 1rem; }
-  .spinner-form .button { width: 100%; padding: 18px; background: #1a1a1a; color: #fff; border-radius: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; border: none; }
+  @media (max-width: 600px) { .spinner-modal { width: 90%; padding: 40px 20px; } .spinner-title { font-size: 2rem; } .wheel-container { width: 260px; height: 260px; } }
 </style>
 
 <div class="spinner-overlay" id="SpinnerOverlay">
   <div class="spinner-modal">
-    <button class="spinner-close" id="SpinnerClose">&times;</button>
-    <h2 class="spinner-title">Spin to Win</h2>
-    <p class="spinner-text">Unlock a special welcome gift for your little one.</p>
+    <button class="spinner-close" onclick="closeSpinner()">&times;</button>
+    <h2 class="spinner-title">{{ section.settings.title }}</h2>
+    <p class="spinner-subtitle">{{ section.settings.subtitle }}</p>
     
-    <div class="spinner-wheel-wrap">
-      <div class="spinner-pointer"></div>
-      <div class="spinner-wheel" id="Wheel">
-        <div class="s-label s-label-1">10%</div>
-        <div class="s-label s-label-2">15%</div>
-        <div class="s-label s-label-3">20%</div>
+    <div class="wheel-container">
+      <div class="wheel-pointer"></div>
+      <div class="wheel-center-cap"></div>
+      <div class="wheel" id="LuckyWheel">
+        {%- assign colors = "#FF8C69,#FFDAB9,#FFF5EE,#FF8C69,#FFDAB9,#FFF5EE" | split: "," -%}
+        {%- for block in section.blocks -%}
+          <div class="wheel-section" style="transform: rotate({{ forloop.index0 | times: 60 }}deg) skewY(-30deg); background: {{ colors[forloop.index0] }};">
+            <span style="transform: skewY(30deg) rotate(30deg) translateY(-80px); display: block; width: 100%; text-align: center;">{{ block.settings.label }}</span>
+          </div>
+        {%- endfor -%}
       </div>
     </div>
-
-    <div class="spinner-form" id="SpinnerForm">
-      <input type="email" id="SpinnerEmail" placeholder="Your email address" required>
-      <button type="button" class="button" id="SpinButton">Try My Luck</button>
+    
+    <div id="SpinAction">
+      <input type="email" placeholder="Enter your email" class="spinner-input" id="SpinnerEmail">
+      <button class="spinner-btn" onclick="spinWheel()">Try My Luck</button>
     </div>
     
-    <div id="SpinnerResult" style="display:none; animation: fadeUp 0.6s forwards;">
-      <h3 style="font-family:var(--font-heading); font-size: 2.2rem; color:#1a1a1a; margin-bottom:10px;">It's Your Lucky Day!</h3>
-      <p style="font-size: 1.1rem; color:#666;">You won <strong style="color:#1a1a1a;">20% OFF</strong> your first order.</p>
-      <div style="margin-top:20px; padding: 15px; background: #f9f9f9; border-radius: 8px; font-weight: 800; letter-spacing: 0.1em;">CODE: RAINBOW20</div>
+    <div id="SpinResult" style="display:none; padding:20px; background:#fdfdfd; border-radius:12px; border:1px solid #eee;">
+      <h3 style="font-family:var(--font-heading); margin:0;">Congratulations!</h3>
+      <p style="color:#888; margin:10px 0;">Use code: <strong id="WinCode" style="color:#1a1a1a; font-size:1.2rem;">LUCKY20</strong></p>
+      <button class="spinner-btn" onclick="closeSpinner()">Shop Now</button>
     </div>
   </div>
 </div>
 
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    // Temporarily disabled check so you can see it pop up for testing
-    // if (!localStorage.getItem('rainbow_spun')) {
-      setTimeout(() => {
-        const overlay = document.getElementById('SpinnerOverlay');
-        if (overlay) overlay.classList.add('show');
-      }, 4000);
-    // }
-    const closeSpinner = () => {
-      document.getElementById('SpinnerOverlay').classList.remove('show');
-      localStorage.setItem('rainbow_spun', 'dismissed');
-    };
-    const closeBtn = document.getElementById('SpinnerClose');
-    if (closeBtn) closeBtn.addEventListener('click', closeSpinner);
+  let hasSpun = false;
+  
+  function spinWheel() {
+    if (hasSpun) return;
+    const email = document.getElementById('SpinnerEmail').value;
+    if (!email.includes('@')) { alert('Please enter a valid email'); return; }
     
-    const spinBtn = document.getElementById('SpinButton');
-    if (spinBtn) {
-      spinBtn.addEventListener('click', () => {
-        const email = document.getElementById('SpinnerEmail').value;
-        if(!email || !email.includes('@')) return alert('Valid email please!');
-        document.getElementById('Wheel').style.transform = `rotate(1860deg)`;
-        setTimeout(() => {
-          document.getElementById('SpinnerForm').style.display = 'none';
-          document.getElementById('SpinnerResult').style.display = 'block';
-          localStorage.setItem('rainbow_spun', 'won');
-        }, 4000);
-      });
-    }
-  });
+    hasSpun = true;
+    const wheel = document.getElementById('LuckyWheel');
+    const randomDeg = 1800 + Math.floor(Math.random() * 360);
+    wheel.style.transform = `rotate(${randomDeg}deg)`;
+    
+    setTimeout(() => {
+      if (window.celebrate) window.celebrate();
+      document.getElementById('SpinAction').style.display = 'none';
+      document.getElementById('SpinResult').style.display = 'block';
+    }, 5000);
+  }
+
+  function closeSpinner() {
+    document.getElementById('SpinnerOverlay').classList.remove('show');
+    localStorage.setItem('rainbow_spun', 'true');
+  }
 </script>
 
 {% schema %}
-{ "name": "Boutique Spinner" }
+{
+  "name": "Professional Spinner",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Title", "default": "Spin to Win" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Unlock a special welcome gift for your little one." }
+  ],
+  "max_blocks": 6,
+  "blocks": [
+    {
+      "type": "slice",
+      "name": "Wheel Slice",
+      "settings": [
+        { "type": "text", "id": "label", "label": "Label", "default": "10% OFF" },
+        { "type": "text", "id": "code", "label": "Discount Code", "default": "WELCOME10" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Boutique Discount Spinner",
+      "blocks": [
+        { "type": "slice", "settings": { "label": "10% OFF" } },
+        { "type": "slice", "settings": { "label": "FREE GIFT" } },
+        { "type": "slice", "settings": { "label": "20% OFF" } },
+        { "type": "slice", "settings": { "label": "15% OFF" } },
+        { "type": "slice", "settings": { "label": "FREE SHIP" } },
+        { "type": "slice", "settings": { "label": "5% OFF" } }
+      ]
+    }
+  ]
+}
 {% endschema %}

@@ -1,61 +1,60 @@
-/* Rainbow Kids Hub - Bold Mix Design System */
 :root {
-  --color-primary: #F8C8DC;
-  --color-secondary: #CDE7F0;
-  --color-accent: #DFF5E1;
-  --color-highlight: #FFF1B8;
-  --color-coral: #FF8282;         /* New Coral Accent from your screenshot */
+  --font-heading: 'Bodoni Moda', serif;
+  --font-body: 'Inter', sans-serif;
   
-  --color-background: #FCF8F1;    /* Warm Cream from the original version */
-  --color-text-dark: #1A1A1A;
-  --color-text-light: #666666;
+  /* The Coral & Peach Palette */
+  --color-primary: #FF8C69; /* Coral */
+  --color-secondary: #FFDAB9; /* Peach */
+  --color-background: #FFF5EE; /* Peach Cream */
+  --color-text-dark: #1a1a1a;
+  --color-text-light: #666;
+  --color-accent-pink: #F8C8DC;
+  --color-accent-mint: #CDE7F0;
   
-  --font-heading: "Bodoni Moda", serif;
-  --font-body: "Inter", sans-serif;
-  
-  --radius-soft: 24px;
-  --radius-pill: 50px;
-  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-smooth: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
-body { 
-  font-family: var(--font-body); 
-  color: var(--color-text-dark); 
+body {
+  font-family: var(--font-body);
   background-color: var(--color-background);
-  line-height: 1.6;
-  overflow-x: hidden;
+  color: var(--color-text-dark);
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
 }
 
-.container { max-width: 1300px; margin: 0 auto; padding: 0 40px; }
+.container {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 40px;
+}
 
-/* Elite Typography */
-h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 700; color: var(--color-text-dark); line-height: 1.1; }
-.heading-accent { color: var(--color-coral); }
-
-.section-tag { display: inline-block; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-text-light); margin-bottom: 16px; }
-
-/* Premium Buttons */
-.button {
-  display: inline-block;
-  padding: 20px 48px;
-  background: var(--color-text-dark);
-  color: #fff;
-  border-radius: var(--radius-pill);
-  text-decoration: none;
-  font-weight: 700;
-  font-size: 0.9rem;
+.boutique-link {
+  font-size: 0.8rem;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.15em;
-  transition: all 0.4s var(--ease-smooth);
-  border: 2px solid var(--color-text-dark);
-  cursor: pointer;
-  text-align: center;
+  color: var(--color-primary);
+  text-decoration: underline;
+  text-underline-offset: 8px;
+  transition: all 0.3s;
 }
 
-.button:hover {
-  background: var(--color-background);
+.boutique-link:hover {
   color: var(--color-text-dark);
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+  text-underline-offset: 12px;
 }
+
+/* Global Animations */
+.animate-reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s var(--ease-smooth);
+}
+
+.animate-reveal.aos-animate {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Premium Typography */
+h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 400; }
