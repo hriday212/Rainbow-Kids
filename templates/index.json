@@ -1,16 +1,107 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "hero": { "type": "hero-slider" },
-    "marquee": { "type": "marquee-bar" },
-    "collections": { "type": "collection-list" },
-    "featured": { "type": "featured-collection" },
-    "benefits": { "type": "benefits-grid" },
-    "story": { "type": "image-with-text" },
-    "founder": { "type": "founder-story" },
-    "testimonials": { "type": "testimonials" },
-    "trust": { "type": "trust-bar" },
-    "newsletter": { "type": "newsletter" },
-    "spinner": { "type": "discount-spinner" }
+    "hero": {
+      "type": "hero-slider",
+      "blocks": {
+        "slide_YNGjTH": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Untitled_design-removebg-preview.png",
+            "bg_color": "#cde7f0",
+            "accent_color": "#f8c8dc",
+            "eyebrow": "Buttery Soft Essentials",
+            "title": "Made for Little Ones",
+            "text": "Discover our signature bamboo sleep bags and pajamas.",
+            "button_label": "Shop New Arrivals",
+            "button_link": ""
+          }
+        },
+        "slide_rhAfEU": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/baby-shoes.jpg",
+            "bg_color": "#cde7f0",
+            "accent_color": "#f8c8dc",
+            "eyebrow": "Buttery Soft Essentials",
+            "title": "Made for Little Ones",
+            "text": "Discover our signature bamboo sleep bags and pajamas.",
+            "button_label": "Shop New Arrivals",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_YNGjTH",
+        "slide_rhAfEU"
+      ],
+      "settings": {}
+    },
+    "marquee": {
+      "type": "marquee-bar",
+      "settings": {}
+    },
+    "collections": {
+      "type": "collection-list",
+      "settings": {}
+    },
+    "featured": {
+      "type": "featured-collection",
+      "settings": {
+        "tag": "Bestsellers",
+        "title": "Shop Our Favorites",
+        "collection": "",
+        "limit": 4
+      }
+    },
+    "benefits": {
+      "type": "benefits-grid",
+      "settings": {}
+    },
+    "story": {
+      "type": "image-with-text",
+      "settings": {}
+    },
+    "founder": {
+      "type": "founder-story",
+      "settings": {}
+    },
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {}
+    },
+    "trust": {
+      "type": "trust-bar",
+      "settings": {}
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {}
+    },
+    "spinner": {
+      "type": "discount-spinner",
+      "settings": {}
+    }
   },
-  "order": ["hero", "marquee", "collections", "featured", "benefits", "story", "founder", "testimonials", "trust", "newsletter", "spinner"]
+  "order": [
+    "hero",
+    "marquee",
+    "collections",
+    "featured",
+    "benefits",
+    "story",
+    "founder",
+    "testimonials",
+    "trust",
+    "newsletter",
+    "spinner"
+  ]
 }
