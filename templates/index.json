@@ -19,8 +19,10 @@
     },
     "testimonials": { "type": "testimonials", "settings": { "title": "What Mamas are Saying" } },
     "marquee": { "type": "marquee-new-arrivals", "settings": {} },
+    "trust_bar": { "type": "trust-bar", "settings": {} },
     "story": { "type": "founder-story", "settings": {} },
-    "benefits": { "type": "why-bamboo", "settings": {} }
+    "benefits": { "type": "why-bamboo", "settings": {} },
+    "newsletter": { "type": "newsletter", "settings": {} }
   },
   "order": [
     "hero",
@@ -30,7 +32,9 @@
     "blue_shop",
     "testimonials",
     "marquee",
+    "trust_bar",
     "story",
-    "benefits"
+    "benefits",
+    "newsletter"
   ]
 }
