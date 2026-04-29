@@ -1,49 +1,46 @@
 <style>
-  .collection-page { padding: 60px 0 100px; background: var(--color-background); }
-  .collection-header { text-align: center; margin-bottom: 60px; }
-  .collection-header__title { font-size: 3.5rem; margin-bottom: 15px; font-family: var(--font-heading); font-weight: 400; color: var(--color-text-dark); }
-  .collection-header__description { max-width: 600px; margin: 0 auto; color: var(--color-text-light); line-height: 1.6; font-size: 1rem; }
+  .collection-page { padding: 40px 0 100px; background: var(--color-background); }
+  .collection-header { text-align: left; margin-bottom: 40px; }
+  .collection-header__title { font-size: 3rem; margin-bottom: 12px; font-family: var(--font-heading); font-weight: 400; color: var(--color-text-dark); }
+  .collection-header__description { max-width: 600px; color: var(--color-text-light); line-height: 1.6; font-size: 0.95rem; }
   
-  .collection-filters { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08); margin-bottom: 60px; }
-  .filter-btn { background: none; border: none; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--color-text-dark); }
+  .collection-top-bar { display: flex; justify-content: flex-end; align-items: center; padding: 15px 0; border-bottom: 1px solid rgba(0,0,0,0.08); margin-bottom: 40px; }
   
-  /* 3-Column Grid matching Kyte Baby */
+  /* 2-Column Layout */
+  .collection-layout { display: flex; gap: 40px; }
+  
+  /* Sidebar Styling */
+  .collection-sidebar { width: 240px; flex-shrink: 0; }
+  .sidebar-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 30px; color: var(--color-text-dark); }
+  
+  .filter-group { border-bottom: 1px solid #eee; padding: 20px 0; }
+  .filter-group__header { width: 100%; display: flex; justify-content: space-between; align-items: center; background: none; border: none; padding: 0; cursor: pointer; text-align: left; }
+  .filter-group__title { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-dark); }
+  .filter-group__icon { font-size: 1.2rem; line-height: 1; transition: transform 0.3s; }
+  .filter-group.active .filter-group__icon { transform: rotate(45deg); }
+  
+  .filter-group__content { display: none; padding-top: 20px; }
+  .filter-group.active .filter-group__content { display: block; }
+  
+  .filter-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; cursor: pointer; font-size: 0.9rem; color: #555; }
+  .filter-checkbox { width: 18px; height: 18px; border: 1px solid #ccc; border-radius: 4px; display: flex; align-items: center; justify-content: center; transition: all 0.2s; position: relative; }
+  .filter-item input:checked + .filter-checkbox { background: #1a1a1a; border-color: #1a1a1a; }
+  .filter-item input:checked + .filter-checkbox::after { content: '✓'; color: #fff; font-size: 12px; }
+  .filter-item input { display: none; }
+  .filter-item:hover { color: #000; }
+  
+  .collection-content { flex-grow: 1; }
   .collection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 20px; }
 
-  /* Kyte Baby Style Product Card */
-  .product-card { position: relative; display: flex; flex-direction: column; gap: 16px; background: transparent; }
-  
-  .product-card__media { position: relative; aspect-ratio: 4/5; overflow: hidden; background: #fff; display: block; border-radius: 8px; }
-  .product-card__img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
-  
-  .product-card__badge { position: absolute; top: 12px; left: 12px; background: #fff; color: #333; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; z-index: 2; letter-spacing: 0.05em; border: 1px solid #eee; }
-  
-  .product-card__info { display: flex; flex-direction: column; gap: 6px; text-align: left; }
-  .product-card__title { font-size: 1rem; font-weight: 700; color: var(--color-text-dark); margin: 0; line-height: 1.3; font-family: var(--font-body); }
-  
-  /* Star Ratings */
-  .product-card__stars { display: flex; align-items: center; gap: 6px; margin: 2px 0; }
-  .star-row { color: #1a1a1a; display: flex; gap: 2px; }
-  .star-row svg { width: 14px; height: 14px; fill: currentColor; }
-  .review-count { font-size: 0.75rem; color: #888; font-weight: 500; }
+  /* Shared Card Overrides */
+  .product-card__media { aspect-ratio: 4/5; }
 
-  .product-card__price { font-size: 0.95rem; color: var(--color-text-dark); font-weight: 700; }
-  
-  /* Inline Size Selector */
-  .product-card__size-wrapper { margin-top: 10px; border: 1px solid #eee; border-radius: 8px; background: #fff; overflow: hidden; }
-  .product-card__size-toggle { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: none; border: none; font-size: 0.85rem; font-weight: 700; color: var(--color-text-dark); cursor: pointer; }
-  .product-card__size-toggle svg { width: 12px; height: 12px; transition: transform 0.3s; }
-  .product-card__size-toggle.active svg { transform: rotate(180deg); }
-
-  .product-card__sizes { display: none; padding: 0 16px 16px; grid-template-columns: repeat(5, 1fr); gap: 8px; }
-  .product-card__sizes.active { display: grid; }
-  
-  .size-pill { display: flex; align-items: center; justify-content: center; height: 36px; border: 1px solid #eee; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--color-text-dark); }
-  .size-pill:hover { border-color: #333; }
-  .size-pill.selected { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
-
-  @media (max-width: 1024px) { .collection-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 768px) { .collection-header__title { font-size: 2.5rem; } .collection-grid { gap: 30px 15px; } .product-card__sizes { grid-template-columns: repeat(4, 1fr); } }
+  @media (max-width: 1024px) { 
+    .collection-layout { flex-direction: column; }
+    .collection-sidebar { width: 100%; display: none; /* Mobile filter button should toggle this */ }
+    .collection-sidebar.mobile-active { display: block; position: fixed; inset: 0; background: #fff; z-index: 1000; padding: 30px; overflow-y: auto; }
+    .collection-grid { grid-template-columns: repeat(2, 1fr); }
+  }
 </style>
 
 <section class="collection-page">
@@ -54,96 +51,158 @@
       <p class="collection-header__description">{{ collection.description | default: 'The original bamboo essentials. Designed for safety, comfort, and a better night\'s rest.' }}</p>
     </header>
 
-    <div class="collection-filters">
-      <button class="filter-btn">Filter</button>
-      <div class="collection-count" style="font-size: 0.75rem; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.1em;">{{ collection.products_count }} Products</div>
-      <button class="filter-btn">Sort By {% render 'icon', icon: 'chevron-down' %}</button>
+    <div class="collection-top-bar">
+      <div style="display: flex; gap: 20px; align-items: center;">
+        <div class="collection-count" style="font-size: 0.85rem; font-weight: 500; color: #888;">{{ collection.products_count }} products</div>
+        <button class="filter-btn">Sort By {% render 'icon', icon: 'chevron-down' %}</button>
+      </div>
     </div>
 
-    <div class="collection-grid">
-      {%- if collection.products.size > 0 -%}
-        {%- for product in collection.products -%}
-          <div class="product-card" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 30 }}">
-            <a href="{{ product.url }}" class="product-card__media">
-              {%- if product.tags contains 'Best Seller' or product.tags contains 'best-seller' -%}
-                <span class="product-card__badge">Best Seller</span>
-              {%- elsif product.compare_at_price > product.price -%}
-                <span class="product-card__badge" style="color: #d00;">Sale</span>
-              {%- endif -%}
-              
-              {%- if product.featured_image != blank -%}
-                <img src="{{ product.featured_image | image_url: width: 800 }}" class="product-card__img" alt="{{ product.title | escape }}" loading="lazy">
-              {%- else -%}
-                <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=800" class="product-card__img" alt="Coming Soon">
-              {%- endif -%}
-            </a>
-            
-            <div class="product-card__info">
-              <h3 class="product-card__title">{{ product.title }}</h3>
-              
-              <div class="product-card__stars">
-                <div class="star-row">
-                  {%- for i in (1..5) -%}
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.6 6.3h6.4l-5.2 4.4 2 6.3-5.8-4-5.8 4 2-6.3-5.2-4.4h6.4z"/></svg>
-                  {%- endfor -%}
-                </div>
-                <span class="review-count">(27,455)</span>
+    <div class="collection-layout">
+      <!-- Left Sidebar -->
+      <aside class="collection-sidebar">
+        <h2 class="sidebar-title">Filter by</h2>
+        
+        <form class="collection-filters-form">
+          {%- for filter in collection.filters -%}
+            <div class="filter-group active">
+              <button type="button" class="filter-group__header" onclick="this.parentElement.classList.toggle('active')">
+                <span class="filter-group__title">{{ filter.label }}</span>
+                <span class="filter-group__icon">+</span>
+              </button>
+              <div class="filter-group__content">
+                {%- case filter.type -%}
+                  {%- when 'boolean' or 'list' -%}
+                    {%- for value in filter.values -%}
+                      <label class="filter-item">
+                        <input type="checkbox" name="{{ value.param_name }}" value="{{ value.value }}" {% if value.active %}checked{% endif %}>
+                        <span class="filter-checkbox"></span>
+                        {{ value.label }} ({{ value.count }})
+                      </label>
+                    {%- endfor -%}
+                {%- endcase -%}
               </div>
-              
-              <span class="product-card__price">{{ product.price | money }}</span>
-              
-              <div class="product-card__size-wrapper">
-                <button class="product-card__size-toggle" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active')">
-                  Select a Size
-                  <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            </div>
+          {%- endfor -%}
+
+          {%- comment -%} Fallback filters if Shopify filters aren't set up {%- endcomment -%}
+          {%- if collection.filters.size == 0 -%}
+            {%- assign mock_filters = "Availability,Size,Color,TOG Rating,Fabric" | split: "," -%}
+            {%- for mock in mock_filters -%}
+              <div class="filter-group {% if forloop.first %}active{% endif %}">
+                <button type="button" class="filter-group__header" onclick="this.parentElement.classList.toggle('active')">
+                  <span class="filter-group__title">{{ mock }}</span>
+                  <span class="filter-group__icon">+</span>
                 </button>
-                <div class="product-card__sizes">
-                  {%- for size in (0..4) -%}
-                    {%- assign size_names = "XS,S,M,L,XL" | split: "," -%}
-                    <div class="size-pill" onclick="this.parentElement.querySelectorAll('.size-pill').forEach(p => p.classList.remove('selected')); this.classList.add('selected')">
-                      {{ size_names[size] }}
+                <div class="filter-group__content">
+                  {%- if mock == "Availability" -%}
+                    <label class="filter-item"><input type="checkbox"><span class="filter-checkbox"></span> In stock (96)</label>
+                    <label class="filter-item"><input type="checkbox"><span class="filter-checkbox"></span> Out of stock (28)</label>
+                  {%- elsif mock == "Size" -%}
+                    {%- assign sizes = "XS,S,M,L,XL" | split: "," -%}
+                    {%- for s in sizes -%}<label class="filter-item"><input type="checkbox"><span class="filter-checkbox"></span> {{ s }}</label>{%- endfor -%}
+                  {%- elsif mock == "TOG Rating" -%}
+                    <label class="filter-item"><input type="checkbox"><span class="filter-checkbox"></span> 0.5 TOG</label>
+                    <label class="filter-item"><input type="checkbox"><span class="filter-checkbox"></span> 1.0 TOG</label>
+                    <label class="filter-item"><input type="checkbox"><span class="filter-checkbox"></span> 2.5 TOG</label>
+                  {%- else -%}
+                    <label class="filter-item"><span style="font-size: 0.8rem; color: #999;">Select items below</span></label>
+                  {%- endif -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endif -%}
+        </form>
+      </aside>
+
+      <!-- Right Content Area -->
+      <div class="collection-content">
+        <div class="collection-grid">
+          {%- if collection.products.size > 0 -%}
+            {%- for product in collection.products -%}
+              <div class="product-card" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 30 }}">
+                <a href="{{ product.url }}" class="product-card__media">
+                  {%- if product.tags contains 'Best Seller' or product.tags contains 'best-seller' -%}
+                    <span class="product-card__badge">Best Seller</span>
+                  {%- elsif product.compare_at_price > product.price -%}
+                    <span class="product-card__badge" style="color: #d00;">Sale</span>
+                  {%- endif -%}
+                  
+                  {%- if product.featured_image != blank -%}
+                    <img src="{{ product.featured_image | image_url: width: 800 }}" class="product-card__img" alt="{{ product.title | escape }}" loading="lazy">
+                  {%- else -%}
+                    <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=800" class="product-card__img" alt="Coming Soon">
+                  {%- endif -%}
+                </a>
+                
+                <div class="product-card__info">
+                  <h3 class="product-card__title">{{ product.title }}</h3>
+                  
+                  <div class="product-card__stars">
+                    <div class="star-row">
+                      {%- for i in (1..5) -%}
+                        <svg viewBox="0 0 20 20"><path d="M10 1l2.6 6.3h6.4l-5.2 4.4 2 6.3-5.8-4-5.8 4 2-6.3-5.2-4.4h6.4z"/></svg>
+                      {%- endfor -%}
                     </div>
-                  {%- endfor -%}
+                    <span class="review-count">(27,455)</span>
+                  </div>
+                  
+                  <span class="product-card__price">{{ product.price | money }}</span>
+                  
+                  <div class="product-card__size-wrapper">
+                    <button class="product-card__size-toggle" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active')">
+                      Select a Size
+                      <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                    <div class="product-card__sizes">
+                      {%- for size in (0..4) -%}
+                        {%- assign size_names = "XS,S,M,L,XL" | split: "," -%}
+                        <div class="size-pill" onclick="this.parentElement.querySelectorAll('.size-pill').forEach(p => p.classList.remove('selected')); this.classList.add('selected')">
+                          {{ size_names[size] }}
+                        </div>
+                      {%- endfor -%}
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        {%- endfor -%}
-      {%- else -%}
-        {%- for i in (1..6) -%}
-          <div class="product-card" data-aos="fade-up">
-            <div class="product-card__media">
-              <span class="product-card__badge">Best Seller</span>
-              <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=800" class="product-card__img" alt="Demo Product">
-            </div>
-            <div class="product-card__info">
-              <h3 class="product-card__title">Bamboo Sleep Bag in Oat</h3>
-              <div class="product-card__stars">
-                <div class="star-row">
-                  {%- for j in (1..5) -%}
-                    <svg viewBox="0 0 20 20"><path d="M10 1l2.6 6.3h6.4l-5.2 4.4 2 6.3-5.8-4-5.8 4 2-6.3-5.2-4.4h6.4z"/></svg>
-                  {%- endfor -%}
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..6) -%}
+              <div class="product-card" data-aos="fade-up">
+                <div class="product-card__media">
+                  <span class="product-card__badge">Best Seller</span>
+                  <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=800" class="product-card__img" alt="Demo Product">
                 </div>
-                <span class="review-count">(27,455)</span>
-              </div>
-              <span class="product-card__price">$55.00</span>
-              <div class="product-card__size-wrapper">
-                <button class="product-card__size-toggle" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active')">
-                  Select a Size
-                  <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-                </button>
-                <div class="product-card__sizes">
-                   <div class="size-pill">XS</div>
-                   <div class="size-pill">S</div>
-                   <div class="size-pill">M</div>
-                   <div class="size-pill">L</div>
-                   <div class="size-pill">XL</div>
+                <div class="product-card__info">
+                  <h3 class="product-card__title">Bamboo Sleep Bag in Oat</h3>
+                  <div class="product-card__stars">
+                    <div class="star-row">
+                      {%- for j in (1..5) -%}
+                        <svg viewBox="0 0 20 20"><path d="M10 1l2.6 6.3h6.4l-5.2 4.4 2 6.3-5.8-4-5.8 4 2-6.3-5.2-4.4h6.4z"/></svg>
+                      {%- endfor -%}
+                    </div>
+                    <span class="review-count">(27,455)</span>
+                  </div>
+                  <span class="product-card__price">$55.00</span>
+                  <div class="product-card__size-wrapper">
+                    <button class="product-card__size-toggle" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active')">
+                      Select a Size
+                      <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                    </button>
+                    <div class="product-card__sizes">
+                       <div class="size-pill">XS</div>
+                       <div class="size-pill">S</div>
+                       <div class="size-pill">M</div>
+                       <div class="size-pill">L</div>
+                       <div class="size-pill">XL</div>
+                    </div>
+                  </div>
                 </div>
               </div>
-            </div>
-          </div>
-        {%- endfor -%}
-      {%- endif -%}
+            {%- endfor -%}
+          {%- endif -%}
+        </div>
+      </div>
     </div>
 
   </div>
