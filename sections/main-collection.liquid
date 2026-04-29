@@ -1,35 +1,49 @@
 <style>
-  .collection-page { padding: 80px 0 120px; background: var(--color-background); }
-  .collection-header { text-align: center; margin-bottom: 80px; }
-  .collection-header__title { font-size: 4rem; margin-bottom: 20px; font-family: var(--font-heading); }
-  .collection-header__description { max-width: 700px; margin: 0 auto; color: var(--color-text-light); line-height: 1.8; font-size: 1.1rem; }
+  .collection-page { padding: 60px 0 100px; background: var(--color-background); }
+  .collection-header { text-align: center; margin-bottom: 60px; }
+  .collection-header__title { font-size: 3.5rem; margin-bottom: 15px; font-family: var(--font-heading); font-weight: 400; color: var(--color-text-dark); }
+  .collection-header__description { max-width: 600px; margin: 0 auto; color: var(--color-text-light); line-height: 1.6; font-size: 1rem; }
   
-  .collection-filters { display: flex; justify-content: space-between; align-items: center; padding: 25px 0; border-top: 1px solid rgba(0,0,0,0.05); border-bottom: 1px solid rgba(0,0,0,0.05); margin-bottom: 80px; }
-  .filter-btn { background: none; border: none; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; display: flex; align-items: center; gap: 10px; color: var(--color-text-dark); }
+  .collection-filters { display: flex; justify-content: space-between; align-items: center; padding: 20px 0; border-top: 1px solid rgba(0,0,0,0.08); border-bottom: 1px solid rgba(0,0,0,0.08); margin-bottom: 60px; }
+  .filter-btn { background: none; border: none; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; cursor: pointer; display: flex; align-items: center; gap: 8px; color: var(--color-text-dark); }
   
-  .collection-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 60px 30px; }
+  /* 3-Column Grid matching Kyte Baby */
+  .collection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 20px; }
 
-  /* Premium Product Card - Kyte Baby Style */
-  .product-card { position: relative; display: flex; flex-direction: column; gap: 24px; transition: transform 0.4s var(--ease-smooth); }
-  .product-card:hover { transform: translateY(-5px); }
+  /* Kyte Baby Style Product Card */
+  .product-card { position: relative; display: flex; flex-direction: column; gap: 16px; background: transparent; }
   
-  .product-card__media { position: relative; aspect-ratio: 1/1; border-radius: 24px; overflow: hidden; background: #fff; display: block; box-shadow: 0 10px 30px rgba(0,0,0,0.02); }
-  .product-card__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease-smooth); }
-  .product-card:hover .product-card__img { transform: scale(1.1); }
+  .product-card__media { position: relative; aspect-ratio: 4/5; overflow: hidden; background: #fff; display: block; border-radius: 8px; }
+  .product-card__img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
   
-  .product-card__badge { position: absolute; top: 15px; left: 15px; background: var(--color-primary); color: var(--color-text-dark); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; padding: 8px 16px; border-radius: var(--radius-pill); z-index: 2; letter-spacing: 0.1em; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
-  .product-card__badge--sale { background: var(--color-secondary); }
+  .product-card__badge { position: absolute; top: 12px; left: 12px; background: #fff; color: #333; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; z-index: 2; letter-spacing: 0.05em; border: 1px solid #eee; }
   
-  .product-card__info { display: flex; flex-direction: column; gap: 10px; text-align: center; }
-  .product-card__title { font-size: 1.15rem; font-weight: 700; color: var(--color-text-dark); margin: 0; line-height: 1.4; font-family: var(--font-body); }
-  .product-card__price { font-size: 1rem; color: var(--color-text-light); font-weight: 600; opacity: 0.8; }
+  .product-card__info { display: flex; flex-direction: column; gap: 6px; text-align: left; }
+  .product-card__title { font-size: 1rem; font-weight: 700; color: var(--color-text-dark); margin: 0; line-height: 1.3; font-family: var(--font-body); }
   
-  /* Bold Button - High Contrast Fix */
-  .product-card__atc { width: 100%; padding: 18px; border-radius: var(--radius-pill); border: 2px solid var(--color-text-dark); background: #fff; color: var(--color-text-dark); font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: all 0.3s; margin-top: 10px; }
-  .product-card__atc:hover { background: var(--color-text-dark); color: #fff; box-shadow: 0 12px 25px rgba(0,0,0,0.15); }
+  /* Star Ratings */
+  .product-card__stars { display: flex; align-items: center; gap: 6px; margin: 2px 0; }
+  .star-row { color: #1a1a1a; display: flex; gap: 2px; }
+  .star-row svg { width: 14px; height: 14px; fill: currentColor; }
+  .review-count { font-size: 0.75rem; color: #888; font-weight: 500; }
 
-  @media (max-width: 1024px) { .collection-grid { grid-template-columns: repeat(3, 1fr); } }
-  @media (max-width: 768px) { .collection-grid { grid-template-columns: repeat(2, 1fr); gap: 40px 15px; } .collection-header__title { font-size: 3rem; } .product-card__atc { padding: 14px; font-size: 0.75rem; } }
+  .product-card__price { font-size: 0.95rem; color: var(--color-text-dark); font-weight: 700; }
+  
+  /* Inline Size Selector */
+  .product-card__size-wrapper { margin-top: 10px; border: 1px solid #eee; border-radius: 8px; background: #fff; overflow: hidden; }
+  .product-card__size-toggle { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: none; border: none; font-size: 0.85rem; font-weight: 700; color: var(--color-text-dark); cursor: pointer; }
+  .product-card__size-toggle svg { width: 12px; height: 12px; transition: transform 0.3s; }
+  .product-card__size-toggle.active svg { transform: rotate(180deg); }
+
+  .product-card__sizes { display: none; padding: 0 16px 16px; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .product-card__sizes.active { display: grid; }
+  
+  .size-pill { display: flex; align-items: center; justify-content: center; height: 36px; border: 1px solid #eee; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--color-text-dark); }
+  .size-pill:hover { border-color: #333; }
+  .size-pill.selected { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+
+  @media (max-width: 1024px) { .collection-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px) { .collection-header__title { font-size: 2.5rem; } .collection-grid { gap: 30px 15px; } .product-card__sizes { grid-template-columns: repeat(4, 1fr); } }
 </style>
 
 <section class="collection-page">
@@ -37,52 +51,95 @@
     
     <header class="collection-header animate-reveal">
       <h1 class="collection-header__title">{{ collection.title | default: 'Sleep Bags' }}</h1>
-      <p class="collection-header__description">{{ collection.description | default: 'The original bamboo essentials. Designed for safety, comfort, and a better night\'s rest for the whole family.' }}</p>
+      <p class="collection-header__description">{{ collection.description | default: 'The original bamboo essentials. Designed for safety, comfort, and a better night\'s rest.' }}</p>
     </header>
 
     <div class="collection-filters">
       <button class="filter-btn">Filter</button>
-      <div class="collection-count" style="font-size: 0.85rem; font-weight: 700; color: #999; text-transform: uppercase; letter-spacing: 0.1em;">{{ collection.products_count }} Products</div>
+      <div class="collection-count" style="font-size: 0.75rem; font-weight: 700; color: #888; text-transform: uppercase; letter-spacing: 0.1em;">{{ collection.products_count }} Products</div>
       <button class="filter-btn">Sort By {% render 'icon', icon: 'chevron-down' %}</button>
     </div>
 
     <div class="collection-grid">
       {%- if collection.products.size > 0 -%}
         {%- for product in collection.products -%}
-          <div class="product-card" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 50 }}">
+          <div class="product-card" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 30 }}">
             <a href="{{ product.url }}" class="product-card__media">
-              {%- if product.compare_at_price > product.price -%}
-                <span class="product-card__badge product-card__badge--sale">Sale</span>
+              {%- if product.tags contains 'Best Seller' or product.tags contains 'best-seller' -%}
+                <span class="product-card__badge">Best Seller</span>
+              {%- elsif product.compare_at_price > product.price -%}
+                <span class="product-card__badge" style="color: #d00;">Sale</span>
               {%- endif -%}
               
               {%- if product.featured_image != blank -%}
                 <img src="{{ product.featured_image | image_url: width: 800 }}" class="product-card__img" alt="{{ product.title | escape }}" loading="lazy">
               {%- else -%}
-                {%- comment -%} Premium Placeholder {%- endcomment -%}
                 <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=800" class="product-card__img" alt="Coming Soon">
               {%- endif -%}
             </a>
+            
             <div class="product-card__info">
               <h3 class="product-card__title">{{ product.title }}</h3>
+              
+              <div class="product-card__stars">
+                <div class="star-row">
+                  {%- for i in (1..5) -%}
+                    <svg viewBox="0 0 20 20"><path d="M10 1l2.6 6.3h6.4l-5.2 4.4 2 6.3-5.8-4-5.8 4 2-6.3-5.2-4.4h6.4z"/></svg>
+                  {%- endfor -%}
+                </div>
+                <span class="review-count">(27,455)</span>
+              </div>
+              
               <span class="product-card__price">{{ product.price | money }}</span>
-              <button class="product-card__atc" 
-                      data-variant-id="{{ product.selected_or_first_available_variant.id }}"
-                      onclick="if(window.cartLogic) window.cartLogic.addItem({{ product.selected_or_first_available_variant.id }})">
-                Add to Bag
-              </button>
+              
+              <div class="product-card__size-wrapper">
+                <button class="product-card__size-toggle" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active')">
+                  Select a Size
+                  <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+                <div class="product-card__sizes">
+                  {%- for size in (0..4) -%}
+                    {%- assign size_names = "XS,S,M,L,XL" | split: "," -%}
+                    <div class="size-pill" onclick="this.parentElement.querySelectorAll('.size-pill').forEach(p => p.classList.remove('selected')); this.classList.add('selected')">
+                      {{ size_names[size] }}
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
             </div>
           </div>
         {%- endfor -%}
       {%- else -%}
-        {%- for i in (1..8) -%}
+        {%- for i in (1..6) -%}
           <div class="product-card" data-aos="fade-up">
             <div class="product-card__media">
+              <span class="product-card__badge">Best Seller</span>
               <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=800" class="product-card__img" alt="Demo Product">
             </div>
             <div class="product-card__info">
-              <h3 class="product-card__title">Bamboo Essentials Item {{ i }}</h3>
-              <span class="product-card__price">$35.00</span>
-              <button class="product-card__atc">Add to Bag</button>
+              <h3 class="product-card__title">Bamboo Sleep Bag in Oat</h3>
+              <div class="product-card__stars">
+                <div class="star-row">
+                  {%- for j in (1..5) -%}
+                    <svg viewBox="0 0 20 20"><path d="M10 1l2.6 6.3h6.4l-5.2 4.4 2 6.3-5.8-4-5.8 4 2-6.3-5.2-4.4h6.4z"/></svg>
+                  {%- endfor -%}
+                </div>
+                <span class="review-count">(27,455)</span>
+              </div>
+              <span class="product-card__price">$55.00</span>
+              <div class="product-card__size-wrapper">
+                <button class="product-card__size-toggle" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active')">
+                  Select a Size
+                  <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+                <div class="product-card__sizes">
+                   <div class="size-pill">XS</div>
+                   <div class="size-pill">S</div>
+                   <div class="size-pill">M</div>
+                   <div class="size-pill">L</div>
+                   <div class="size-pill">XL</div>
+                </div>
+              </div>
             </div>
           </div>
         {%- endfor -%}
@@ -93,5 +150,10 @@
 </section>
 
 {% schema %}
-{ "name": "Main Collection" }
+{
+  "name": "Main Collection",
+  "settings": [
+    { "type": "checkbox", "id": "show_badge", "label": "Show Best Seller Badge", "default": true }
+  ]
+}
 {% endschema %}

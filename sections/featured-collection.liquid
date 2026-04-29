@@ -1,33 +1,50 @@
 <style>
-  .featured-coll { padding: 80px 0; background: var(--color-background); }
+  .featured-coll { padding: 60px 0 100px; background: var(--color-background); }
   .featured-coll__header { text-align: center; margin-bottom: 48px; }
   
-  .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 24px; }
+  .product-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px 20px; }
   
-  /* Shared Premium Card Styles */
-  .product-card { position: relative; display: flex; flex-direction: column; gap: 20px; }
-  .product-card__media { position: relative; aspect-ratio: 1/1; border-radius: var(--radius-soft); overflow: hidden; background: #FDFBFF; display: block; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
-  .product-card__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.2, 1, 0.3, 1); }
-  .product-card:hover .product-card__img { transform: scale(1.08); }
+  /* Shared Kyte Style Product Card */
+  .product-card { position: relative; display: flex; flex-direction: column; gap: 16px; background: transparent; }
   
-  .product-card__badge { position: absolute; top: 12px; left: 12px; background: var(--color-primary); color: var(--color-text-dark); font-size: 0.65rem; font-weight: 800; text-transform: uppercase; padding: 6px 12px; border-radius: var(--radius-pill); z-index: 2; letter-spacing: 0.05em; }
-  .product-card__badge--sale { background: var(--color-secondary); }
+  .product-card__media { position: relative; aspect-ratio: 4/5; overflow: hidden; background: #fff; display: block; border-radius: 8px; }
+  .product-card__img { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s; }
   
-  .product-card__info { display: flex; flex-direction: column; gap: 8px; text-align: center; }
-  .product-card__title { font-size: 1.1rem; font-weight: 600; color: var(--color-text-dark); margin: 0; line-height: 1.4; min-height: 2.8em; }
-  .product-card__price { font-size: 1rem; color: var(--color-text-light); font-weight: 500; }
+  .product-card__badge { position: absolute; top: 12px; left: 12px; background: #fff; color: #333; font-size: 0.65rem; font-weight: 700; text-transform: uppercase; padding: 4px 10px; border-radius: 4px; z-index: 2; letter-spacing: 0.05em; border: 1px solid #eee; }
   
-  .product-card__atc { width: 100%; padding: 14px; border-radius: var(--radius-pill); border: 1.5px solid #eee; background: #fff; font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; cursor: pointer; transition: all 0.3s; margin-top: 10px; }
-  .product-card__atc:hover { background: var(--color-text-dark); color: #fff; border-color: var(--color-text-dark); transform: translateY(-3px); box-shadow: 0 8px 20px rgba(0,0,0,0.1); }
+  .product-card__info { display: flex; flex-direction: column; gap: 6px; text-align: left; }
+  .product-card__title { font-size: 1rem; font-weight: 700; color: var(--color-text-dark); margin: 0; line-height: 1.3; font-family: var(--font-body); }
+  
+  /* Star Ratings */
+  .product-card__stars { display: flex; align-items: center; gap: 6px; margin: 2px 0; }
+  .star-row { color: #1a1a1a; display: flex; gap: 2px; }
+  .star-row svg { width: 14px; height: 14px; fill: currentColor; }
+  .review-count { font-size: 0.75rem; color: #888; font-weight: 500; }
+
+  .product-card__price { font-size: 0.95rem; color: var(--color-text-dark); font-weight: 700; }
+  
+  /* Inline Size Selector */
+  .product-card__size-wrapper { margin-top: 10px; border: 1px solid #eee; border-radius: 8px; background: #fff; overflow: hidden; }
+  .product-card__size-toggle { width: 100%; display: flex; justify-content: space-between; align-items: center; padding: 12px 16px; background: none; border: none; font-size: 0.85rem; font-weight: 700; color: var(--color-text-dark); cursor: pointer; }
+  .product-card__size-toggle svg { width: 12px; height: 12px; transition: transform 0.3s; }
+  .product-card__size-toggle.active svg { transform: rotate(180deg); }
+
+  .product-card__sizes { display: none; padding: 0 16px 16px; grid-template-columns: repeat(5, 1fr); gap: 8px; }
+  .product-card__sizes.active { display: grid; }
+  
+  .size-pill { display: flex; align-items: center; justify-content: center; height: 36px; border: 1px solid #eee; border-radius: 6px; font-size: 0.75rem; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--color-text-dark); }
+  .size-pill:hover { border-color: #333; }
+  .size-pill.selected { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
 
   @media (max-width: 1024px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 768px) { .product-grid { gap: 30px 15px; } .product-card__sizes { grid-template-columns: repeat(4, 1fr); } }
 </style>
 
 <section class="featured-coll animate-reveal">
   <div class="container">
     <div class="featured-coll__header">
-      {%- if section.settings.tag != blank -%}<span class="section-tag">{{ section.settings.tag }}</span>{%- endif -%}
-      <h2 style="font-size: 2.5rem;">{{ section.settings.title | default: 'Shop Our Favorites' }}</h2>
+      {%- if section.settings.tag != blank -%}<span class="section-tag" style="margin-bottom: 12px; display: block;">{{ section.settings.tag }}</span>{%- endif -%}
+      <h2 style="font-size: 2.5rem; font-family: var(--font-heading); font-weight: 400;">{{ section.settings.title | default: 'Shop Our Favorites' }}</h2>
     </div>
 
     <div class="product-grid">
@@ -36,22 +53,48 @@
         {%- for product in collection.products limit: section.settings.limit -%}
           <div class="product-card">
             <a href="{{ product.url }}" class="product-card__media">
-              {%- if product.available == false -%}
-                <span class="product-card__badge product-card__badge--sold" style="background:#eee;color:#999;">Sold Out</span>
+              {%- if product.tags contains 'Best Seller' or product.tags contains 'best-seller' -%}
+                <span class="product-card__badge">Best Seller</span>
+              {%- elsif product.available == false -%}
+                <span class="product-card__badge" style="background:#f4f4f4;color:#999;">Sold Out</span>
               {%- elsif product.compare_at_price > product.price -%}
-                <span class="product-card__badge product-card__badge--sale">Sale</span>
+                <span class="product-card__badge" style="color:#d00;">Sale</span>
               {%- endif -%}
               <img src="{{ product.featured_image | image_url: width: 800 }}" class="product-card__img" alt="{{ product.title | escape }}" loading="lazy">
             </a>
             <div class="product-card__info">
               <h3 class="product-card__title">{{ product.title }}</h3>
+              
+              <div class="product-card__stars">
+                <div class="star-row">
+                  {%- for i in (1..5) -%}
+                    <svg viewBox="0 0 20 20"><path d="M10 1l2.6 6.3h6.4l-5.2 4.4 2 6.3-5.8-4-5.8 4 2-6.3-5.2-4.4h6.4z"/></svg>
+                  {%- endfor -%}
+                </div>
+                <span class="review-count">(27,455)</span>
+              </div>
+
               <span class="product-card__price">
                 {%- if product.compare_at_price > product.price -%}
-                  <s style="opacity:0.5;margin-right:10px;">{{ product.compare_at_price | money }}</s>
+                  <s style="opacity:0.5;margin-right:8px;">{{ product.compare_at_price | money }}</s>
                 {%- endif -%}
                 {{ product.price | money }}
               </span>
-              <button class="product-card__atc" onclick="window.openCart()">Add to Bag</button>
+
+              <div class="product-card__size-wrapper">
+                <button class="product-card__size-toggle" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active')">
+                  Select a Size
+                  <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+                <div class="product-card__sizes">
+                  {%- for size in (0..4) -%}
+                    {%- assign size_names = "XS,S,M,L,XL" | split: "," -%}
+                    <div class="size-pill" onclick="this.parentElement.querySelectorAll('.size-pill').forEach(p => p.classList.remove('selected')); this.classList.add('selected')">
+                      {{ size_names[size] }}
+                    </div>
+                  {%- endfor -%}
+                </div>
+              </div>
             </div>
           </div>
         {%- endfor -%}
@@ -59,12 +102,33 @@
         {%- for i in (1..section.settings.limit) -%}
           <div class="product-card">
             <div class="product-card__media">
+              <span class="product-card__badge">Best Seller</span>
               <img src="https://images.unsplash.com/photo-1544126592-807daa2b565b?q=80&w=800" class="product-card__img" alt="Demo Product">
             </div>
             <div class="product-card__info">
-              <h3 class="product-card__title">Bamboo Sleep Item {{ i }}</h3>
+              <h3 class="product-card__title">Bamboo Sleep Bag in Oat</h3>
+              <div class="product-card__stars">
+                <div class="star-row">
+                  {%- for j in (1..5) -%}
+                    <svg viewBox="0 0 20 20"><path d="M10 1l2.6 6.3h6.4l-5.2 4.4 2 6.3-5.8-4-5.8 4 2-6.3-5.2-4.4h6.4z"/></svg>
+                  {%- endfor -%}
+                </div>
+                <span class="review-count">(27,455)</span>
+              </div>
               <span class="product-card__price">$55.00</span>
-              <button class="product-card__atc">Add to Bag</button>
+              <div class="product-card__size-wrapper">
+                <button class="product-card__size-toggle" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active')">
+                  Select a Size
+                  <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+                </button>
+                <div class="product-card__sizes">
+                   <div class="size-pill">XS</div>
+                   <div class="size-pill">S</div>
+                   <div class="size-pill">M</div>
+                   <div class="size-pill">L</div>
+                   <div class="size-pill">XL</div>
+                </div>
+              </div>
             </div>
           </div>
         {%- endfor -%}
