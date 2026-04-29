@@ -16,26 +16,14 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/Untitled_design-removebg-preview.png",
-            "bg_color": "#cde7f0",
-            "accent_color": "#f8c8dc",
-            "eyebrow": "Buttery Soft Essentials",
-            "title": "Made for Little Ones",
-            "text": "Discover our signature bamboo sleep bags and pajamas.",
-            "button_label": "Shop New Arrivals",
-            "button_link": ""
+            "title": "Made for Little Ones"
           }
         },
         "slide_rhAfEU": {
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/baby-shoes.jpg",
-            "bg_color": "#cde7f0",
-            "accent_color": "#f8c8dc",
-            "eyebrow": "Buttery Soft Essentials",
-            "title": "Made for Little Ones",
-            "text": "Discover our signature bamboo sleep bags and pajamas.",
-            "button_label": "Shop New Arrivals",
-            "button_link": ""
+            "title": "Made for Little Ones"
           }
         }
       },
@@ -47,7 +35,10 @@
     },
     "spinner": {
       "type": "discount-spinner",
-      "settings": {}
+      "settings": {
+        "title": "Spin to Win",
+        "subtitle": "Unlock a special welcome gift for your little one."
+      }
     },
     "marquee": {
       "type": "marquee-bar",
@@ -60,10 +51,8 @@
     "featured": {
       "type": "featured-collection",
       "settings": {
-        "tag": "Bestsellers",
         "title": "Shop Our Favorites",
-        "collection": "",
-        "limit": 4
+        "collection": ""
       }
     },
     "benefits": {
@@ -72,15 +61,37 @@
     },
     "story": {
       "type": "image-with-text",
-      "settings": {}
+      "settings": {
+        "image": "shopify://shop_images/baby-toys-bottles-products.jpg",
+        "layout": "left",
+        "tag": "Our Philosophy",
+        "title": "The Softest Touch for Their Skin",
+        "text": "",
+        "item_1": "Sustainably Sourced Bamboo",
+        "item_2": "Hypoallergenic & Gentle",
+        "item_3": "Designed for Better Sleep",
+        "button_label": "",
+        "button_link": ""
+      }
     },
     "founder": {
       "type": "founder-story",
-      "settings": {}
+      "settings": {
+        "image": "shopify://shop_images/WhatsAppImage2026-03-27at4.56.40PM_1.jpg",
+        "subtitle": "A Letter From Our Founder",
+        "title": "Made with love, from one mama to another.",
+        "content": "<p>I started Rainbow Kids Hub because I wanted the softest, safest bamboo fabrics for my own little ones. Every piece we make is a promise of quality and comfort.</p>",
+        "signature": "- With Love, Hriday"
+      }
     },
     "testimonials": {
       "type": "testimonials",
-      "settings": {}
+      "settings": {
+        "tag": "Social Proof",
+        "title": "Trusted by 10,000+ Mamas",
+        "google_link": "",
+        "button_label": "View all Google Reviews"
+      }
     },
     "trust": {
       "type": "trust-bar",
@@ -88,7 +99,10 @@
     },
     "newsletter": {
       "type": "newsletter",
-      "settings": {}
+      "settings": {
+        "title": "Stay in the loop.",
+        "text": "New arrivals and parenting tips."
+      }
     }
   },
   "order": [
