@@ -3,15 +3,28 @@
   .header__grid { display: flex; justify-content: space-between; align-items: center; }
   .header__logo { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: var(--color-text-dark); }
   
-  .header__nav { display: flex; gap: 30px; }
-  .header__nav-link { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-light); }
-  .header__nav-link:hover { color: var(--color-primary); }
+  /* Mega Navigation */
+  .header__nav { display: flex; gap: 30px; height: 100%; }
+  .nav-item { position: relative; height: 100%; display: flex; align-items: center; }
+  .header__nav-link { font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; color: var(--color-text-light); padding: 20px 0; border-bottom: 2px solid transparent; transition: all 0.2s; }
+  .nav-item:hover .header__nav-link { color: var(--color-text-dark); border-color: var(--color-primary); }
   
+  .mega-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%); width: 100vw; max-width: 1200px; background: #fff; padding: 40px; border-radius: 0 0 20px 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.05); display: none; grid-template-columns: repeat(4, 1fr); gap: 30px; opacity: 0; transition: opacity 0.3s; }
+  .nav-item:hover .mega-menu { display: grid; opacity: 1; }
+  
+  .mega-col__title { font-weight: 700; font-size: 0.8rem; text-transform: uppercase; margin-bottom: 15px; display: block; border-bottom: 1px solid #f4f4f4; padding-bottom: 8px; }
+  .mega-link { display: block; font-size: 0.9rem; color: var(--color-text-light); margin-bottom: 8px; }
+  .mega-link:hover { color: var(--color-primary); transform: translateX(5px); }
+  
+  .mega-image { border-radius: 12px; overflow: hidden; aspect-ratio: 1/1; position: relative; }
+  .mega-image img { width: 100%; height: 100%; object-fit: cover; }
+  .mega-image__label { position: absolute; bottom: 15px; left: 15px; color: #fff; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; }
+
   .header__actions { display: flex; gap: 20px; align-items: center; }
   .header__action-btn { background: none; border: none; cursor: pointer; color: var(--color-text-dark); position: relative; padding: 5px; }
   .header__cart-count { position: absolute; top: -2px; right: -2px; background: var(--color-primary); color: var(--color-text-dark); font-size: 0.65rem; font-weight: 800; width: 16px; height: 16px; border-radius: 50%; display: flex; align-items: center; justify-content: center; }
 
-  @media (max-width: 768px) { .header__nav { display: none; } }
+  @media (max-width: 1024px) { .header__nav { display: none; } }
 </style>
 
 <header class="header">
@@ -19,17 +32,43 @@
     <!-- Logo -->
     <a href="/" class="header__logo">{{ shop.name }}</a>
 
-    <!-- Nav -->
+    <!-- Advanced Nav -->
     <nav class="header__nav">
-      <a href="/collections/all" class="header__nav-link">Shop All</a>
-      <a href="/collections/new" class="header__nav-link">Newborn</a>
-      <a href="/collections/sleep" class="header__nav-link">Sleep Bags</a>
-      <a href="/pages/about" class="header__nav-link">Our Story</a>
+      <div class="nav-item">
+        <a href="/collections/all" class="header__nav-link">Shop All</a>
+        <div class="mega-menu">
+          <div>
+            <span class="mega-col__title">By Product</span>
+            <a href="/collections/sleep-bags" class="mega-link">Sleep Bags</a>
+            <a href="/collections/pajamas" class="mega-link">Pajamas</a>
+            <a href="/collections/bodysuits" class="mega-link">Bodysuits</a>
+            <a href="/collections/accessories" class="mega-link">Accessories</a>
+          </div>
+          <div>
+            <span class="mega-col__title">By Age</span>
+            <a href="/collections/newborn" class="mega-link">Newborn (0-3M)</a>
+            <a href="/collections/baby" class="mega-link">Baby (3-24M)</a>
+            <a href="/collections/toddler" class="mega-link">Toddler (2-4Y)</a>
+            <a href="/collections/kids" class="mega-link">Kids (5Y+)</a>
+          </div>
+          <div class="mega-image">
+            <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=400" alt="Newborn">
+            <span class="mega-image__label">Newborn Shop</span>
+          </div>
+          <div class="mega-image">
+            <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=400" alt="Sleep Bags">
+            <span class="mega-image__label">Sleep Solutions</span>
+          </div>
+        </div>
+      </div>
+      <div class="nav-item"><a href="/collections/new" class="header__nav-link">New Arrivals</a></div>
+      <div class="nav-item"><a href="/collections/sleep" class="header__nav-link">Sleep Bags</a></div>
+      <div class="nav-item"><a href="/pages/about" class="header__nav-link">Our Story</a></div>
     </nav>
 
     <!-- Actions -->
     <div class="header__actions">
-      <button class="header__action-btn" aria-label="Search">{% render 'icon', icon: 'search' %}</button>
+      <button class="header__action-btn" id="SearchToggle" aria-label="Search">{% render 'icon', icon: 'search' %}</button>
       <button class="header__action-btn" id="CartToggle" aria-label="Cart">
         {% render 'icon', icon: 'cart' %}
         <span class="header__cart-count">0</span>
@@ -37,24 +76,6 @@
     </div>
   </div>
 </header>
-
-<script>
-  // Simple Drawer Logic
-  const cartToggle = document.getElementById('CartToggle');
-  const cartDrawer = document.getElementById('CartDrawer');
-  const cartOverlay = document.getElementById('CartOverlay');
-  const cartClose = document.getElementById('CartClose');
-
-  const openCart = () => { cartDrawer.classList.add('active'); cartOverlay.classList.add('active'); };
-  const closeCart = () => { cartDrawer.classList.remove('active'); cartOverlay.classList.remove('active'); };
-
-  if(cartToggle) cartToggle.addEventListener('click', openCart);
-  if(cartClose) cartClose.addEventListener('click', closeCart);
-  if(cartOverlay) cartOverlay.addEventListener('click', closeCart);
-
-  // Expose to global for "Add to Cart" buttons
-  window.openCart = openCart;
-</script>
 
 {% schema %}
 { "name": "Header" }

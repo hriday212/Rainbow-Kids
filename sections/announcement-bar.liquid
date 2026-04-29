@@ -1,0 +1,44 @@
+<style>
+  .announcement-bar { background: var(--color-text-dark); color: #fff; position: relative; overflow: hidden; z-index: 1001; }
+  .announcement-bar__slider { display: flex; transition: transform 0.6s var(--ease-smooth); }
+  .announcement-bar__item { flex-shrink: 0; width: 100%; text-align: center; padding: 10px 40px; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; display: flex; align-items: center; justify-content: center; min-height: 40px; }
+  .announcement-bar__item a { text-decoration: underline; text-underline-offset: 4px; margin-left: 10px; }
+  
+  .announcement-bar__nav { position: absolute; top: 0; bottom: 0; width: 40px; background: none; border: none; color: #fff; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; opacity: 0.6; transition: opacity 0.2s; z-index: 2; }
+  .announcement-bar__nav:hover { opacity: 1; }
+  .announcement-bar__nav--prev { left: 0; }
+  .announcement-bar__nav--next { right: 0; }
+</style>
+
+<div class="announcement-bar" id="AnnounceBar-{{ section.id }}">
+  <button class="announcement-bar__nav announcement-bar__nav--prev" onclick="prevAnnounce()">&#10094;</button>
+  
+  <div class="announcement-bar__slider" id="AnnounceSlider">
+    <div class="announcement-bar__item">Free Shipping on orders over $85 <a href="/collections/all">Shop Now</a></div>
+    <div class="announcement-bar__item">Newborn Essentials: Safe at every stage <a href="/collections/new">Explore</a></div>
+    <div class="announcement-bar__item">Join Rewards & Get 500 Points <a href="/pages/rewards">Join</a></div>
+  </div>
+
+  <button class="announcement-bar__nav announcement-bar__nav--next" onclick="nextAnnounce()">&#10095;</button>
+</div>
+
+<script>
+  let currentAnnounce = 0;
+  const announceSlider = document.getElementById('AnnounceSlider');
+  const totalAnnounce = 3;
+
+  function moveAnnounce(idx) {
+    currentAnnounce = idx;
+    announceSlider.style.transform = `translateX(-${idx * 100}%)`;
+  }
+
+  function nextAnnounce() { moveAnnounce((currentAnnounce + 1) % totalAnnounce); }
+  function prevAnnounce() { moveAnnounce((currentAnnounce - 1 + totalAnnounce) % totalAnnounce); }
+
+  // Auto-slide every 5 seconds
+  setInterval(nextAnnounce, 5000);
+</script>
+
+{% schema %}
+{ "name": "Announcement Bar" }
+{% endschema %}

@@ -24,7 +24,9 @@
   </head>
 
   <body>
-    <!-- Cart Drawer (Fixed position) -->
+    {% section 'announcement-bar' %}
+    
+    <!-- Cart Drawer -->
     {% section 'cart-drawer' %}
 
     {% section 'header' %}
@@ -36,7 +38,7 @@
     {% section 'footer' %}
 
     <script>
-      // 1. Reveal Animations
+      // Reveal Animations
       const observer = new IntersectionObserver((entries) => {
         entries.forEach(entry => {
           if (entry.isIntersecting) entry.target.classList.add('reveal');
@@ -44,28 +46,16 @@
       }, { threshold: 0.1 });
       document.querySelectorAll('.animate-reveal').forEach(el => observer.observe(el));
 
-      // 2. Confetti Celebration
+      // Confetti Celebration
       function celebrate() {
         const colors = ['#F8C8DC', '#CDE7F0', '#DFF5E1', '#FFF1B8'];
-        confetti({
-          particleCount: 100,
-          spread: 70,
-          origin: { y: 0.6 },
-          colors: colors,
-          ticks: 200,
-          gravity: 1.2,
-          scalar: 0.8
-        });
+        confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 }, colors: colors });
       }
 
-      // 3. Global Add to Cart interceptor
+      // Global Add to Cart interceptor
       document.addEventListener('click', (e) => {
         if (e.target.closest('.product-card__atc') || e.target.closest('[type="submit"][name="add"]')) {
-          // If it's an add to cart button
-          if(window.openCart) {
-            window.openCart();
-            celebrate(); // 🌈 Burst of pastel confetti!
-          }
+          if(window.openCart) { window.openCart(); celebrate(); }
         }
       });
     </script>
