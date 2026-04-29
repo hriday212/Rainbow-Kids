@@ -1,7 +1,12 @@
 <style>
   .header { padding: 15px 0; background: #fff; border-bottom: 1px solid #f4f4f4; position: sticky; top: 0; z-index: 1000; }
   .header__grid { display: flex; justify-content: space-between; align-items: center; }
-  .header__logo { font-family: var(--font-heading); font-size: 2rem; font-weight: 700; color: var(--color-text-dark); text-decoration: none; letter-spacing: -0.02em; }
+  
+  .header__logo-wrapper { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+  .header__logo-img { display: block; height: auto; transition: transform 0.3s; }
+  .header__logo-img:hover { transform: scale(1.05); }
+  
+  .header__logo-text { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: var(--color-text-dark); letter-spacing: -0.02em; }
   
   /* Mega Navigation */
   .header__nav { display: flex; gap: 30px; height: 100%; }
@@ -33,6 +38,8 @@
   .search-overlay__input { width: 100%; max-width: 900px; border: none; border-bottom: 4px solid #eee; font-size: clamp(2rem, 5vw, 4rem); font-family: var(--font-heading); padding: 30px 0; outline: none; text-align: center; color: var(--color-text-dark); transition: border-color 0.4s; }
   .search-overlay__input:focus { border-color: var(--color-text-dark); }
   .search-overlay__hint { margin-top: 30px; color: #999; text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.85rem; font-weight: 700; }
+
+  @media (max-width: 768px) { .header__logo-text { font-size: 1.2rem; } .header__nav { display: none; } }
 </style>
 
 <div class="search-overlay" id="SearchOverlay">
@@ -45,8 +52,19 @@
 
 <header class="header">
   <div class="container header__grid">
-    <!-- Logo -->
-    <a href="/" class="header__logo">{{ shop.name }}</a>
+    <!-- Logo & Title -->
+    <a href="/" class="header__logo-wrapper">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 400 }}" 
+             class="header__logo-img" 
+             style="width: {{ section.settings.logo_width }}px;"
+             alt="{{ shop.name }}">
+      {%- endif -%}
+      
+      {%- if section.settings.show_text or section.settings.logo == blank -%}
+        <span class="header__logo-text">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
 
     <!-- Nav -->
     <nav class="header__nav">
@@ -71,6 +89,7 @@
       </div>
       <div class="nav-item"><a href="/collections/new-arrivals" class="header__nav-link">New Arrivals</a></div>
       <div class="nav-item"><a href="/pages/about" class="header__nav-link">Our Story</a></div>
+      <div class="nav-item"><a href="/pages/contact" class="header__nav-link">Support</a></div>
     </nav>
 
     <!-- Actions -->
@@ -85,9 +104,32 @@
 </header>
 
 <script>
-  // Existing header JS
+  // Search Overlay Toggle
+  const searchToggle = document.getElementById('SearchToggle');
+  const searchClose = document.getElementById('SearchClose');
+  const searchOverlay = document.getElementById('SearchOverlay');
+  const searchInput = document.getElementById('SearchInput');
+
+  if(searchToggle) {
+    searchToggle.addEventListener('click', () => {
+      searchOverlay.classList.add('active');
+      setTimeout(() => searchInput.focus(), 100);
+    });
+  }
+  if(searchClose) {
+    searchClose.addEventListener('click', () => searchOverlay.classList.remove('active'));
+  }
+
+  // Cart Logic is handled by cart-logic.js
 </script>
 
 {% schema %}
-{ "name": "Header" }
+{
+  "name": "Header",
+  "settings": [
+    { "type": "image_picker", "id": "logo", "label": "Logo Image" },
+    { "type": "range", "id": "logo_width", "min": 50, "max": 250, "step": 10, "default": 100, "unit": "px", "label": "Logo Width" },
+    { "type": "checkbox", "id": "show_text", "label": "Show Shop Name next to Logo", "default": true }
+  ]
+}
 {% endschema %}
