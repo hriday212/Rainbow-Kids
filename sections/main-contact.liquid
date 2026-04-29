@@ -1,0 +1,81 @@
+<style>
+  .contact-section { padding: 100px 0; background: #fff; }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; }
+  
+  .contact-info { display: flex; flex-direction: column; gap: 40px; }
+  .contact-card { background: var(--color-background); padding: 40px; border-radius: 24px; display: flex; flex-direction: column; gap: 15px; }
+  .contact-card h3 { font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
+  .contact-card p { font-size: 1.1rem; color: var(--color-text-light); }
+  .contact-card a { color: var(--color-primary); font-weight: 700; text-decoration: none; filter: brightness(0.8); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 20px; }
+  .contact-form__field { display: flex; flex-direction: column; gap: 8px; }
+  .contact-form__label { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light); }
+  .contact-form__input { padding: 18px 24px; border-radius: 12px; border: 1.5px solid #eee; font-family: var(--font-body); font-size: 1rem; transition: border-color 0.3s; outline: none; }
+  .contact-form__input:focus { border-color: var(--color-text-dark); }
+  .contact-form__textarea { height: 150px; resize: none; }
+
+  @media (max-width: 1024px) { .contact-grid { grid-template-columns: 1fr; gap: 60px; } }
+</style>
+
+<section class="contact-section animate-reveal">
+  <div class="container contact-grid">
+    
+    <div class="contact-info" data-aos="fade-right">
+      <div class="contact-header">
+        <span class="section-tag">Get in Touch</span>
+        <h1 style="font-size: 3.5rem; margin-top: 10px;">We're here to help.</h1>
+      </div>
+      
+      <div class="contact-card">
+        <h3>Call or WhatsApp</h3>
+        <p>097025 72315</p>
+        <a href="tel:09702572315">Click to Call</a>
+      </div>
+
+      <div class="contact-card">
+        <h3>Email Support</h3>
+        <p>support@rainbowkidshub.com</p>
+        <a href="mailto:support@rainbowkidshub.com">Send an Email</a>
+      </div>
+      
+      <div class="contact-card" style="background: var(--color-secondary);">
+        <h3>Visit Our Google Profile</h3>
+        <p>See our 5-star reviews and location.</p>
+        <a href="https://share.google/3KW7AdBGh5ncM2c52" target="_blank">View on Google Maps</a>
+      </div>
+    </div>
+
+    <div class="contact-form-wrapper" data-aos="fade-left">
+      {%- form 'contact', class: 'contact-form' -%}
+        {%- if form.posted_successfully? -%}
+          <div style="background: var(--color-accent); padding: 20px; border-radius: 12px; margin-bottom: 20px; font-weight: 700; text-align: center;">
+            ✓ Message sent! We'll get back to you within 24 hours.
+          </div>
+        {%- endif -%}
+
+        <div class="contact-form__field">
+          <label class="contact-form__label">Full Name</label>
+          <input type="text" name="contact[name]" class="contact-form__input" placeholder="Your Name" required>
+        </div>
+
+        <div class="contact-form__field">
+          <label class="contact-form__label">Email Address</label>
+          <input type="email" name="contact[email]" class="contact-form__input" placeholder="Email@example.com" required>
+        </div>
+
+        <div class="contact-form__field">
+          <label class="contact-form__label">Message</label>
+          <textarea name="contact[body]" class="contact-form__input contact-form__textarea" placeholder="How can we help you today?" required></textarea>
+        </div>
+
+        <button type="submit" class="button" style="width: 100%; margin-top: 20px;">Send Message</button>
+      {%- endform -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Contact Form" }
+{% endschema %}

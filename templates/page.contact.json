@@ -1,0 +1,7 @@
+{
+  "sections": {
+    "main": { "type": "main-contact" },
+    "faq": { "type": "faq-section" }
+  },
+  "order": ["main", "faq"]
+}
