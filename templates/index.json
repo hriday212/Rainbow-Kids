@@ -45,6 +45,10 @@
       ],
       "settings": {}
     },
+    "spinner": {
+      "type": "discount-spinner",
+      "settings": {}
+    },
     "marquee": {
       "type": "marquee-bar",
       "settings": {}
@@ -85,14 +89,11 @@
     "newsletter": {
       "type": "newsletter",
       "settings": {}
-    },
-    "spinner": {
-      "type": "discount-spinner",
-      "settings": {}
     }
   },
   "order": [
     "hero",
+    "spinner",
     "marquee",
     "collections",
     "featured",
@@ -101,7 +102,6 @@
     "founder",
     "testimonials",
     "trust",
-    "newsletter",
-    "spinner"
+    "newsletter"
   ]
 }
