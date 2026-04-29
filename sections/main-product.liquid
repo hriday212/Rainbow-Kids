@@ -1,48 +1,78 @@
 <style>
-  .product-section { padding: 40px 0 100px; background: #fff; }
-  .product-grid { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; align-items: start; }
+  .product-section { padding: 60px 0 100px; background: #fff; }
+  .product-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 60px; align-items: start; }
   
-  /* Gallery */
-  .product-gallery { position: sticky; top: 120px; display: flex; flex-direction: column; gap: 12px; }
-  .product-gallery__main { border-radius: var(--radius-soft); overflow: hidden; background: #f9f9f9; aspect-ratio: 1/1; }
-  .product-gallery__main img { width: 100%; height: 100%; object-fit: cover; }
-  .product-gallery__thumbs { display: flex; gap: 10px; overflow-x: auto; }
-  .product-gallery__thumb { flex-shrink: 0; width: 80px; height: 80px; border-radius: 8px; overflow: hidden; border: 2px solid transparent; cursor: pointer; }
-  .product-gallery__thumb--active { border-color: var(--color-primary); }
+  /* Gallery with Wipe Effect */
+  .product-gallery { position: sticky; top: 100px; display: flex; flex-direction: column; gap: 20px; }
+  
+  .product-gallery__main-wrapper { position: relative; aspect-ratio: 4/5; overflow: hidden; border-radius: 12px; background: #FDFBFF; }
+  .product-gallery__main-img { width: 100%; height: 100%; object-fit: cover; position: absolute; top: 0; left: 0; }
+  
+  /* Wipe Animation Layer */
+  .wipe-layer {
+    position: absolute; inset: 0; z-index: 2;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 0.8s cubic-bezier(0.19, 1, 0.22, 1);
+    background: #fff;
+  }
+  .wipe-layer img { width: 100%; height: 100%; object-fit: cover; }
+  .wipe-active .wipe-layer { clip-path: inset(0 0 0 0); }
+
+  .product-gallery__thumbs { display: flex; gap: 12px; overflow-x: auto; padding-bottom: 10px; }
+  .product-gallery__thumb { flex-shrink: 0; width: 90px; height: 110px; border-radius: 8px; overflow: hidden; border: 1.5px solid transparent; cursor: pointer; transition: all 0.3s; opacity: 0.7; }
+  .product-gallery__thumb--active { border-color: #1a1a1a; opacity: 1; }
   .product-gallery__thumb img { width: 100%; height: 100%; object-fit: cover; }
   
-  /* Info */
-  .product-info { display: flex; flex-direction: column; gap: 24px; }
-  .product-info__title { font-size: 2.8rem; margin: 0; }
-  .product-info__stars { color: #FFB800; font-size: 0.9rem; letter-spacing: 2px; }
-  .product-info__price { font-size: 1.5rem; font-weight: 700; color: var(--color-text-dark); }
-  
-  .product-option { display: flex; flex-direction: column; gap: 12px; }
-  .product-option__label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
-  .product-option__list { display: flex; flex-wrap: wrap; gap: 10px; }
-  
-  .swatch { width: 32px; height: 32px; border-radius: 50%; border: 2px solid #fff; box-shadow: 0 0 0 1px #eee; cursor: pointer; transition: transform 0.2s; }
-  .swatch.active { box-shadow: 0 0 0 2px var(--color-text-dark); }
-  
-  .size-btn { padding: 10px 24px; border-radius: var(--radius-pill); border: 1.5px solid #eee; background: #fff; font-size: 0.9rem; font-weight: 600; cursor: pointer; transition: all 0.2s; }
-  .size-btn.active { background: var(--color-text-dark); color: #fff; border-color: var(--color-text-dark); }
-  
-  .product-form { display: flex; flex-direction: column; gap: 20px; margin-top: 20px; }
-  .qty-selector { display: flex; align-items: center; border: 1.5px solid #eee; border-radius: var(--radius-pill); width: fit-content; overflow: hidden; }
-  .qty-btn { padding: 12px 20px; background: none; border: none; cursor: pointer; font-size: 1.2rem; }
-  .qty-input { width: 40px; border: none; text-align: center; font-weight: 700; background: transparent; }
+  /* Info Area */
+  .product-info { display: flex; flex-direction: column; gap: 24px; padding-top: 10px; }
+  .product-breadcrumb { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.15em; color: #aaa; margin-bottom: 10px; }
+  .product-breadcrumb a { color: inherit; text-decoration: none; }
+  .product-breadcrumb a:hover { color: #000; }
 
-  /* Tabs */
-  .product-tabs { border-top: 1px solid #eee; margin-top: 40px; }
-  .product-tab { border-bottom: 1px solid #eee; }
-  .product-tab__header { padding: 20px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 700; text-transform: uppercase; font-size: 0.8rem; letter-spacing: 0.05em; }
-  .product-tab__content { padding: 0 0 20px; font-size: 0.95rem; color: var(--color-text-light); line-height: 1.7; display: none; }
-  .product-tab.active .product-tab__content { display: block; }
+  .product-info__title { font-family: var(--font-heading); font-size: 3rem; font-weight: 400; color: var(--color-text-dark); margin: 0; line-height: 1.1; }
+  
+  .product-info__rating { display: flex; align-items: center; gap: 10px; }
+  .product-info__stars { color: #1a1a1a; display: flex; gap: 2px; }
+  .product-info__stars svg { width: 16px; height: 16px; fill: currentColor; }
+  .review-count { font-size: 0.85rem; color: #888; font-weight: 500; }
 
-  @media (max-width: 860px) {
+  .product-info__price { font-size: 1.6rem; font-weight: 700; color: var(--color-text-dark); margin: 10px 0; }
+  .product-info__price s { opacity: 0.3; margin-right: 15px; font-weight: 400; font-size: 1.2rem; }
+
+  .product-option { display: flex; flex-direction: column; gap: 12px; margin-top: 10px; }
+  .product-option__label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-dark); }
+  .product-option__list { display: flex; flex-wrap: wrap; gap: 12px; }
+  
+  /* Swatches */
+  .swatch { width: 36px; height: 36px; border-radius: 50%; border: 1.5px solid #eee; cursor: pointer; transition: all 0.2s; position: relative; padding: 2px; }
+  .swatch__inner { width: 100%; height: 100%; border-radius: 50%; }
+  .swatch.active { border-color: #1a1a1a; transform: scale(1.1); }
+  
+  /* Sizes */
+  .size-btn { padding: 12px 28px; border-radius: 8px; border: 1.5px solid #eee; background: #fff; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s; color: var(--color-text-dark); }
+  .size-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
+  
+  /* TOG Badge */
+  .tog-badge { display: inline-flex; align-items: center; gap: 8px; background: #f4f4f4; padding: 10px 20px; border-radius: 8px; font-size: 0.8rem; font-weight: 700; color: #555; align-self: flex-start; }
+
+  .product-form { display: flex; flex-direction: column; gap: 20px; margin-top: 30px; }
+  .add-to-bag-btn { width: 100%; padding: 22px; border-radius: 12px; border: none; background: #1a1a1a; color: #fff; font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: all 0.3s; }
+  .add-to-bag-btn:hover { background: #333; transform: translateY(-2px); box-shadow: 0 15px 35px rgba(0,0,0,0.15); }
+  .add-to-bag-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+  /* Accordions */
+  .product-accordions { border-top: 1px solid #eee; margin-top: 40px; }
+  .accordion { border-bottom: 1px solid #eee; }
+  .accordion__header { padding: 22px 0; display: flex; justify-content: space-between; align-items: center; cursor: pointer; font-weight: 800; text-transform: uppercase; font-size: 0.75rem; letter-spacing: 0.1em; color: var(--color-text-dark); }
+  .accordion__icon { font-size: 1.2rem; transition: transform 0.3s; }
+  .accordion.active .accordion__icon { transform: rotate(45deg); }
+  .accordion__content { padding: 0 0 22px; font-size: 0.95rem; color: #666; line-height: 1.8; display: none; }
+  .accordion.active .accordion__content { display: block; }
+
+  @media (max-width: 1024px) {
     .product-grid { grid-template-columns: 1fr; gap: 40px; }
     .product-gallery { position: relative; top: 0; }
-    .product-info__title { font-size: 2.2rem; }
+    .product-info__title { font-size: 2.5rem; }
   }
 </style>
 
@@ -51,14 +81,19 @@
     
     <!-- Gallery -->
     <div class="product-gallery">
-      <div class="product-gallery__main">
-        <img id="MainProductImg" src="{{ product.featured_image | image_url: width: 1200 }}" alt="{{ product.title | escape }}">
+      <div class="product-gallery__main-wrapper" id="MainGalleryWrapper">
+        <img id="MainImg" src="{{ product.featured_image | image_url: width: 1400 }}" class="product-gallery__main-img" alt="{{ product.title }}">
+        <div class="wipe-layer" id="WipeLayer">
+          <img src="" id="WipeImg" alt="Wipe Effect">
+        </div>
       </div>
+      
       {%- if product.images.size > 1 -%}
         <div class="product-gallery__thumbs">
           {%- for image in product.images -%}
-            <div class="product-gallery__thumb {% if forloop.first %}product-gallery__thumb--active{% endif %}" onclick="updateGallery('{{ image | image_url: width: 1200 }}', this)">
-              <img src="{{ image | image_url: width: 200 }}" alt="{{ image.alt | escape }}">
+            <div class="product-gallery__thumb {% if forloop.first %}product-gallery__thumb--active{% endif %}" 
+                 onclick="performWipe('{{ image | image_url: width: 1400 }}', this)">
+              <img src="{{ image | image_url: width: 300 }}" alt="{{ image.alt | escape }}">
             </div>
           {%- endfor -%}
         </div>
@@ -67,34 +102,46 @@
 
     <!-- Info -->
     <div class="product-info">
-      <div class="product-breadcrumb" style="font-size: 0.75rem; color: #999; text-transform: uppercase; letter-spacing: 0.1em;">
-        <a href="/">Home</a> / <a href="/collections/all">Shop</a> / {{ product.title }}
-      </div>
+      <nav class="product-breadcrumb">
+        <a href="/">Home</a> <span>/</span> 
+        <a href="/collections/all">Shop</a> <span>/</span> 
+        {{ product.title }}
+      </nav>
       
       <h1 class="product-info__title">{{ product.title }}</h1>
       
       <div class="product-info__rating">
-        <span class="product-info__stars">★★★★★</span>
-        <span style="color:#999; margin-left:8px;">Based on {{ product.id | modulo: 1000 | plus: 500 }} reviews</span>
+        <div class="product-info__stars">
+          {%- for i in (1..5) -%}
+            <svg viewBox="0 0 20 20"><path d="M10 1l2.6 6.3h6.4l-5.2 4.4 2 6.3-5.8-4-5.8 4 2-6.3-5.2-4.4h6.4z"/></svg>
+          {%- endfor -%}
+        </div>
+        <span class="review-count">27,455 reviews</span>
       </div>
       
       <div class="product-info__price">
         {%- if product.compare_at_price > product.price -%}
-          <s style="opacity:0.5; margin-right: 12px;">{{ product.compare_at_price | money }}</s>
+          <s>{{ product.compare_at_price | money }}</s>
         {%- endif -%}
         {{ product.price | money }}
       </div>
       
+      <div class="tog-badge">
+        <span>☁️</span> 1.0 TOG Rating — Ideal for 21-23°C
+      </div>
+
       {%- form 'product', product -%}
         <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
 
         {%- for option in product.options_with_values -%}
           <div class="product-option">
-            <span class="product-option__label">{{ option.name }}: <span style="font-weight:400;">{{ option.selected_value }}</span></span>
+            <span class="product-option__label">{{ option.name }}: <span style="font-weight:500; opacity:0.6;">{{ option.selected_value }}</span></span>
             <div class="product-option__list">
               {%- if option.name == 'Color' or option.name == 'Colour' -%}
                 {%- for value in option.values -%}
-                  <div class="swatch {% if option.selected_value == value %}active{% endif %}" title="{{ value }}" style="background-color: {{ value | handleize }};"></div>
+                  <div class="swatch {% if option.selected_value == value %}active{% endif %}" title="{{ value }}">
+                    <div class="swatch__inner" style="background-color: {{ value | handleize }};"></div>
+                  </div>
                 {%- endfor -%}
               {%- else -%}
                 {%- for value in option.values -%}
@@ -106,30 +153,31 @@
         {%- endfor -%}
 
         <div class="product-form">
-          <div class="qty-selector">
-            <button type="button" class="qty-btn" onclick="updateQty(-1)">−</button>
-            <input type="text" id="ProductQty" name="quantity" class="qty-input" value="1" readonly>
-            <button type="button" class="qty-btn" onclick="updateQty(1)">+</button>
-          </div>
-          <button type="submit" class="button" style="width: 100%; padding: 18px;" {% unless product.available %}disabled{% endunless %}>
+          <button type="submit" class="add-to-bag-btn" {% unless product.available %}disabled{% endunless %}>
             {%- if product.available -%}Add to Bag{%- else -%}Sold Out{%- endif -%}
           </button>
         </div>
       {%- endform -%}
 
-      <div class="product-tabs">
-        <div class="product-tab active">
-          <div class="product-tab__header" onclick="toggleTab(this)">Description <span>+</span></div>
-          <div class="product-tab__content">
+      <div class="product-accordions">
+        <div class="accordion active">
+          <div class="accordion__header" onclick="this.parentElement.classList.toggle('active')">Description <span class="accordion__icon">+</span></div>
+          <div class="accordion__content">
             {{ product.description }}
           </div>
         </div>
-        {%- if product.metafields.custom.fabric_care -%}
-          <div class="product-tab">
-            <div class="product-tab__header" onclick="toggleTab(this)">Fabric & Care <span>+</span></div>
-            <div class="product-tab__content">{{ product.metafields.custom.fabric_care }}</div>
+        <div class="accordion">
+          <div class="accordion__header" onclick="this.parentElement.classList.toggle('active')">Fabric & Care <span class="accordion__icon">+</span></div>
+          <div class="accordion__content">
+            Our signature bamboo fabric is soft on baby's skin and gentle on the planet. 97% Bamboo Rayon, 3% Spandex. Machine wash cold on delicate cycle. Tumble dry low or hang dry.
           </div>
-        {%- endif -%}
+        </div>
+        <div class="accordion">
+          <div class="accordion__header" onclick="this.parentElement.classList.toggle('active')">Shipping & Returns <span class="accordion__icon">+</span></div>
+          <div class="accordion__content">
+            Free shipping on orders over $100. We offer a 45-day return policy for unwashed and unworn items in original packaging.
+          </div>
+        </div>
       </div>
     </div>
 
@@ -137,17 +185,31 @@
 </section>
 
 <script>
-  function updateGallery(src, thumb) {
-    document.getElementById('MainProductImg').src = src;
+  function performWipe(newSrc, thumb) {
+    const wrapper = document.getElementById('MainGalleryWrapper');
+    const mainImg = document.getElementById('MainImg');
+    const wipeImg = document.getElementById('WipeImg');
+    const wipeLayer = document.getElementById('WipeLayer');
+
+    if (mainImg.src === newSrc) return;
+
+    // Set new image to the hidden wipe layer
+    wipeImg.src = newSrc;
+    
+    // Reset wipe layer and trigger animation
+    wrapper.classList.remove('wipe-active');
+    void wrapper.offsetWidth; // Force reflow
+    wrapper.classList.add('wipe-active');
+
+    // After animation, update the main image and reset
+    setTimeout(() => {
+      mainImg.src = newSrc;
+      wrapper.classList.remove('wipe-active');
+    }, 850);
+
+    // Update thumbs
     document.querySelectorAll('.product-gallery__thumb').forEach(t => t.classList.remove('product-gallery__thumb--active'));
     thumb.classList.add('product-gallery__thumb--active');
-  }
-  function updateQty(delta) {
-    const input = document.getElementById('ProductQty');
-    input.value = Math.max(1, parseInt(input.value) + delta);
-  }
-  function toggleTab(header) {
-    header.parentElement.classList.toggle('active');
   }
 </script>
 
