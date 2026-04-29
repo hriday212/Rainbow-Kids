@@ -1,91 +1,38 @@
 <style>
-  .hero-slider { position: relative; width: 100%; height: 80vh; min-height: 600px; overflow: hidden; background: #fdfdfd; }
-  .swiper-hero { width: 100%; height: 100%; }
+  .hero-slider { position: relative; height: 80vh; min-height: 600px; background: var(--color-background); overflow: hidden; }
+  .hero-slide { position: absolute; inset: 0; display: flex; align-items: center; opacity: 0; transition: opacity 1s var(--ease-smooth); }
+  .hero-slide.active { opacity: 1; z-index: 1; }
   
-  .hero-slide { position: relative; width: 100%; height: 100%; display: flex; align-items: center; }
-  .hero-slide__image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: 1; }
-  .hero-slide__overlay { position: absolute; inset: 0; background: rgba(0,0,0,0.15); z-index: 2; }
+  .hero-bg { position: absolute; inset: 0; z-index: -1; }
+  .hero-bg img { width: 100%; height: 100%; object-fit: cover; }
+  .hero-overlay { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(255,255,255,0.4) 0%, transparent 60%); }
   
-  .hero-slide__content { position: relative; z-index: 3; color: #fff; max-width: 800px; padding: 0 40px; }
-  .hero-slide__subtitle { font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 20px; }
-  .hero-slide__title { font-family: var(--font-heading); font-size: 5rem; line-height: 1; margin: 0 0 40px; font-weight: 400; }
-  
-  .hero-btn { display: inline-block; padding: 22px 50px; background: #fff; color: #1a1a1a; text-decoration: none; border-radius: 50px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; font-size: 0.8rem; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
-  .hero-btn:hover { transform: translateY(-5px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); background: var(--color-primary); color: #fff; }
+  .hero-content { max-width: 650px; padding-left: 100px; }
+  .hero-subtitle { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.3em; color: var(--color-primary); margin-bottom: 20px; display: block; }
+  .hero-title { font-family: var(--font-heading); font-size: clamp(3rem, 8vw, 5.5rem); color: #1a1a1a; line-height: 1; margin-bottom: 30px; }
+  .hero-btn { display: inline-block; padding: 20px 45px; background: var(--color-primary); color: #fff; text-decoration: none; font-weight: 800; border-radius: 50px; text-transform: uppercase; letter-spacing: 0.1em; transition: all 0.3s; }
+  .hero-btn:hover { transform: translateY(-5px); box-shadow: 0 15px 30px rgba(255,140,105,0.3); }
 
-  @media (max-width: 768px) { .hero-slide__title { font-size: 3rem; } .hero-slider { height: 70vh; } }
+  @media (max-width: 768px) { .hero-content { padding-left: 20px; text-align: center; } .hero-overlay { background: rgba(255,255,255,0.4); } }
 </style>
 
-<div class="hero-slider">
-  <div class="swiper swiper-hero">
-    <div class="swiper-wrapper">
-      {%- if section.blocks.size > 0 -%}
-        {%- for block in section.blocks -%}
-          <div class="swiper-slide hero-slide">
-            {%- if block.settings.image != blank -%}
-              <img src="{{ block.settings.image | image_url: width: 2000 }}" class="hero-slide__image" alt="{{ block.settings.title }}">
-            {%- else -%}
-              <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?auto=format&fit=crop&q=80&w=2000" class="hero-slide__image" alt="Demo">
-            {%- endif -%}
-            <div class="hero-slide__overlay"></div>
-            <div class="hero-slide__content animate-reveal">
-              <span class="hero-slide__subtitle">{{ block.settings.subtitle | default: "The Bamboo Collection" }}</span>
-              <h2 class="hero-slide__title">{{ block.settings.title | default: "Buttery Soft Essentials" }}</h2>
-              <a href="{{ block.settings.link | default: '#' }}" class="hero-btn">Shop Now</a>
-            </div>
-          </div>
-        {%- endfor -%}
-      {%- else -%}
-        {% comment %} Final Fallback for Blank State {% endcomment %}
-        <div class="swiper-slide hero-slide">
-          <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?auto=format&fit=crop&q=80&w=2000" class="hero-slide__image" alt="Demo">
-          <div class="hero-slide__overlay"></div>
-          <div class="hero-slide__content">
-            <span class="hero-slide__subtitle">The Spring Collection</span>
-            <h2 class="hero-slide__title">Made for Sweet Dreams</h2>
-            <a href="/collections/all" class="hero-btn">Shop Collection</a>
-          </div>
-        </div>
-      {%- endif -%}
+<section class="hero-slider">
+  <div class="hero-slide active">
+    <div class="hero-bg">
+      <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=2000" alt="Boutique Slider">
+      <div class="hero-overlay"></div>
     </div>
-    <div class="swiper-pagination"></div>
+    <div class="container">
+      <div class="hero-content">
+        <span class="hero-subtitle">Spring Collection 2026</span>
+        <h1 class="hero-title">Softness defined.</h1>
+        <p style="font-size:1.2rem; color:#444; margin-bottom:40px;">Discover the world's softest bamboo apparel for your little ones.</p>
+        <a href="/collections/all" class="hero-btn">Shop the Collection</a>
+      </div>
+    </div>
   </div>
-</div>
-
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    new Swiper('.swiper-hero', {
-      loop: true,
-      autoplay: { delay: 5000 },
-      pagination: { el: '.swiper-pagination', clickable: true },
-      effect: 'fade',
-      fadeEffect: { crossFade: true }
-    });
-  });
-</script>
+</section>
 
 {% schema %}
-{
-  "name": "Hero Slider",
-  "blocks": [
-    {
-      "type": "slide",
-      "name": "Slide",
-      "settings": [
-        { "type": "image_picker", "id": "image", "label": "Slide Image" },
-        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "The Bamboo Collection" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Buttery Soft Essentials" },
-        { "type": "url", "id": "link", "label": "Link" }
-      ]
-    }
-  ],
-  "presets": [
-    {
-      "name": "Boutique Hero Slider",
-      "blocks": [
-        { "type": "slide" }
-      ]
-    }
-  ]
-}
+{ "name": "Hero Slider", "settings": [] }
 {% endschema %}
