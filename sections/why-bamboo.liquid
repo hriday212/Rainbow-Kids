@@ -1,33 +1,46 @@
 <style>
   .why-bamboo { padding: 100px 0; background: #fff; }
-  .bamboo-header { text-align: center; margin-bottom: 70px; }
-  .bamboo-title { font-family: var(--font-heading); font-size: 3.5rem; color: #1a1a1a; margin-bottom: 20px; font-weight: 400; }
+  .wb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px; text-align: center; }
   
-  .bamboo-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-  .bamboo-card { text-align: center; padding: 40px; background: #fdfdfd; border-radius: 30px; border: 1px solid #f4f4f4; transition: all 0.4s cubic-bezier(0.19, 1, 0.22, 1); }
-  .bamboo-card:hover { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.05); }
+  .wb-item { padding: 40px; border-radius: 24px; background: var(--color-background); transition: transform 0.3s; }
+  .wb-item:hover { transform: translateY(-10px); }
   
-  .bamboo-icon { font-size: 3rem; margin-bottom: 25px; display: block; }
-  .bamboo-card-title { font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #1a1a1a; margin-bottom: 15px; }
-  .bamboo-card-text { font-size: 1rem; color: #666; line-height: 1.7; }
+  .wb-icon { font-size: 3rem; margin-bottom: 25px; display: block; }
+  .wb-title { font-family: var(--font-heading); font-size: 1.8rem; color: #1a1a1a; margin-bottom: 15px; }
+  .wb-text { font-size: 0.95rem; color: #666; line-height: 1.6; }
 
-  @media (max-width: 1024px) { .bamboo-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 1024px) { .wb-grid { grid-template-columns: 1fr; gap: 30px; } }
 </style>
 
 <section class="why-bamboo">
   <div class="container">
-    <div class="bamboo-header animate-reveal">
-      <h2 class="bamboo-title">{{ section.settings.title }}</h2>
-    </div>
-
-    <div class="bamboo-grid">
-      {% for block in section.blocks %}
-        <div class="bamboo-card animate-reveal" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 100 }}">
-          <span class="bamboo-icon">{{ block.settings.icon }}</span>
-          <h3 class="bamboo-card-title">{{ block.settings.title }}</h3>
-          <p class="bamboo-card-text">{{ block.settings.text }}</p>
+    <div class="wb-grid">
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          <div class="wb-item animate-reveal" {{ block.shopify_attributes }}>
+            <span class="wb-icon">{{ block.settings.icon | default: "🌿" }}</span>
+            <h3 class="wb-title">{{ block.settings.title }}</h3>
+            <p class="wb-text">{{ block.settings.text }}</p>
+          </div>
+        {%- endfor -%}
+      {%- else -%}
+        {% comment %} Demo Benefits {% endcomment %}
+        <div class="wb-item">
+          <span class="wb-icon">🌬️</span>
+          <h3 class="wb-title">Breathable</h3>
+          <p class="wb-text">Naturally thermoregulating to keep your little one cool in summer and warm in winter.</p>
         </div>
-      {% endfor %}
+        <div class="wb-item">
+          <span class="wb-icon">☁️</span>
+          <h3 class="wb-title">Buttery Soft</h3>
+          <p class="wb-text">Our bamboo fabric is softer than the finest cotton, perfect for sensitive newborn skin.</p>
+        </div>
+        <div class="wb-item">
+          <span class="wb-icon">🌿</span>
+          <h3 class="wb-title">Eco-Friendly</h3>
+          <p class="wb-text">Sustainably sourced and biodegradable. Kind to your baby, and kind to our planet.</p>
+        </div>
+      {%- endif -%}
     </div>
   </div>
 </section>
@@ -35,17 +48,15 @@
 {% schema %}
 {
   "name": "Why Bamboo",
-  "settings": [
-    { "type": "text", "id": "title", "label": "Section Title", "default": "The Magic of Bamboo" }
-  ],
+  "settings": [],
   "blocks": [
     {
       "type": "benefit",
       "name": "Benefit",
       "settings": [
-        { "type": "text", "id": "icon", "label": "Emoji Icon", "default": "☁️" },
-        { "type": "text", "id": "title", "label": "Benefit Title", "default": "Buttery Soft" },
-        { "type": "textarea", "id": "text", "label": "Benefit Text", "default": "Specifically designed for sensitive skin, our fabric is smoother than silk." }
+        { "type": "text", "id": "icon", "label": "Emoji Icon", "default": "🌿" },
+        { "type": "text", "id": "title", "label": "Title", "default": "Buttery Soft" },
+        { "type": "textarea", "id": "text", "label": "Text", "default": "Naturally soft fabric for your little one." }
       ]
     }
   ],
@@ -53,8 +64,8 @@
     {
       "name": "Boutique Why Bamboo",
       "blocks": [
+        { "type": "benefit", "settings": { "icon": "🌬️", "title": "Breathable" } },
         { "type": "benefit", "settings": { "icon": "☁️", "title": "Buttery Soft" } },
-        { "type": "benefit", "settings": { "icon": "🌡️", "title": "Thermal Regulating" } },
         { "type": "benefit", "settings": { "icon": "🌿", "title": "Eco-Friendly" } }
       ]
     }
