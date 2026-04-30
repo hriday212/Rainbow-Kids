@@ -1,33 +1,36 @@
 <style>
   .founder-story { padding: 100px 0; background: #fff; }
-  .founder-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .founder-grid { display: flex; gap: 80px; align-items: center; }
+  .founder--reverse { flex-direction: row-reverse; }
   
-  .founder-img-wrap { border-radius: 40px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.05); aspect-ratio: 4/5; }
+  .founder-img-wrap { flex: 1; border-radius: 40px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.05); aspect-ratio: 4/5; }
   .founder-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s var(--ease-smooth); }
   .founder-story:hover .founder-img { transform: scale(1.05); }
   
-  .founder-content { padding: 40px; }
+  .founder-content { flex: 1; padding: 40px; }
   .founder-subtitle { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-primary); margin-bottom: 20px; display: block; }
   .founder-title { font-family: var(--font-heading); font-size: 3.5rem; color: #1a1a1a; margin-bottom: 30px; line-height: 1.1; }
   .founder-text { font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 40px; }
 
-  @media (max-width: 1024px) { .founder-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; } .founder-img-wrap { aspect-ratio: 1/1; } }
+  @media (max-width: 1024px) { .founder-grid { flex-direction: column; text-align: center; gap: 40px; } .founder-content { padding: 0; } }
 </style>
 
 <section class="founder-story">
   <div class="container">
-    <div class="founder-grid">
+    <div class="founder-grid {% if section.settings.layout == 'right' %}founder--reverse{% endif %}">
       <div class="founder-img-wrap animate-reveal">
         {% if section.settings.image != blank %}
           <img src="{{ section.settings.image | image_url: width: 1000 }}" class="founder-img" alt="{{ section.settings.title }}">
         {% else %}
-          <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=1000" class="founder-img" alt="Founder Demo">
+          <div style="width:100%; height:100%; background:#f4f4f4; display:flex; align-items:center; justify-content:center; color:#ccc;">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
         {% endif %}
       </div>
       
       <div class="founder-content animate-reveal">
         <span class="founder-subtitle">{{ section.settings.subtitle | default: "The Heart of the Hub" }}</span>
-        <h2 class="founder-title">{{ section.settings.title | default: "Made by a Mom, for your little ones." }}</h2>
+        <h2 class="founder-title">{{ section.settings.title | default: "Made by a Mom." }}</h2>
         <div class="founder-text">
           {{ section.settings.text | default: "<p>We started Rainbow Kids Hub with a simple mission: to provide the softest, safest, and most stylish bamboo apparel for the babies we love. Every piece is curated with care and tested for comfort.</p>" }}
         </div>
@@ -44,6 +47,16 @@
   "name": "Founder Story",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Founder Image" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Desktop Image Alignment",
+      "options": [
+        { "value": "left", "label": "Image on Left" },
+        { "value": "right", "label": "Image on Right" }
+      ],
+      "default": "left"
+    },
     { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "The Heart of the Hub" },
     { "type": "text", "id": "title", "label": "Title", "default": "Made by a Mom." },
     { "type": "richtext", "id": "text", "label": "Story Text" },

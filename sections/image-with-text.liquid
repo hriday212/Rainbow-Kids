@@ -1,21 +1,22 @@
 <style>
   .image-with-text { padding: 100px 0; background: #fff; }
-  .iwt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .iwt-grid { display: flex; gap: 80px; align-items: center; }
+  .iwt--reverse { flex-direction: row-reverse; }
   
-  .iwt-img-wrap { border-radius: 40px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.05); aspect-ratio: 1/1; }
+  .iwt-img-wrap { flex: 1; border-radius: 40px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.05); aspect-ratio: 1/1; }
   .iwt-img { width: 100%; height: 100%; object-fit: cover; }
   .iwt-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f4f4f4; color: #ccc; }
   
-  .iwt-content { padding: 40px; }
+  .iwt-content { flex: 1; padding: 40px; }
   .iwt-title { font-family: var(--font-heading); font-size: 3rem; color: #1a1a1a; margin-bottom: 25px; line-height: 1.1; }
   .iwt-text { font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 40px; }
 
-  @media (max-width: 1024px) { .iwt-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; } }
+  @media (max-width: 1024px) { .iwt-grid { flex-direction: column; text-align: center; gap: 40px; } .iwt-content { padding: 0; } }
 </style>
 
 <section class="image-with-text">
   <div class="container">
-    <div class="iwt-grid">
+    <div class="iwt-grid {% if section.settings.layout == 'right' %}iwt--reverse{% endif %}">
       <div class="iwt-img-wrap animate-reveal">
         {% if section.settings.image != blank %}
           <img src="{{ section.settings.image | image_url: width: 1000 }}" class="iwt-img" alt="{{ section.settings.title }}">
@@ -28,7 +29,9 @@
       
       <div class="iwt-content animate-reveal">
         <h2 class="iwt-title">{{ section.settings.title | default: "Quality you can feel." }}</h2>
-        <p class="iwt-text">{{ section.settings.text | default: "Our bamboo is specifically sourced for its buttery softness and durability. Made for the most sensitive skin, because your little one deserves the best." }}</p>
+        <div class="iwt-text">
+          {{ section.settings.text | default: "<p>Our bamboo is specifically sourced for its buttery softness and durability. Made for the most sensitive skin, because your little one deserves the best.</p>" }}
+        </div>
         {% if section.settings.button_label != blank %}
           <a href="{{ section.settings.button_link }}" class="hero-btn">{{ section.settings.button_label }}</a>
         {% endif %}
@@ -42,8 +45,18 @@
   "name": "Image with Text",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Image" },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Desktop Image Alignment",
+      "options": [
+        { "value": "left", "label": "Image on Left" },
+        { "value": "right", "label": "Image on Right" }
+      ],
+      "default": "left"
+    },
     { "type": "text", "id": "title", "label": "Heading", "default": "Quality you can feel." },
-    { "type": "textarea", "id": "text", "label": "Text", "default": "Our bamboo is specifically sourced for its buttery softness." },
+    { "type": "richtext", "id": "text", "label": "Text" },
     { "type": "text", "id": "button_label", "label": "Button Label", "default": "Learn More" },
     { "type": "url", "id": "button_link", "label": "Button Link" }
   ],

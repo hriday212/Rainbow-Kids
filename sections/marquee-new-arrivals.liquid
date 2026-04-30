@@ -19,20 +19,78 @@
 
 <section class="marquee-new">
   <div class="marquee-track">
-    {%- for i in (1..10) -%}
-      <div class="marquee-card">
-        <div class="marquee-img-wrap">
-          <div class="marquee-placeholder">
-            {{ 'product-' | append: i | placeholder_svg_tag }}
+    {%- if section.blocks.size > 0 -%}
+      {%- for block in section.blocks -%}
+        <div class="marquee-card" {{ block.shopify_attributes }}>
+          <div class="marquee-img-wrap">
+            {% if block.settings.image != blank %}
+              <img src="{{ block.settings.image | image_url: width: 600 }}" class="marquee-img">
+            {% else %}
+              <div class="marquee-placeholder">
+                {{ 'product-1' | placeholder_svg_tag }}
+              </div>
+            {% endif %}
           </div>
+          <span class="marquee-title">{{ block.settings.title }}</span>
+          <span class="marquee-price">{{ block.settings.price }}</span>
         </div>
-        <span class="marquee-title">New Arrivals #{{ i }}</span>
-        <span class="marquee-price">$45.00</span>
-      </div>
-    {%- endfor -%}
+      {%- endfor -%}
+      {% comment %} Duplicate for infinite scroll {% endcomment %}
+      {%- for block in section.blocks -%}
+        <div class="marquee-card">
+          <div class="marquee-img-wrap">
+            {% if block.settings.image != blank %}
+              <img src="{{ block.settings.image | image_url: width: 600 }}" class="marquee-img">
+            {% else %}
+              <div class="marquee-placeholder">
+                {{ 'product-1' | placeholder_svg_tag }}
+              </div>
+            {% endif %}
+          </div>
+          <span class="marquee-title">{{ block.settings.title }}</span>
+          <span class="marquee-price">{{ block.settings.price }}</span>
+        </div>
+      {%- endfor -%}
+    {%- else -%}
+      {%- for i in (1..6) -%}
+        <div class="marquee-card">
+          <div class="marquee-img-wrap">
+            <div class="marquee-placeholder">
+              {{ 'product-' | append: i | placeholder_svg_tag }}
+            </div>
+          </div>
+          <span class="marquee-title">Demo Product {{ i }}</span>
+          <span class="marquee-price">$45.00</span>
+        </div>
+      {%- endfor -%}
+    {%- endif -%}
   </div>
 </section>
 
 {% schema %}
-{ "name": "New Arrivals Marquee", "settings": [] }
+{
+  "name": "New Arrivals Marquee",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "product",
+      "name": "Product",
+      "settings": [
+        { "type": "image_picker", "id": "image", "label": "Product Image" },
+        { "type": "text", "id": "title", "label": "Title", "default": "New Arrival" },
+        { "type": "text", "id": "price", "label": "Price", "default": "$45.00" }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Boutique Arrivals Strip",
+      "blocks": [
+        { "type": "product" },
+        { "type": "product" },
+        { "type": "product" }
+      ]
+    }
+  ]
+}
 {% endschema %}
