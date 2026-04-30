@@ -3,18 +3,15 @@
   .categories-grid__header { text-align: center; margin-bottom: 70px; }
   .categories-grid__subtitle { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-primary); margin-bottom: 15px; display: block; }
   .categories-grid__title { font-family: var(--font-heading); font-size: 3rem; color: #1a1a1a; }
-
   .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
   .cat-card { text-decoration: none; text-align: center; display: block; }
-  .cat-card__circle { width: 140px; height: 140px; border-radius: 50%; overflow: hidden; background: var(--color-background); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(0,0,0,0.06); transition: transform 0.4s var(--ease-smooth), box-shadow 0.4s; }
+  .cat-card__circle { width: 140px; height: 140px; border-radius: 50%; overflow: hidden; background: var(--color-background); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(0,0,0,0.06); transition: transform 0.4s, box-shadow 0.4s; }
   .cat-card:hover .cat-card__circle { transform: scale(1.08); box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
   .cat-card__circle img { width: 100%; height: 100%; object-fit: cover; }
-  .cat-card__icon { display: flex; align-items: center; justify-content: center; }
+  .cat-card__icon-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
   .cat-card__label { font-family: var(--font-heading); font-size: 1.2rem; color: #1a1a1a; margin-bottom: 6px; }
   .cat-card__sub { font-size: 0.8rem; color: #aaa; }
-
   @media (max-width: 1024px) { .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
-  @media (max-width: 480px) { .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; } .cat-card__circle { width: 100px; height: 100px; } }
 </style>
 
 <section class="categories-grid">
@@ -32,9 +29,7 @@
               {%- if block.settings.image != blank -%}
                 <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.label }}">
               {%- else -%}
-                <div class="cat-card__icon">
-                  {% render 'boutique-icon', icon: block.settings.icon, size: 48, color: '#FF8C69' %}
-                </div>
+                <div class="cat-card__icon-wrap">{{ 'product-1' | placeholder_svg_tag }}</div>
               {%- endif -%}
             </div>
             <p class="cat-card__label">{{ block.settings.label | default: "Category" }}</p>
@@ -43,19 +38,19 @@
         {%- endfor -%}
       {%- else -%}
         <a href="/pages/sleep-bags" class="cat-card animate-reveal">
-          <div class="cat-card__circle"><div class="cat-card__icon">{% render 'boutique-icon', icon: 'moon', size: 48, color: '#FF8C69' %}</div></div>
+          <div class="cat-card__circle"><div class="cat-card__icon-wrap">{{ 'product-1' | placeholder_svg_tag }}</div></div>
           <p class="cat-card__label">Sleep Bags</p><p class="cat-card__sub">Safe Sleep Solutions</p>
         </a>
         <a href="/pages/pajamas" class="cat-card animate-reveal">
-          <div class="cat-card__circle"><div class="cat-card__icon">{% render 'boutique-icon', icon: 'star', size: 48, color: '#FF8C69' %}</div></div>
+          <div class="cat-card__circle"><div class="cat-card__icon-wrap">{{ 'product-2' | placeholder_svg_tag }}</div></div>
           <p class="cat-card__label">Pajamas</p><p class="cat-card__sub">Dreamy Bamboo Sets</p>
         </a>
         <a href="/pages/bodysuits" class="cat-card animate-reveal">
-          <div class="cat-card__circle"><div class="cat-card__icon">{% render 'boutique-icon', icon: 'heart', size: 48, color: '#FF8C69' %}</div></div>
+          <div class="cat-card__circle"><div class="cat-card__icon-wrap">{{ 'product-3' | placeholder_svg_tag }}</div></div>
           <p class="cat-card__label">Bodysuits</p><p class="cat-card__sub">Everyday Comfort</p>
         </a>
         <a href="/pages/newborn" class="cat-card animate-reveal">
-          <div class="cat-card__circle"><div class="cat-card__icon">{% render 'boutique-icon', icon: 'sparkle', size: 48, color: '#FF8C69' %}</div></div>
+          <div class="cat-card__circle"><div class="cat-card__icon-wrap">{{ 'product-4' | placeholder_svg_tag }}</div></div>
           <p class="cat-card__label">Newborn</p><p class="cat-card__sub">First Wardrobe Essentials</p>
         </a>
       {%- endif -%}
@@ -75,41 +70,13 @@
       "type": "category",
       "name": "Category",
       "settings": [
-        { "type": "image_picker", "id": "image", "label": "Category Photo (optional)" },
-        {
-          "type": "select",
-          "id": "icon",
-          "label": "Fallback Icon (shown if no photo)",
-          "options": [
-            { "value": "moon", "label": "Moon (Sleep)" },
-            { "value": "star", "label": "Star (Quality)" },
-            { "value": "heart", "label": "Heart (Love)" },
-            { "value": "sparkle", "label": "Sparkle (Premium)" },
-            { "value": "leaf", "label": "Leaf (Organic)" },
-            { "value": "sun", "label": "Sun (Warmth)" },
-            { "value": "cloud", "label": "Cloud (Softness)" },
-            { "value": "smile", "label": "Smile (Happy)" },
-            { "value": "gift", "label": "Gift (Rewards)" },
-            { "value": "shield", "label": "Shield (Safety)" }
-          ],
-          "default": "star"
-        },
+        { "type": "image_picker", "id": "image", "label": "Category Photo" },
         { "type": "text", "id": "label", "label": "Category Name", "default": "Sleep Bags" },
         { "type": "text", "id": "sub", "label": "Subtitle", "default": "Safe Sleep Solutions" },
         { "type": "url", "id": "link", "label": "Link" }
       ]
     }
   ],
-  "presets": [
-    {
-      "name": "Boutique Categories Grid",
-      "blocks": [
-        { "type": "category", "settings": { "icon": "moon", "label": "Sleep Bags", "sub": "Safe Sleep Solutions", "link": "/pages/sleep-bags" } },
-        { "type": "category", "settings": { "icon": "star", "label": "Pajamas", "sub": "Dreamy Bamboo Sets", "link": "/pages/pajamas" } },
-        { "type": "category", "settings": { "icon": "heart", "label": "Bodysuits", "sub": "Everyday Comfort", "link": "/pages/bodysuits" } },
-        { "type": "category", "settings": { "icon": "sparkle", "label": "Newborn", "sub": "First Wardrobe Essentials", "link": "/pages/newborn" } }
-      ]
-    }
-  ]
+  "presets": [{ "name": "Boutique Categories Grid" }]
 }
 {% endschema %}
