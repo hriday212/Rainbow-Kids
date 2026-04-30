@@ -1,21 +1,21 @@
 {
   "sections": {
-    "banner": {
+    "banner_shipping": {
       "type": "interactive-banner",
       "settings": {
-        "title": "Shipping & Returns"
+        "title": "Shipping & Delivery"
       }
     },
-    "content": {
+    "content_shipping": {
       "type": "image-with-text",
       "settings": {
-        "title": "Delivery Promise",
-        "text": "Fast shipping on all boutique orders."
+        "title": "Our Promise",
+        "text": "Fast and safe boutique shipping."
       }
     }
   },
   "order": [
-    "banner",
-    "content"
+    "banner_shipping",
+    "content_shipping"
   ]
 }

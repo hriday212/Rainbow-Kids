@@ -77,10 +77,18 @@
               <a href="/pages/toddler" class="mega-link">Toddler</a>
             </div>
             <a href="/pages/sleep-bags" class="mega-image">
-              <div class="mega-placeholder">{{ 'product-1' | placeholder_svg_tag }}</div>
+              {% if section.settings.mega_img_1 != blank %}
+                <img src="{{ section.settings.mega_img_1 | image_url: width: 600 }}">
+              {% else %}
+                <div class="mega-placeholder">{{ 'product-1' | placeholder_svg_tag }}</div>
+              {% endif %}
             </a>
             <a href="/pages/newborn" class="mega-image">
-              <div class="mega-placeholder">{{ 'product-2' | placeholder_svg_tag }}</div>
+              {% if section.settings.mega_img_2 != blank %}
+                <img src="{{ section.settings.mega_img_2 | image_url: width: 600 }}">
+              {% else %}
+                <div class="mega-placeholder">{{ 'product-2' | placeholder_svg_tag }}</div>
+              {% endif %}
             </a>
           </div>
         </div>
@@ -112,7 +120,10 @@
   "name": "Boutique Header",
   "settings": [
     { "type": "image_picker", "id": "logo", "label": "Logo Image" },
-    { "type": "range", "id": "logo_width", "min": 30, "max": 300, "step": 10, "unit": "px", "label": "Logo Width", "default": 60 }
+    { "type": "range", "id": "logo_width", "min": 30, "max": 300, "step": 10, "unit": "px", "label": "Logo Width", "default": 60 },
+    { "type": "header", "content": "Mega Menu Images" },
+    { "type": "image_picker", "id": "mega_img_1", "label": "Mega Menu Image 1 (Sleep Bags)" },
+    { "type": "image_picker", "id": "mega_img_2", "label": "Mega Menu Image 2 (Newborn)" }
   ]
 }
 {% endschema %}

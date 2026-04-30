@@ -1,21 +1,21 @@
 {
   "sections": {
-    "banner": {
+    "banner_rewards": {
       "type": "interactive-banner",
       "settings": {
-        "title": "Rewards"
+        "title": "Rainbow Rewards"
       }
     },
-    "content": {
+    "content_rewards": {
       "type": "image-with-text",
       "settings": {
-        "title": "Join the Family",
-        "text": "Earn points for every purchase."
+        "title": "Earn Points",
+        "text": "Join our family and save."
       }
     }
   },
   "order": [
-    "banner",
-    "content"
+    "banner_rewards",
+    "content_rewards"
   ]
 }

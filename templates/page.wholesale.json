@@ -1,21 +1,21 @@
 {
   "sections": {
-    "banner": {
+    "banner_wholesale": {
       "type": "interactive-banner",
       "settings": {
-        "title": "Wholesale"
+        "title": "Wholesale Partnership"
       }
     },
-    "content": {
+    "content_wholesale": {
       "type": "image-with-text",
       "settings": {
-        "title": "Boutique Partnerships",
-        "text": "Apply to carry our rainbow collection in your store."
+        "title": "Work with Us",
+        "text": "Join our boutique network."
       }
     }
   },
   "order": [
-    "banner",
-    "content"
+    "banner_wholesale",
+    "content_wholesale"
   ]
 }
