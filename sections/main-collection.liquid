@@ -1,90 +1,96 @@
 <style>
-  .collection-page { padding: 60px 0; background: var(--color-background); min-height: 100vh; }
+  .collection-grid { padding: 60px 0; background: #fff; }
   .collection-layout { display: grid; grid-template-columns: 280px 1fr; gap: 60px; }
   
-  .collection-toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; padding-bottom: 20px; border-bottom: 1px solid rgba(0,0,0,0.05); }
-  .sort-dropdown { border: none; background: none; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #1a1a1a; cursor: pointer; outline: none; }
-
-  .collection-sidebar { position: sticky; top: 120px; height: fit-content; }
-  .filter-group { margin-bottom: 30px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 20px; }
-  .filter-group__title { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
+  .sidebar-section { margin-bottom: 40px; padding-bottom: 30px; border-bottom: 1px solid #f4f4f4; }
+  .sidebar-title { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; margin-bottom: 25px; display: block; }
   
-  .swatch-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; }
+  .filter-list { list-style: none; padding: 0; margin: 0; }
+  .filter-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 0.95rem; color: #666; cursor: pointer; }
+  
+  .swatch-list { display: flex; gap: 12px; flex-wrap: wrap; }
   .swatch { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #eee; cursor: pointer; transition: transform 0.2s; }
   .swatch:hover { transform: scale(1.2); }
+  
+  .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  .product-card { text-decoration: none; display: block; }
+  .product-card__img { aspect-ratio: 4/5; border-radius: 12px; overflow: hidden; background: #f9f9f9; margin-bottom: 15px; position: relative; }
+  .product-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f4f4f4; color: #ccc; }
+  
+  .badge { position: absolute; top: 15px; right: 15px; padding: 5px 12px; border-radius: 50px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; z-index: 2; }
+  .badge--new { background: #B5EAD7; color: #1a1a1a; }
+  .badge--sale { background: #FF9AA2; }
+  .badge--limit { background: #C7CEEA; color: #1a1a1a; }
 
-  .collection-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px 20px; }
-
-  @media (max-width: 1024px) { .collection-layout { grid-template-columns: 1fr; } .collection-sidebar { display: none; } }
+  @media (max-width: 1024px) { .collection-layout { grid-template-columns: 1fr; } .product-grid { grid-template-columns: repeat(2, 1fr); } }
 </style>
 
-<section class="collection-page">
+<section class="collection-grid">
   <div class="container">
-    <header style="margin-bottom: 40px;">
-      <h1 style="font-family:var(--font-heading); font-size: 3.5rem; margin:0;">{{ collection.title | default: "All Apparel" }}</h1>
-    </header>
-
-    <div class="collection-toolbar">
-      <p style="color:#888; margin:0;">{{ collection.products_count | default: 24 }} Items</p>
-      <div style="display:flex; align-items:center; gap:10px;">
-        <span style="font-size:0.7rem; font-weight:800; color:#999; text-transform:uppercase;">Sort By:</span>
-        <select class="sort-dropdown">
-          <option>Featured</option>
-          <option>Best Selling</option>
-          <option>Newest</option>
-          <option>Price: Low to High</option>
-          <option>Price: High to Low</option>
-        </select>
-      </div>
-    </div>
-
     <div class="collection-layout">
-      <aside class="collection-sidebar">
-        <div class="filter-group">
-          <span class="filter-group__title">Availability</span>
-          <label style="display:flex;align-items:center;gap:10px;font-size:0.9rem;color:#666;margin-bottom:10px;"><input type="checkbox" checked> In Stock</label>
-          <label style="display:flex;align-items:center;gap:10px;font-size:0.9rem;color:#666;"><input type="checkbox"> Out of Stock</label>
+      <!-- Sidebar -->
+      <aside class="collection-sidebar animate-reveal">
+        <div class="sidebar-section">
+          <span class="sidebar-title">Availability</span>
+          <div class="filter-item"><input type="checkbox" checked> In Stock</div>
+          <div class="filter-item"><input type="checkbox"> Out of Stock</div>
         </div>
-
-        <div class="filter-group">
-          <span class="filter-group__title">Color Palette</span>
-          <div class="swatch-grid">
-            <div class="swatch" style="background: var(--color-pink);" title="Blossom"></div>
-            <div class="swatch" style="background: var(--color-blue);" title="Cloud"></div>
-            <div class="swatch" style="background: var(--color-lavender);" title="Lavender"></div>
-            <div class="swatch" style="background: var(--color-primary);" title="Coral"></div>
-            <div class="swatch" style="background: var(--color-mint);" title="Sage"></div>
+        
+        <div class="sidebar-section">
+          <span class="sidebar-title">Color Palette</span>
+          <div class="swatch-list">
+            <div class="swatch" style="background: #F8D7E3;" title="Soft Pink"></div>
+            <div class="swatch" style="background: #D7E9F8;" title="Sky Blue"></div>
+            <div class="swatch" style="background: #E3D7F8;" title="Lavender"></div>
+            <div class="swatch" style="background: #F8E5D7;" title="Peach"></div>
+            <div class="swatch" style="background: #D7F8E9;" title="Mint"></div>
           </div>
         </div>
 
-        <div class="filter-group">
-          <span class="filter-group__title">Category</span>
-          <ul style="list-style:none;padding:0;margin:0;">
-            <li style="margin-bottom:10px;"><a href="#" style="text-decoration:none;color:#666;font-size:0.9rem;">Sleep Bags</a></li>
-            <li style="margin-bottom:10px;"><a href="#" style="text-decoration:none;color:#666;font-size:0.9rem;">Pajamas</a></li>
-            <li style="margin-bottom:10px;"><a href="#" style="text-decoration:none;color:#666;font-size:0.9rem;">Bodysuits</a></li>
-          </ul>
+        <div class="sidebar-section">
+          <span class="sidebar-title">Category</span>
+          <div class="filter-list">
+            <a href="/pages/sleep-bags" class="mega-link">Sleep Bags</a>
+            <a href="/pages/pajamas" class="mega-link">Pajamas</a>
+            <a href="/pages/bodysuits" class="mega-link">Bodysuits</a>
+          </div>
         </div>
       </aside>
 
+      <!-- Main Grid -->
       <main class="collection-main">
-        <div class="collection-grid">
-          {%- for i in (1..9) -%}
-            <div class="product-card">
-              <div class="product-card__image-wrap" style="aspect-ratio:1/1.2; border-radius:12px; overflow:hidden; background:#fff; margin-bottom:15px; position:relative;">
-                <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=600" style="width:100%; height:100%; object-fit:cover;">
-                {% if i == 1 %}
-                  <span class="badge badge--new" style="position:absolute; top:10px; right:10px;">NEW</span>
-                {% elsif i == 2 %}
-                  <span class="badge badge--sale" style="position:absolute; top:10px; right:10px;">SALE</span>
-                {% elsif i == 3 %}
-                  <span class="badge badge--exclusive" style="position:absolute; top:10px; right:10px;">LIMIT</span>
-                {% endif %}
+        <div style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: baseline;">
+          <h1 style="font-family: var(--font-heading); font-size: 4rem; margin: 0;">{{ collection.title | default: "Products" }}</h1>
+          <span style="font-size: 0.9rem; color: #999;">{{ collection.products_count | default: 5 }} Items</span>
+        </div>
+
+        <div class="product-grid">
+          {%- if collection.products.size > 0 -%}
+            {%- for product in collection.products -%}
+              <a href="{{ product.url }}" class="product-card animate-reveal">
+                <div class="product-card__img">
+                  <img src="{{ product.featured_image | image_url: width: 800 }}" style="width:100%; height:100%; object-fit:cover;">
+                </div>
+                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; margin: 0 0 5px;">{{ product.title }}</h3>
+                <p style="font-weight: 700; color: var(--color-primary);">{{ product.price | money }}</p>
+              </a>
+            {%- endfor -%}
+          {%- else -%}
+            {%- for i in (1..6) -%}
+              <div class="product-card animate-reveal">
+                <div class="product-card__img">
+                  <div class="product-placeholder">
+                    {{ 'product-' | append: i | placeholder_svg_tag }}
+                  </div>
+                  {%- if i == 1 -%}<span class="badge badge--new">New</span>{%- endif -%}
+                  {%- if i == 2 -%}<span class="badge badge--sale">Sale</span>{%- endif -%}
+                  {%- if i == 3 -%}<span class="badge badge--limit">Limit</span>{%- endif -%}
+                </div>
+                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; margin: 0 0 5px;">Bamboo Apparel {{ i }}</h3>
+                <p style="font-weight: 700; color: var(--color-primary);">$55.00</p>
               </div>
-              <h3 style="font-family:var(--font-heading); font-size:1.1rem; margin:0 0 5px;">Bamboo Apparel {{ i }}</h3>
-              <p style="font-weight:700; color:var(--color-primary);">$55.00</p>
-            </div>
-          {%- endfor -%}
+            {%- endfor -%}
+          {%- endif -%}
         </div>
       </main>
     </div>
