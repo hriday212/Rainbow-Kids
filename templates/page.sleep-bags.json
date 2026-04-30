@@ -1,14 +1,14 @@
 {
   "sections": {
-    "banner": { "type": "interactive-banner", "settings": { "title": "Sleep Bags" } },
-    "marquee": { "type": "marquee-new-arrivals", "settings": {} },
-    "grid": { "type": "main-collection", "settings": {} },
-    "benefits": { "type": "why-bamboo", "settings": {} }
+    "cat_hero_sleepbags": {
+      "type": "category-page",
+      "settings": {
+        "subtitle": "Safe Sleep Solutions",
+        "title": "Sleep Bags",
+        "description": "Designed for the safest, most comfortable night's sleep. Our bamboo sleep bags keep your little one at the perfect temperature all night long — no loose blankets, no worries.",
+        "active_page": "sleep-bags"
+      }
+    }
   },
-  "order": [
-    "banner",
-    "marquee",
-    "grid",
-    "benefits"
-  ]
+  "order": ["cat_hero_sleepbags"]
 }

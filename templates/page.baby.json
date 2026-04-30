@@ -1,7 +1,14 @@
 {
   "sections": {
-    "banner": { "type": "interactive-banner", "settings": { "title": "Baby Collection" } },
-    "grid": { "type": "main-collection", "settings": {} }
+    "cat_hero_baby": {
+      "type": "category-page",
+      "settings": {
+        "subtitle": "Growing & Exploring",
+        "title": "Baby",
+        "description": "For the little ones on the move. Our baby collection grows with your child — from 3 months to 18 months — in buttery-soft bamboo that stretches, breathes, and washes beautifully.",
+        "active_page": "baby"
+      }
+    }
   },
-  "order": ["banner", "grid"]
+  "order": ["cat_hero_baby"]
 }

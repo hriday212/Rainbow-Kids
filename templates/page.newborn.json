@@ -1,9 +1,14 @@
 {
   "sections": {
-    "banner": { "type": "interactive-banner", "settings": { "title": "Newborn Essentials" } },
-    "marquee": { "type": "marquee-new-arrivals", "settings": {} },
-    "grid": { "type": "main-collection", "settings": {} },
-    "benefits": { "type": "why-bamboo", "settings": {} }
+    "cat_hero_newborn": {
+      "type": "category-page",
+      "settings": {
+        "subtitle": "First Wardrobe Essentials",
+        "title": "Newborn",
+        "description": "Welcome to the world, little one. Our newborn collection is crafted for the most delicate skin — hypoallergenic, tagless, and gentle on every single inch. The perfect first gift.",
+        "active_page": "newborn"
+      }
+    }
   },
-  "order": ["banner", "marquee", "grid", "benefits"]
+  "order": ["cat_hero_newborn"]
 }

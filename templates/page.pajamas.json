@@ -1,14 +1,14 @@
 {
   "sections": {
-    "banner": { "type": "interactive-banner", "settings": { "title": "Pajamas" } },
-    "marquee": { "type": "marquee-new-arrivals", "settings": {} },
-    "grid": { "type": "main-collection", "settings": {} },
-    "benefits": { "type": "why-bamboo", "settings": {} }
+    "cat_hero_pajamas": {
+      "type": "category-page",
+      "settings": {
+        "subtitle": "Dreamy Bamboo Sets",
+        "title": "Pajamas",
+        "description": "Our bamboo pajama sets are cloud-soft, quick-drying, and built to last through a hundred washes. Available in matching family sets — because coordinated mornings are the best mornings.",
+        "active_page": "pajamas"
+      }
+    }
   },
-  "order": [
-    "banner",
-    "marquee",
-    "grid",
-    "benefits"
-  ]
+  "order": ["cat_hero_pajamas"]
 }

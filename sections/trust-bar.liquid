@@ -1,42 +1,46 @@
 <style>
-  .trust-bar { padding: 60px 0; background: #fff; border-top: 1px solid #f4f4f4; border-bottom: 1px solid #f4f4f4; }
-  .trust-grid { display: flex; justify-content: center; gap: 60px; flex-wrap: wrap; }
-  
-  .trust-item { text-align: center; max-width: 200px; }
-  .trust-icon { font-size: 2.5rem; margin-bottom: 15px; display: block; }
-  .trust-text { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; display: block; margin-bottom: 8px; }
-  .trust-subtext { font-size: 0.85rem; color: #888; }
-
-  @media (max-width: 768px) { .trust-grid { gap: 40px 20px; } .trust-item { flex: 0 0 140px; } }
+  .trust-bar { padding: 40px 0; background: var(--color-background); border-top: 1px solid #f0f0f0; border-bottom: 1px solid #f0f0f0; }
+  .trust-bar__grid { display: flex; justify-content: space-around; align-items: flex-start; gap: 40px; flex-wrap: wrap; }
+  .trust-item { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 15px; flex: 1; min-width: 160px; }
+  .trust-item__icon { width: 56px; height: 56px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; box-shadow: 0 4px 20px rgba(0,0,0,0.06); }
+  .trust-item__title { font-weight: 800; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0.1em; color: #1a1a1a; }
+  .trust-item__text { font-size: 0.82rem; color: #888; line-height: 1.5; }
+  @media (max-width: 768px) { .trust-bar__grid { gap: 24px; } }
 </style>
 
 <section class="trust-bar">
   <div class="container">
-    <div class="trust-grid">
+    <div class="trust-bar__grid">
       {%- if section.blocks.size > 0 -%}
         {%- for block in section.blocks -%}
           <div class="trust-item animate-reveal" {{ block.shopify_attributes }}>
-            <span class="trust-icon">{{ block.settings.icon | default: "🤍" }}</span>
-            <span class="trust-text">{{ block.settings.title }}</span>
-            <span class="trust-subtext">{{ block.settings.subtitle }}</span>
+            <div class="trust-item__icon">
+              {% render 'boutique-icon', icon: block.settings.icon, size: 28, color: '#FF8C69' %}
+            </div>
+            <span class="trust-item__title">{{ block.settings.title }}</span>
+            <p class="trust-item__text">{{ block.settings.text }}</p>
           </div>
         {%- endfor -%}
       {%- else -%}
-        {% comment %} Demo Trust Items {% endcomment %}
         <div class="trust-item">
-          <span class="trust-icon">🚚</span>
-          <span class="trust-text">Fast Shipping</span>
-          <span class="trust-subtext">Free over $85</span>
+          <div class="trust-item__icon">{% render 'boutique-icon', icon: 'leaf', size: 28, color: '#FF8C69' %}</div>
+          <span class="trust-item__title">100% Organic</span>
+          <p class="trust-item__text">Certified OEKO-TEX bamboo fabric for sensitive skin.</p>
         </div>
         <div class="trust-item">
-          <span class="trust-icon">🌿</span>
-          <span class="trust-text">Eco-Friendly</span>
-          <span class="trust-subtext">100% Bamboo</span>
+          <div class="trust-item__icon">{% render 'boutique-icon', icon: 'truck', size: 28, color: '#FF8C69' %}</div>
+          <span class="trust-item__title">Free Shipping</span>
+          <p class="trust-item__text">Complimentary shipping on all orders over $85.</p>
         </div>
         <div class="trust-item">
-          <span class="trust-icon">🛡️</span>
-          <span class="trust-text">Secure Shop</span>
-          <span class="trust-subtext">Buyer protection</span>
+          <div class="trust-item__icon">{% render 'boutique-icon', icon: 'shield', size: 28, color: '#FF8C69' %}</div>
+          <span class="trust-item__title">Safe & Tested</span>
+          <p class="trust-item__text">Every garment rigorously tested for baby safety.</p>
+        </div>
+        <div class="trust-item">
+          <div class="trust-item__icon">{% render 'boutique-icon', icon: 'heart', size: 28, color: '#FF8C69' %}</div>
+          <span class="trust-item__title">Made with Love</span>
+          <p class="trust-item__text">Designed by parents, for the tiniest dreamers.</p>
         </div>
       {%- endif -%}
     </div>
@@ -46,15 +50,33 @@
 {% schema %}
 {
   "name": "Trust Bar",
-  "settings": [],
   "blocks": [
     {
       "type": "trust_item",
       "name": "Trust Item",
       "settings": [
-        { "type": "text", "id": "icon", "label": "Emoji Icon", "default": "🚚" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Fast Shipping" },
-        { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Free over $85" }
+        {
+          "type": "select",
+          "id": "icon",
+          "label": "Icon",
+          "options": [
+            { "value": "leaf", "label": "Leaf (Organic)" },
+            { "value": "truck", "label": "Truck (Shipping)" },
+            { "value": "shield", "label": "Shield (Safety)" },
+            { "value": "heart", "label": "Heart (Love)" },
+            { "value": "star", "label": "Star (Quality)" },
+            { "value": "lock", "label": "Lock (Security)" },
+            { "value": "sparkle", "label": "Sparkle (Premium)" },
+            { "value": "gift", "label": "Gift (Rewards)" },
+            { "value": "sun", "label": "Sun (Warmth)" },
+            { "value": "moon", "label": "Moon (Sleep)" },
+            { "value": "cloud", "label": "Cloud (Softness)" },
+            { "value": "smile", "label": "Smile (Happy)" }
+          ],
+          "default": "leaf"
+        },
+        { "type": "text", "id": "title", "label": "Title", "default": "Our Promise" },
+        { "type": "textarea", "id": "text", "label": "Description", "default": "Add your trust message here." }
       ]
     }
   ],
@@ -62,9 +84,10 @@
     {
       "name": "Boutique Trust Bar",
       "blocks": [
-        { "type": "trust_item", "settings": { "icon": "🚚", "title": "Fast Shipping" } },
-        { "type": "trust_item", "settings": { "icon": "🌿", "title": "Eco-Friendly" } },
-        { "type": "trust_item", "settings": { "icon": "🛡️", "title": "Secure Shop" } }
+        { "type": "trust_item", "settings": { "icon": "leaf", "title": "100% Organic", "text": "Certified OEKO-TEX bamboo fabric." } },
+        { "type": "trust_item", "settings": { "icon": "truck", "title": "Free Shipping", "text": "On all orders over $85." } },
+        { "type": "trust_item", "settings": { "icon": "shield", "title": "Safe & Tested", "text": "Rigorously tested for baby safety." } },
+        { "type": "trust_item", "settings": { "icon": "heart", "title": "Made with Love", "text": "Designed by parents, for dreamers." } }
       ]
     }
   ]

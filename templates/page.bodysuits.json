@@ -1,8 +1,14 @@
 {
   "sections": {
-    "banner": { "type": "interactive-banner", "settings": { "title": "Bodysuits" } },
-    "marquee": { "type": "marquee-new-arrivals", "settings": {} },
-    "grid": { "type": "main-collection", "settings": {} }
+    "cat_hero_bodysuits": {
+      "type": "category-page",
+      "settings": {
+        "subtitle": "Everyday Comfort",
+        "title": "Bodysuits",
+        "description": "The perfect everyday essential. Our bamboo bodysuits snap easily, breathe beautifully, and keep your baby comfortable from morning nap to bedtime. Mix, match, and layer effortlessly.",
+        "active_page": "bodysuits"
+      }
+    }
   },
-  "order": ["banner", "marquee", "grid"]
+  "order": ["cat_hero_bodysuits"]
 }

@@ -1,7 +1,14 @@
 {
   "sections": {
-    "banner": { "type": "interactive-banner", "settings": { "title": "Toddler Collection" } },
-    "grid": { "type": "main-collection", "settings": {} }
+    "cat_hero_toddler": {
+      "type": "category-page",
+      "settings": {
+        "subtitle": "Big Kid Energy, Bamboo Softness",
+        "title": "Toddler",
+        "description": "They may be bigger now, but they still deserve the softest bamboo on the planet. Our toddler range is built for play, naps, and everything in between — durable, stretchy, and impossibly soft.",
+        "active_page": "toddler"
+      }
+    }
   },
-  "order": ["banner", "grid"]
+  "order": ["cat_hero_toddler"]
 }
