@@ -1,44 +1,48 @@
 <style>
-  .why-bamboo { padding: 100px 0; background: var(--color-background); }
+  .why-bamboo { padding: 100px 0; background: #fff; }
   .why-bamboo__header { text-align: center; margin-bottom: 70px; }
   .why-bamboo__subtitle { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-primary); margin-bottom: 15px; display: block; }
-  .why-bamboo__title { font-family: var(--font-heading); font-size: 3rem; color: #1a1a1a; }
+  .why-bamboo__title { font-family: var(--font-heading); font-size: 3.5rem; color: #1a1a1a; margin: 0; }
+  
   .wb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
-  .wb-item { padding: 50px 40px; border-radius: 24px; background: #fff; text-align: center; box-shadow: 0 4px 30px rgba(0,0,0,0.04); transition: transform 0.3s, box-shadow 0.3s; }
-  .wb-item:hover { transform: translateY(-8px); box-shadow: 0 20px 60px rgba(0,0,0,0.08); }
-  .wb-icon { width: 72px; height: 72px; border-radius: 50%; background: var(--color-background); display: flex; align-items: center; justify-content: center; margin: 0 auto 28px; font-size: 2rem; }
-  .wb-title { font-family: var(--font-heading); font-size: 1.6rem; color: #1a1a1a; margin-bottom: 15px; }
-  .wb-text { font-size: 0.95rem; color: #888; line-height: 1.7; }
-  @media (max-width: 1024px) { .wb-grid { grid-template-columns: 1fr; gap: 24px; } .why-bamboo__title { font-size: 2.2rem; } }
+  .wb-item { padding: 60px 40px; border-radius: 30px; background: #fdf8f6; text-align: center; transition: all 0.4s ease; opacity: 1 !important; visibility: visible !important; }
+  .wb-item:hover { transform: translateY(-10px); background: #fff; box-shadow: 0 30px 60px rgba(0,0,0,0.06); }
+  
+  .wb-icon { width: 80px; height: 80px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; font-size: 2.2rem; box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
+  .wb-title { font-family: var(--font-heading); font-size: 1.8rem; color: #1a1a1a; margin-bottom: 15px; }
+  .wb-text { font-size: 1rem; color: #777; line-height: 1.8; margin: 0; }
+
+  @media (max-width: 1024px) { .wb-grid { grid-template-columns: 1fr; gap: 30px; } .why-bamboo__title { font-size: 2.5rem; } }
 </style>
 
 <section class="why-bamboo">
   <div class="container">
-    <div class="why-bamboo__header animate-reveal">
+    <div class="why-bamboo__header">
       <span class="why-bamboo__subtitle">{{ section.settings.subtitle | default: "The Rainbow Difference" }}</span>
       <h2 class="why-bamboo__title">{{ section.settings.title | default: "Why Bamboo?" }}</h2>
     </div>
+
     <div class="wb-grid">
       {%- if section.blocks.size > 0 -%}
         {%- for block in section.blocks -%}
-          <div class="wb-item animate-reveal" {{ block.shopify_attributes }}>
+          <div class="wb-item" {{ block.shopify_attributes }}>
             <div class="wb-icon">{{ block.settings.icon | default: "✦" }}</div>
             <h3 class="wb-title">{{ block.settings.title }}</h3>
             <p class="wb-text">{{ block.settings.text }}</p>
           </div>
         {%- endfor -%}
       {%- else -%}
-        <div class="wb-item animate-reveal">
+        <div class="wb-item">
           <div class="wb-icon">☀️</div>
           <h3 class="wb-title">Thermoregulating</h3>
           <p class="wb-text">Naturally keeps your little one cool in summer and cozy in winter — no overheating, no night wakings.</p>
         </div>
-        <div class="wb-item animate-reveal">
+        <div class="wb-item">
           <div class="wb-icon">☁️</div>
           <h3 class="wb-title">Buttery Soft</h3>
           <p class="wb-text">Three times softer than cotton. Our bamboo fabric feels like a gentle hug against the most delicate newborn skin.</p>
         </div>
-        <div class="wb-item animate-reveal">
+        <div class="wb-item">
           <div class="wb-icon">🌿</div>
           <h3 class="wb-title">Sustainably Grown</h3>
           <p class="wb-text">Bamboo grows without pesticides or irrigation. Kind to your baby, and kind to the planet they'll inherit.</p>
@@ -66,15 +70,6 @@
       ]
     }
   ],
-  "presets": [
-    {
-      "name": "Boutique Why Bamboo",
-      "blocks": [
-        { "type": "benefit", "settings": { "icon": "☀️", "title": "Thermoregulating", "text": "Naturally keeps your little one cool in summer and cozy in winter." } },
-        { "type": "benefit", "settings": { "icon": "☁️", "title": "Buttery Soft", "text": "Three times softer than cotton, perfect for newborn skin." } },
-        { "type": "benefit", "settings": { "icon": "🌿", "title": "Sustainably Grown", "text": "Bamboo grows without pesticides or irrigation." } }
-      ]
-    }
-  ]
+  "presets": [{ "name": "Boutique Why Bamboo" }]
 }
 {% endschema %}

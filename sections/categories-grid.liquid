@@ -1,22 +1,29 @@
 <style>
-  .categories-grid { padding: 100px 0; background: #fff; }
-  .categories-grid__header { text-align: center; margin-bottom: 70px; }
-  .categories-grid__subtitle { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-primary); margin-bottom: 15px; display: block; }
-  .categories-grid__title { font-family: var(--font-heading); font-size: 3rem; color: #1a1a1a; }
+  .categories-grid { padding: 80px 0; background: #fff; position: relative; z-index: 1; }
+  .categories-grid__header { text-align: center; margin-bottom: 60px; }
+  .categories-grid__subtitle { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-primary); margin-bottom: 12px; display: block; }
+  .categories-grid__title { font-family: var(--font-heading); font-size: 3rem; color: #1a1a1a; margin: 0; }
+
   .cat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
-  .cat-card { text-decoration: none; text-align: center; display: block; }
-  .cat-card__circle { width: 140px; height: 140px; border-radius: 50%; overflow: hidden; background: var(--color-background); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 8px 30px rgba(0,0,0,0.06); transition: transform 0.4s, box-shadow 0.4s; }
-  .cat-card:hover .cat-card__circle { transform: scale(1.08); box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
-  .cat-card__circle img { width: 100%; height: 100%; object-fit: cover; }
-  .cat-card__icon-wrap { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
-  .cat-card__label { font-family: var(--font-heading); font-size: 1.2rem; color: #1a1a1a; margin-bottom: 6px; }
-  .cat-card__sub { font-size: 0.8rem; color: #aaa; }
-  @media (max-width: 1024px) { .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 24px; } }
+  .cat-card { text-decoration: none; text-align: center; display: block; opacity: 1 !important; visibility: visible !important; }
+  .cat-card__circle { width: 160px; height: 160px; border-radius: 50%; overflow: hidden; background: #fdf8f6; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); }
+  .cat-card:hover .cat-card__circle { transform: translateY(-10px); box-shadow: 0 20px 50px rgba(0,0,0,0.1); }
+  
+  .cat-card__icon-wrap { width: 60%; height: 60%; display: flex; align-items: center; justify-content: center; color: var(--color-primary); }
+  .cat-card__icon-wrap svg { width: 100%; height: 100%; }
+  
+  .cat-card__label { font-family: var(--font-heading); font-size: 1.3rem; color: #1a1a1a; margin-bottom: 4px; display: block; }
+  .cat-card__sub { font-size: 0.85rem; color: #999; display: block; }
+
+  @media (max-width: 1024px) { 
+    .cat-grid { grid-template-columns: repeat(2, 1fr); gap: 30px; }
+    .cat-card__circle { width: 130px; height: 130px; }
+  }
 </style>
 
 <section class="categories-grid">
   <div class="container">
-    <div class="categories-grid__header animate-reveal">
+    <div class="categories-grid__header">
       <span class="categories-grid__subtitle">{{ section.settings.subtitle | default: "Find Their Perfect Fit" }}</span>
       <h2 class="categories-grid__title">{{ section.settings.title | default: "Shop by Category" }}</h2>
     </div>
@@ -24,34 +31,35 @@
     <div class="cat-grid">
       {%- if section.blocks.size > 0 -%}
         {%- for block in section.blocks -%}
-          <a href="{{ block.settings.link | default: '#' }}" class="cat-card animate-reveal" {{ block.shopify_attributes }}>
+          <a href="{{ block.settings.link | default: '#' }}" class="cat-card" {{ block.shopify_attributes }}>
             <div class="cat-card__circle">
               {%- if block.settings.image != blank -%}
-                <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.label }}">
+                <img src="{{ block.settings.image | image_url: width: 400 }}" alt="{{ block.settings.label }}" style="width:100%; height:100%; object-fit:cover;">
               {%- else -%}
                 <div class="cat-card__icon-wrap">{{ 'product-1' | placeholder_svg_tag }}</div>
               {%- endif -%}
             </div>
-            <p class="cat-card__label">{{ block.settings.label | default: "Category" }}</p>
-            <p class="cat-card__sub">{{ block.settings.sub | default: "Shop Now" }}</p>
+            <span class="cat-card__label">{{ block.settings.label | default: "Category" }}</span>
+            <span class="cat-card__sub">{{ block.settings.sub | default: "Shop Now" }}</span>
           </a>
         {%- endfor -%}
       {%- else -%}
-        <a href="/pages/sleep-bags" class="cat-card animate-reveal">
+        {%- comment -%} Fallback Demo Content {%- endcomment -%}
+        <a href="/pages/sleep-bags" class="cat-card">
           <div class="cat-card__circle"><div class="cat-card__icon-wrap">{{ 'product-1' | placeholder_svg_tag }}</div></div>
-          <p class="cat-card__label">Sleep Bags</p><p class="cat-card__sub">Safe Sleep Solutions</p>
+          <span class="cat-card__label">Sleep Bags</span><span class="cat-card__sub">Safe Sleep</span>
         </a>
-        <a href="/pages/pajamas" class="cat-card animate-reveal">
+        <a href="/pages/pajamas" class="cat-card">
           <div class="cat-card__circle"><div class="cat-card__icon-wrap">{{ 'product-2' | placeholder_svg_tag }}</div></div>
-          <p class="cat-card__label">Pajamas</p><p class="cat-card__sub">Dreamy Bamboo Sets</p>
+          <span class="cat-card__label">Pajamas</span><span class="cat-card__sub">Dreamy Sets</span>
         </a>
-        <a href="/pages/bodysuits" class="cat-card animate-reveal">
+        <a href="/pages/bodysuits" class="cat-card">
           <div class="cat-card__circle"><div class="cat-card__icon-wrap">{{ 'product-3' | placeholder_svg_tag }}</div></div>
-          <p class="cat-card__label">Bodysuits</p><p class="cat-card__sub">Everyday Comfort</p>
+          <span class="cat-card__label">Bodysuits</span><span class="cat-card__sub">Soft Basics</span>
         </a>
-        <a href="/pages/newborn" class="cat-card animate-reveal">
+        <a href="/pages/newborn" class="cat-card">
           <div class="cat-card__circle"><div class="cat-card__icon-wrap">{{ 'product-4' | placeholder_svg_tag }}</div></div>
-          <p class="cat-card__label">Newborn</p><p class="cat-card__sub">First Wardrobe Essentials</p>
+          <span class="cat-card__label">Newborn</span><span class="cat-card__sub">First Essentials</span>
         </a>
       {%- endif -%}
     </div>
