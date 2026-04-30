@@ -1,28 +1,119 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
-    "hero": { "type": "hero-slider", "settings": {} },
-    "categories": { "type": "categories-grid", "settings": { "title": "Shop the Rainbow" } },
-    "gender_split": { "type": "gender-split-banner", "settings": {} },
-    "pink_shop": { 
-      "type": "featured-collection", 
-      "settings": { 
+    "hero": {
+      "type": "hero-slider",
+      "blocks": {
+        "slide_gMy7W8": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/WhatsApp_Image_2026-03-27_at_4.56.41_PM_2.jpg",
+            "subtitle": "Spring Collection",
+            "title": "Softness defined.",
+            "text": "Discover the world's softest bamboo apparel.",
+            "button_label": "Shop All",
+            "button_link": ""
+          }
+        },
+        "slide_Pdx4yB": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/baby-shoes.jpg",
+            "subtitle": "Spring Collection",
+            "title": "Softness defined.",
+            "text": "Discover the world's softest bamboo apparel.",
+            "button_label": "Shop All",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_gMy7W8",
+        "slide_Pdx4yB"
+      ],
+      "settings": {}
+    },
+    "categories": {
+      "type": "categories-grid",
+      "settings": {
+        "title": "Shop the Rainbow"
+      }
+    },
+    "gender_split": {
+      "type": "gender-split-banner",
+      "settings": {
+        "subtitle_girls": "The Collection",
+        "title_girls": "For Her",
+        "btn_girls": "Shop Girls",
+        "link_girls": "",
+        "subtitle_boys": "The Essentials",
+        "title_boys": "For Him",
+        "btn_boys": "Shop Boys",
+        "link_boys": ""
+      }
+    },
+    "pink_shop": {
+      "type": "featured-collection",
+      "settings": {
         "title": "The Little Girl Shop",
+        "collection": "",
         "bg_color": "pink"
-      } 
+      }
     },
-    "blue_shop": { 
-      "type": "featured-collection", 
-      "settings": { 
+    "blue_shop": {
+      "type": "featured-collection",
+      "settings": {
         "title": "The Little Boy Shop",
+        "collection": "",
         "bg_color": "blue"
-      } 
+      }
     },
-    "testimonials": { "type": "testimonials", "settings": { "title": "What Mamas are Saying" } },
-    "marquee": { "type": "marquee-new-arrivals", "settings": {} },
-    "trust_bar": { "type": "trust-bar", "settings": {} },
-    "story": { "type": "founder-story", "settings": {} },
-    "benefits": { "type": "why-bamboo", "settings": {} },
-    "newsletter": { "type": "newsletter", "settings": {} }
+    "testimonials": {
+      "type": "testimonials",
+      "settings": {
+        "title": "What Mamas are Saying"
+      }
+    },
+    "marquee": {
+      "type": "marquee-new-arrivals",
+      "settings": {
+        "title": "Just Landed"
+      }
+    },
+    "trust_bar": {
+      "type": "trust-bar",
+      "settings": {}
+    },
+    "story": {
+      "type": "founder-story",
+      "settings": {
+        "subtitle": "The Heart of the Hub",
+        "title": "Made by a Mom.",
+        "text": "",
+        "link_label": "Our Story",
+        "link": ""
+      }
+    },
+    "benefits": {
+      "type": "why-bamboo",
+      "settings": {
+        "title": "The Magic of Bamboo"
+      }
+    },
+    "newsletter": {
+      "type": "newsletter",
+      "settings": {
+        "title": "Join the Family"
+      }
+    }
   },
   "order": [
     "hero",
