@@ -20,35 +20,35 @@
 </style>
 
 <section class="gender-split animate-reveal">
-  <!-- The Pink Side (Girls) -->
+  <!-- Girls Side -->
   <a href="{{ section.settings.link_girls | default: '#' }}" class="split-side side--girls">
     <div class="split-img">
       {% if section.settings.image_girls != blank %}
-        <img src="{{ section.settings.image_girls | image_url: width: 1000 }}">
+        <img src="{{ section.settings.image_girls | image_url: width: 1000 }}" alt="Girls Collection">
       {% else %}
         <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=1000">
       {% endif %}
     </div>
     <div class="split-content">
-      <span class="split-subtitle">The Collection</span>
-      <h2 class="split-title">For Her</h2>
-      <span class="split-btn">Shop Girls</span>
+      <span class="split-subtitle">{{ section.settings.subtitle_girls | default: "The Collection" }}</span>
+      <h2 class="split-title">{{ section.settings.title_girls | default: "For Her" }}</h2>
+      <span class="split-btn">{{ section.settings.btn_girls | default: "Shop Girls" }}</span>
     </div>
   </a>
 
-  <!-- The Blue Side (Boys) -->
+  <!-- Boys Side -->
   <a href="{{ section.settings.link_boys | default: '#' }}" class="split-side side--boys">
     <div class="split-img">
       {% if section.settings.image_boys != blank %}
-        <img src="{{ section.settings.image_boys | image_url: width: 1000 }}">
+        <img src="{{ section.settings.image_boys | image_url: width: 1000 }}" alt="Boys Collection">
       {% else %}
         <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=1000">
       {% endif %}
     </div>
     <div class="split-content">
-      <span class="split-subtitle">The Essentials</span>
-      <h2 class="split-title">For Him</h2>
-      <span class="split-btn">Shop Boys</span>
+      <span class="split-subtitle">{{ section.settings.subtitle_boys | default: "The Essentials" }}</span>
+      <h2 class="split-title">{{ section.settings.title_boys | default: "For Him" }}</h2>
+      <span class="split-btn">{{ section.settings.btn_boys | default: "Shop Boys" }}</span>
     </div>
   </a>
 </section>
@@ -57,10 +57,18 @@
 {
   "name": "Gender Split Banner",
   "settings": [
+    { "type": "header", "content": "Girls Section" },
     { "type": "image_picker", "id": "image_girls", "label": "Girls Image" },
-    { "type": "url", "id": "link_girls", "label": "Girls Link" },
+    { "type": "text", "id": "subtitle_girls", "label": "Subtitle", "default": "The Collection" },
+    { "type": "text", "id": "title_girls", "label": "Title", "default": "For Her" },
+    { "type": "text", "id": "btn_girls", "label": "Button Label", "default": "Shop Girls" },
+    { "type": "url", "id": "link_girls", "label": "Link" },
+    { "type": "header", "content": "Boys Section" },
     { "type": "image_picker", "id": "image_boys", "label": "Boys Image" },
-    { "type": "url", "id": "link_boys", "label": "Boys Link" }
+    { "type": "text", "id": "subtitle_boys", "label": "Subtitle", "default": "The Essentials" },
+    { "type": "text", "id": "title_boys", "label": "Title", "default": "For Him" },
+    { "type": "text", "id": "btn_boys", "label": "Button Label", "default": "Shop Boys" },
+    { "type": "url", "id": "link_boys", "label": "Link" }
   ],
   "presets": [
     { "name": "Boutique Gender Split" }

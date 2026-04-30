@@ -24,32 +24,27 @@
     </div>
 
     <div class="categories-list">
-      {%- if section.blocks.size > 0 -%}
-        {%- for block in section.blocks -%}
-          <a href="{{ block.settings.link | default: '#' }}" class="category-item animate-reveal">
-            <div class="category-img-wrap">
-              {% if block.settings.image != blank %}
-                <img src="{{ block.settings.image | image_url: width: 400 }}" class="category-img">
-              {% else %}
-                <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=400" class="category-img">
-              {% endif %}
-            </div>
-            <span class="category-title">{{ block.settings.title }}</span>
-          </a>
-        {%- endfor -%}
+      {%- for block in section.blocks -%}
+        <a href="{{ block.settings.link | default: '#' }}" class="category-item animate-reveal" {{ block.shopify_attributes }}>
+          <div class="category-img-wrap">
+            {% if block.settings.image != blank %}
+              <img src="{{ block.settings.image | image_url: width: 400 }}" class="category-img" alt="{{ block.settings.title }}">
+            {% else %}
+              <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=400" class="category-img">
+            {% endif %}
+          </div>
+          <span class="category-title">{{ block.settings.title }}</span>
+        </a>
       {%- else -%}
-        {% comment %} Demo Categories {% endcomment %}
-        {%- assign demo_titles = "Sleep Bags,Pajamas,Bodysuits,Newborn,Baby,Toddler" | split: "," -%}
-        {%- assign demo_links = "/pages/sleep-bags,/pages/pajamas,/pages/bodysuits,/pages/newborn,/pages/baby,/pages/toddler" | split: "," -%}
-        {%- for title in demo_titles -%}
-          <a href="{{ demo_links[forloop.index0] }}" class="category-item">
+        {%- for i in (1..6) -%}
+          <div class="category-item">
             <div class="category-img-wrap">
               <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=400" class="category-img">
             </div>
-            <span class="category-title">{{ title }}</span>
-          </a>
+            <span class="category-title">Category {{ i }}</span>
+          </div>
         {%- endfor -%}
-      {%- endif -%}
+      {%- endfor -%}
     </div>
   </div>
 </section>
@@ -72,7 +67,14 @@
     }
   ],
   "presets": [
-    { "name": "Boutique Categories Grid" }
+    {
+      "name": "Boutique Categories Grid",
+      "blocks": [
+        { "type": "category", "settings": { "title": "Sleep Bags" } },
+        { "type": "category", "settings": { "title": "Pajamas" } },
+        { "type": "category", "settings": { "title": "Bodysuits" } }
+      ]
+    }
   ]
 }
 {% endschema %}
