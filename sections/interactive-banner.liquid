@@ -1,0 +1,42 @@
+<style>
+  .int-banner { height: 400px; position: relative; background: var(--color-background); display: flex; align-items: center; justify-content: center; overflow: hidden; margin-bottom: 60px; }
+  .int-bg { position: absolute; inset: 0; z-index: 1; }
+  .int-bg img { width: 100%; height: 100%; object-fit: cover; opacity: 0.4; }
+  .int-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f4f4f4; color: #ccc; opacity: 0.5; }
+  
+  .int-content { position: relative; z-index: 2; text-align: center; }
+  .int-title { font-family: var(--font-heading); font-size: 4rem; color: #1a1a1a; margin: 0; }
+  .int-breadcrumb { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #888; margin-bottom: 15px; display: block; }
+
+  @media (max-width: 768px) { .int-banner { height: 300px; } .int-title { font-size: 2.5rem; } }
+</style>
+
+<section class="int-banner">
+  <div class="int-bg">
+    {% if section.settings.image != blank %}
+      <img src="{{ section.settings.image | image_url: width: 2000 }}" alt="{{ section.settings.title }}">
+    {% else %}
+      <div class="int-placeholder">
+        {{ 'lifestyle-1' | placeholder_svg_tag }}
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="int-content animate-reveal">
+    <span class="int-breadcrumb">Shop / Collection</span>
+    <h1 class="int-title">{{ section.settings.title | default: collection.title | default: "Our Collection" }}</h1>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Interactive Banner",
+  "settings": [
+    { "type": "image_picker", "id": "image", "label": "Background Image" },
+    { "type": "text", "id": "title", "label": "Heading" }
+  ],
+  "presets": [
+    { "name": "Boutique Category Banner" }
+  ]
+}
+{% endschema %}

@@ -1,116 +1,61 @@
 <style>
-  .product-page { padding: 60px 0 120px; background: #fff; }
-  .product-layout { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 80px; align-items: start; }
+  .product-page { padding: 60px 0; background: #fff; }
+  .product-layout { display: grid; grid-template-columns: 1.2fr 1fr; gap: 80px; }
   
-  /* Gallery - Kyte Style */
-  .product-gallery { display: flex; flex-direction: column; gap: 20px; }
-  .product-gallery img { width: 100%; border-radius: 20px; background: #f9f9f9; display: block; }
+  .product-media { position: sticky; top: 120px; }
+  .product-img-wrap { border-radius: 24px; overflow: hidden; background: #f9f9f9; aspect-ratio: 4/5; }
+  .product-img { width: 100%; height: 100%; object-fit: cover; }
   
-  /* Sticky Info Area */
-  .product-info-sticky { position: sticky; top: 120px; }
+  .product-info { padding: 20px 0; }
+  .product-vendor { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-primary); margin-bottom: 10px; display: block; }
+  .product-title { font-family: var(--font-heading); font-size: 3rem; color: #1a1a1a; margin-bottom: 15px; }
+  .product-price { font-size: 1.5rem; font-weight: 700; color: #1a1a1a; margin-bottom: 30px; display: block; }
   
-  .product-title { font-family: var(--font-heading); font-size: 2.8rem; font-weight: 400; color: #1a1a1a; margin-bottom: 10px; }
-  .product-price { font-size: 1.5rem; font-weight: 700; color: #1a1a1a; margin-bottom: 30px; }
+  .product-description { font-size: 1rem; line-height: 1.8; color: #666; margin-bottom: 40px; }
   
-  /* TOG Rating Badge */
-  .tog-badge { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; background: #fdfdfd; border: 1px solid #eee; border-radius: 40px; margin-bottom: 30px; }
-  .tog-circle { width: 32px; height: 32px; border-radius: 50%; background: #1a1a1a; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 0.75rem; font-weight: 800; }
-  .tog-text { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: #888; }
+  .add-to-cart-btn { width: 100%; padding: 20px; background: var(--color-primary); color: #fff; border: none; border-radius: 50px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: all 0.3s; }
+  .add-to-cart-btn:hover { transform: scale(1.02); box-shadow: 0 15px 30px rgba(255,140,105,0.2); }
 
-  /* Product Options */
-  .option-label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #999; margin-bottom: 15px; display: block; }
-  .size-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 10px; margin-bottom: 30px; }
-  .size-btn { padding: 15px; border: 1px solid #eee; border-radius: 12px; font-size: 0.85rem; font-weight: 700; background: #fff; cursor: pointer; transition: all 0.3s; }
-  .size-btn:hover { border-color: #1a1a1a; }
-  .size-btn.active { background: #1a1a1a; color: #fff; border-color: #1a1a1a; }
-
-  /* Accordions */
-  .product-accordion { border-top: 1px solid #f4f4f4; margin-top: 40px; }
-  .acc-item { border-bottom: 1px solid #f4f4f4; }
-  .acc-btn { width: 100%; padding: 25px 0; display: flex; justify-content: space-between; align-items: center; background: none; border: none; font-size: 0.85rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #1a1a1a; cursor: pointer; }
-  .acc-btn svg { width: 12px; height: 12px; transition: transform 0.3s; }
-  .acc-item.active .acc-btn svg { transform: rotate(180deg); }
-  .acc-content { max-height: 0; overflow: hidden; transition: max-height 0.4s var(--ease-smooth); color: #666; font-size: 0.95rem; line-height: 1.7; }
-  .acc-item.active .acc-content { max-height: 500px; padding-bottom: 25px; }
-
-  .atc-btn { width: 100%; padding: 20px; background: var(--color-primary); color: #fff; border-radius: 12px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; border: none; cursor: pointer; margin-top: 20px; transition: all 0.3s; }
-  .atc-btn:hover { background: #333; transform: translateY(-2px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
-
-  @media (max-width: 1024px) { .product-layout { grid-template-columns: 1fr; gap: 40px; } .product-info-sticky { position: static; } }
+  @media (max-width: 1024px) { .product-layout { grid-template-columns: 1fr; } .product-media { position: relative; top: 0; } }
 </style>
 
-<div class="product-page container">
-  <div class="product-layout">
-    
-    <!-- Left: Image Gallery -->
-    <div class="product-gallery">
-      {%- if product.images.size > 0 -%}
-        {% for image in product.images %}
-          <img src="{{ image | image_url: width: 1200 }}" alt="{{ product.title }}" loading="lazy">
-        {% endfor %}
-      {%- else -%}
-        <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?auto=format&fit=crop&q=80&w=1200" alt="Boutique Demo 1">
-        <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?auto=format&fit=crop&q=80&w=1200" alt="Boutique Demo 2">
-        <img src="https://images.unsplash.com/photo-1484860137485-0666042bc64d?auto=format&fit=crop&q=80&w=1200" alt="Boutique Demo 3">
-      {%- endif -%}
-    </div>
-
-    <!-- Right: Sticky Info -->
-    <div class="product-info-sticky">
-      <h1 class="product-title">{{ product.title | default: "Bamboo Sleep Bag in Blossom" }}</h1>
-      <p class="product-price">{{ product.price | money | default: "$55.00" }}</p>
-
-      <div class="tog-badge">
-        <div class="tog-circle">1.0</div>
-        <span class="tog-text">TOG RATING</span>
-      </div>
-
-      <div class="product-options">
-        <span class="option-label">Select Size</span>
-        <div class="size-grid">
-          <button class="size-btn">NB</button>
-          <button class="size-btn active">0-3M</button>
-          <button class="size-btn">3-6M</button>
-          <button class="size-btn">6-12M</button>
-          <button class="size-btn">12-18M</button>
+<section class="product-page">
+  <div class="container">
+    <div class="product-layout">
+      <!-- Media -->
+      <div class="product-media animate-reveal">
+        <div class="product-img-wrap">
+          {% if product.featured_image != blank %}
+            <img src="{{ product.featured_image | image_url: width: 1200 }}" class="product-img">
+          {% else %}
+            <div class="product-placeholder" style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#f4f4f4; color:#ccc;">
+              {{ 'product-1' | placeholder_svg_tag }}
+            </div>
+          {% endif %}
         </div>
       </div>
 
-      <button class="atc-btn" data-variant-id="{{ product.selected_or_first_available_variant.id }}">Add to Bag</button>
+      <!-- Info -->
+      <div class="product-info animate-reveal">
+        <span class="product-vendor">{{ product.vendor | default: "Rainbow Kids Hub" }}</span>
+        <h1 class="product-title">{{ product.title | default: "Bamboo Sleep Bag" }}</h1>
+        <span class="product-price">{{ product.price | money | default: "$55.00" }}</span>
+        
+        <div class="product-description">
+          {{ product.description | default: "Experience the ultimate in baby comfort with our signature bamboo apparel. Breathable, hypoallergenic, and buttery soft." }}
+        </div>
 
-      <div class="product-accordion">
-        <div class="acc-item active">
-          <button class="acc-btn" onclick="this.parentElement.classList.toggle('active')">Details <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-          <div class="acc-content">
-            <p>Our signature bamboo fabric is buttery soft, breathable, and perfect for sensitive skin. Designed for safety and style.</p>
-            <ul>
-              <li>Dual zipper for easy diaper changes</li>
-              <li>Breathable, temperature-regulating fabric</li>
-              <li>Stretchy fit to grow with your baby</li>
-            </ul>
-          </div>
-        </div>
-        <div class="acc-item">
-          <button class="acc-btn" onclick="this.parentElement.classList.toggle('active')">Fabric & Care <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-          <div class="acc-content">
-            <p>97% Bamboo Rayon, 3% Spandex. Machine wash cold, gentle cycle. Hang to dry for best results.</p>
-          </div>
-        </div>
-        <div class="acc-item">
-          <button class="acc-btn" onclick="this.parentElement.classList.toggle('active')">Shipping <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg></button>
-          <div class="acc-content">
-            <p>Free shipping on orders over $100. Standard shipping takes 3-5 business days.</p>
-          </div>
+        <button class="add-to-cart-btn">Add to Cart</button>
+        
+        <div style="margin-top:40px; border-top:1px solid #eee; padding-top:40px;">
+          <p style="font-size:0.8rem; font-weight:800; text-transform:uppercase; color:#1a1a1a; margin-bottom:15px;">Shipping & Returns</p>
+          <p style="font-size:0.9rem; color:#888;">Free shipping on orders over $85. 30-day easy returns for all unworn items.</p>
         </div>
       </div>
     </div>
-
   </div>
-</div>
+</section>
 
 {% schema %}
-{
-  "name": "Boutique Product",
-  "settings": []
-}
+{ "name": "Main Product", "settings": [] }
 {% endschema %}

@@ -1,0 +1,62 @@
+<style>
+  .contact-page { padding: 100px 0; background: var(--color-background); }
+  .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; }
+  
+  .contact-info { padding: 60px; background: #fff; border-radius: 40px; box-shadow: 0 40px 100px rgba(0,0,0,0.05); }
+  .contact-title { font-family: var(--font-heading); font-size: 2.5rem; color: #1a1a1a; margin-bottom: 30px; }
+  .contact-item { margin-bottom: 30px; }
+  .contact-item__label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-primary); display: block; margin-bottom: 10px; }
+  .contact-item__text { font-size: 1.1rem; color: #1a1a1a; }
+
+  .contact-form { background: #fff; padding: 60px; border-radius: 40px; box-shadow: 0 40px 100px rgba(0,0,0,0.05); }
+  .form-group { margin-bottom: 25px; }
+  .form-label { display: block; font-size: 0.8rem; font-weight: 800; margin-bottom: 10px; color: #1a1a1a; text-transform: uppercase; }
+  .form-input { width: 100%; padding: 15px 20px; border: 2px solid #f4f4f4; border-radius: 12px; outline: none; transition: border-color 0.3s; }
+  .form-input:focus { border-color: var(--color-primary); }
+</style>
+
+<section class="contact-page">
+  <div class="container">
+    <div class="contact-grid">
+      <!-- Info -->
+      <div class="contact-info animate-reveal">
+        <h1 class="contact-title">{{ section.settings.title | default: "We're here to help." }}</h1>
+        <div class="contact-item">
+          <span class="contact-item__label">Email Us</span>
+          <span class="contact-item__text">hello@rainbowkidshub.com</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item__label">Follow Us</span>
+          <span class="contact-item__text">@rainbowkidshub</span>
+        </div>
+        <div class="contact-item">
+          <span class="contact-item__label">Hours</span>
+          <span class="contact-item__text">Mon - Fri: 9am - 5pm EST</span>
+        </div>
+      </div>
+
+      <!-- Form -->
+      <div class="contact-form animate-reveal">
+        <form>
+          <div class="form-group">
+            <label class="form-label">Full Name</label>
+            <input type="text" class="form-input" placeholder="Your Name">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email Address</label>
+            <input type="email" class="form-input" placeholder="your@email.com">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Message</label>
+            <textarea class="form-input" rows="5" placeholder="How can we help?"></textarea>
+          </div>
+          <button type="submit" class="hero-btn" style="width:100%; border:none;">Send Message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{ "name": "Contact Page", "settings": [] }
+{% endschema %}
