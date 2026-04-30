@@ -6,22 +6,17 @@
   .sidebar-title { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; margin-bottom: 25px; display: block; }
   
   .filter-list { list-style: none; padding: 0; margin: 0; }
-  .filter-item { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; font-size: 0.95rem; color: #666; cursor: pointer; }
+  .filter-link { display: block; padding: 10px 0; font-size: 0.95rem; color: #666; text-decoration: none; transition: color 0.3s; }
+  .filter-link:hover, .filter-link.active { color: var(--color-primary); font-weight: 700; }
   
-  .swatch-list { display: flex; gap: 12px; flex-wrap: wrap; }
-  .swatch { width: 30px; height: 30px; border-radius: 50%; border: 1px solid #eee; cursor: pointer; transition: transform 0.2s; }
-  .swatch:hover { transform: scale(1.2); }
-  
-  .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-  .product-card { text-decoration: none; display: block; }
-  .product-card__img { aspect-ratio: 4/5; border-radius: 12px; overflow: hidden; background: #f9f9f9; margin-bottom: 15px; position: relative; }
-  .product-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f4f4f4; color: #ccc; }
-  
-  .badge { position: absolute; top: 15px; right: 15px; padding: 5px 12px; border-radius: 50px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; color: #fff; z-index: 2; }
-  .badge--new { background: #B5EAD7; color: #1a1a1a; }
-  .badge--sale { background: #FF9AA2; }
-  .badge--limit { background: #C7CEEA; color: #1a1a1a; }
+  /* Elite Sort By */
+  .elite-sort { position: relative; display: flex; align-items: center; gap: 15px; }
+  .elite-sort__label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #999; }
+  .elite-sort__select { background: none; border: none; border-bottom: 1.5px solid #1a1a1a; padding: 5px 20px 5px 0; font-weight: 800; font-size: 0.85rem; text-transform: uppercase; cursor: pointer; outline: none; }
 
+  .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  .product-card__img { aspect-ratio: 4/5; border-radius: 12px; overflow: hidden; background: #f9f9f9; margin-bottom: 15px; position: relative; }
+  
   @media (max-width: 1024px) { .collection-layout { grid-template-columns: 1fr; } .product-grid { grid-template-columns: repeat(2, 1fr); } }
 </style>
 
@@ -31,42 +26,55 @@
       <!-- Sidebar -->
       <aside class="collection-sidebar animate-reveal">
         <div class="sidebar-section">
-          <span class="sidebar-title">Availability</span>
-          <div class="filter-item"><input type="checkbox" checked> In Stock</div>
-          <div class="filter-item"><input type="checkbox"> Out of Stock</div>
+          <span class="sidebar-title">Category</span>
+          <div class="filter-list">
+            <a href="/pages/sleep-bags" class="filter-link {% if section.settings.active_category == 'sleep-bags' %}active{% endif %}">Sleep Bags</a>
+            <a href="/pages/pajamas" class="filter-link {% if section.settings.active_category == 'pajamas' %}active{% endif %}">Pajamas</a>
+            <a href="/pages/bodysuits" class="filter-link {% if section.settings.active_category == 'bodysuits' %}active{% endif %}">Bodysuits</a>
+            <a href="/pages/newborn" class="filter-link {% if section.settings.active_category == 'newborn' %}active{% endif %}">Newborn</a>
+          </div>
         </div>
         
         <div class="sidebar-section">
-          <span class="sidebar-title">Color Palette</span>
-          <div class="swatch-list">
-            <div class="swatch" style="background: #F8D7E3;" title="Soft Pink"></div>
-            <div class="swatch" style="background: #D7E9F8;" title="Sky Blue"></div>
-            <div class="swatch" style="background: #E3D7F8;" title="Lavender"></div>
-            <div class="swatch" style="background: #F8E5D7;" title="Peach"></div>
-            <div class="swatch" style="background: #D7F8E9;" title="Mint"></div>
+          <span class="sidebar-title">Availability</span>
+          <div style="display:flex; flex-direction:column; gap:10px;">
+            <label style="display:flex; align-items:center; gap:10px; font-size:0.9rem; cursor:pointer;"><input type="checkbox" checked> In Stock</label>
+            <label style="display:flex; align-items:center; gap:10px; font-size:0.9rem; cursor:pointer;"><input type="checkbox"> Out of Stock</label>
           </div>
         </div>
 
         <div class="sidebar-section">
-          <span class="sidebar-title">Category</span>
-          <div class="filter-list">
-            <a href="/pages/sleep-bags" class="mega-link">Sleep Bags</a>
-            <a href="/pages/pajamas" class="mega-link">Pajamas</a>
-            <a href="/pages/bodysuits" class="mega-link">Bodysuits</a>
+          <span class="sidebar-title">Color Palette</span>
+          <div style="display:flex; gap:10px; flex-wrap:wrap;">
+            <div style="width:25px; height:25px; border-radius:50%; background:#F8D7E3; border:1px solid #eee; cursor:pointer;"></div>
+            <div style="width:25px; height:25px; border-radius:50%; background:#D7E9F8; border:1px solid #eee; cursor:pointer;"></div>
+            <div style="width:25px; height:25px; border-radius:50%; background:#E3D7F8; border:1px solid #eee; cursor:pointer;"></div>
           </div>
         </div>
       </aside>
 
       <!-- Main Grid -->
       <main class="collection-main">
-        <div style="margin-bottom: 40px; display: flex; justify-content: space-between; align-items: baseline;">
-          <h1 style="font-family: var(--font-heading); font-size: 4rem; margin: 0;">{{ collection.title | default: "Products" }}</h1>
-          <span style="font-size: 0.9rem; color: #999;">{{ collection.products_count | default: 5 }} Items</span>
+        <div style="margin-bottom: 60px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h1 style="font-family: var(--font-heading); font-size: 3.5rem; margin: 0;">{{ section.settings.title | default: collection.title | default: "Our Shop" }}</h1>
+          </div>
+          
+          <div class="elite-sort">
+            <span class="elite-sort__label">Sort By</span>
+            <select class="elite-sort__select">
+              <option>Bestsellers</option>
+              <option>Newest First</option>
+              <option>Price: Low to High</option>
+              <option>Price: High to Low</option>
+            </select>
+          </div>
         </div>
 
         <div class="product-grid">
-          {%- if collection.products.size > 0 -%}
-            {%- for product in collection.products -%}
+          {%- assign target_collection = section.settings.collection | default: collection -%}
+          {%- if target_collection.products.size > 0 -%}
+            {%- for product in target_collection.products -%}
               <a href="{{ product.url }}" class="product-card animate-reveal">
                 <div class="product-card__img">
                   <img src="{{ product.featured_image | image_url: width: 800 }}" style="width:100%; height:100%; object-fit:cover;">
@@ -79,14 +87,11 @@
             {%- for i in (1..6) -%}
               <div class="product-card animate-reveal">
                 <div class="product-card__img">
-                  <div class="product-placeholder">
+                  <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#f4f4f4; color:#ccc;">
                     {{ 'product-' | append: i | placeholder_svg_tag }}
                   </div>
-                  {%- if i == 1 -%}<span class="badge badge--new">New</span>{%- endif -%}
-                  {%- if i == 2 -%}<span class="badge badge--sale">Sale</span>{%- endif -%}
-                  {%- if i == 3 -%}<span class="badge badge--limit">Limit</span>{%- endif -%}
                 </div>
-                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; margin: 0 0 5px;">Bamboo Apparel {{ i }}</h3>
+                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; margin: 0 0 5px;">Boutique Apparel {{ i }}</h3>
                 <p style="font-weight: 700; color: var(--color-primary);">$55.00</p>
               </div>
             {%- endfor -%}
@@ -98,5 +103,24 @@
 </section>
 
 {% schema %}
-{ "name": "Elite Collection Grid", "settings": [] }
+{
+  "name": "Elite Collection Grid",
+  "settings": [
+    { "type": "text", "id": "title", "label": "Custom Heading" },
+    { "type": "collection", "id": "collection", "label": "Select Collection" },
+    {
+      "type": "select",
+      "id": "active_category",
+      "label": "Active Sidebar Link",
+      "options": [
+        { "value": "none", "label": "None" },
+        { "value": "sleep-bags", "label": "Sleep Bags" },
+        { "value": "pajamas", "label": "Pajamas" },
+        { "value": "bodysuits", "label": "Bodysuits" },
+        { "value": "newborn", "label": "Newborn" }
+      ],
+      "default": "none"
+    }
+  ]
+}
 {% endschema %}
