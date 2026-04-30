@@ -1,7 +1,21 @@
 {
   "sections": {
-    "banner": { "type": "interactive-banner", "settings": { "title": "Wholesale" } },
-    "content": { "type": "image-with-text", "settings": { "title": "Partner with Us", "text": "Interested in carrying Rainbow Kids Hub in your boutique? Contact our wholesale team today." } }
+    "banner": {
+      "type": "interactive-banner",
+      "settings": {
+        "title": "Wholesale"
+      }
+    },
+    "content": {
+      "type": "image-with-text",
+      "settings": {
+        "title": "Boutique Partnerships",
+        "text": "Apply to carry our rainbow collection in your store."
+      }
+    }
   },
-  "order": ["banner", "content"]
+  "order": [
+    "banner",
+    "content"
+  ]
 }
