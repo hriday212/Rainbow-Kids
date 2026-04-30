@@ -2,35 +2,36 @@
   .image-with-text { padding: 100px 0; background: #fff; }
   .iwt-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
   
-  .iwt-image-wrap { border-radius: 30px; overflow: hidden; box-shadow: 0 30px 60px rgba(0,0,0,0.05); aspect-ratio: 1/1; }
-  .iwt-image { width: 100%; height: 100%; object-fit: cover; }
+  .iwt-img-wrap { border-radius: 40px; overflow: hidden; box-shadow: 0 40px 80px rgba(0,0,0,0.05); aspect-ratio: 1/1; }
+  .iwt-img { width: 100%; height: 100%; object-fit: cover; }
+  .iwt-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f4f4f4; color: #ccc; }
   
   .iwt-content { padding: 40px; }
-  .iwt-subtitle { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-primary); margin-bottom: 20px; display: block; }
-  .iwt-title { font-family: var(--font-heading); font-size: 3.5rem; color: #1a1a1a; margin-bottom: 30px; line-height: 1.1; }
+  .iwt-title { font-family: var(--font-heading); font-size: 3rem; color: #1a1a1a; margin-bottom: 25px; line-height: 1.1; }
   .iwt-text { font-size: 1.1rem; line-height: 1.8; color: #666; margin-bottom: 40px; }
 
-  @media (max-width: 1024px) { .iwt-grid { grid-template-columns: 1fr; gap: 40px; text-align: center; } .iwt-image-wrap { aspect-ratio: 16/9; } }
+  @media (max-width: 1024px) { .iwt-grid { grid-template-columns: 1fr; text-align: center; gap: 40px; } }
 </style>
 
 <section class="image-with-text">
   <div class="container">
     <div class="iwt-grid">
-      <div class="iwt-image-wrap animate-reveal">
-        {%- if section.settings.image != blank -%}
-          <img src="{{ section.settings.image | image_url: width: 1000 }}" class="iwt-image">
-        {%- else -%}
-          <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=1000" class="iwt-image" alt="Boutique Demo">
-        {%- endif -%}
+      <div class="iwt-img-wrap animate-reveal">
+        {% if section.settings.image != blank %}
+          <img src="{{ section.settings.image | image_url: width: 1000 }}" class="iwt-img" alt="{{ section.settings.title }}">
+        {% else %}
+          <div class="iwt-placeholder">
+            {{ 'image' | placeholder_svg_tag }}
+          </div>
+        {% endif %}
       </div>
       
-      <div class="iwt-content animate-reveal" data-aos="fade-left">
-        <span class="iwt-subtitle">{{ section.settings.subtitle | default: "Our Promise" }}</span>
+      <div class="iwt-content animate-reveal">
         <h2 class="iwt-title">{{ section.settings.title | default: "Quality you can feel." }}</h2>
-        <p class="iwt-text">
-          {{ section.settings.text | default: "We believe that every baby deserves the softest, safest fabrics. Our boutique collection is curated with love, ensuring only the highest quality bamboo reaches your little one's skin." }}
-        </p>
-        <a href="{{ section.settings.link | default: '/collections/all' }}" class="hero-btn">Explore More</a>
+        <p class="iwt-text">{{ section.settings.text | default: "Our bamboo is specifically sourced for its buttery softness and durability. Made for the most sensitive skin, because your little one deserves the best." }}</p>
+        {% if section.settings.button_label != blank %}
+          <a href="{{ section.settings.button_link }}" class="hero-btn">{{ section.settings.button_label }}</a>
+        {% endif %}
       </div>
     </div>
   </div>
@@ -41,10 +42,10 @@
   "name": "Image with Text",
   "settings": [
     { "type": "image_picker", "id": "image", "label": "Image" },
-    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Our Promise" },
-    { "type": "text", "id": "title", "label": "Title", "default": "Quality you can feel." },
-    { "type": "textarea", "id": "text", "label": "Text", "default": "We believe that every baby deserves the softest, safest fabrics." },
-    { "type": "url", "id": "link", "label": "Button Link" }
+    { "type": "text", "id": "title", "label": "Heading", "default": "Quality you can feel." },
+    { "type": "textarea", "id": "text", "label": "Text", "default": "Our bamboo is specifically sourced for its buttery softness." },
+    { "type": "text", "id": "button_label", "label": "Button Label", "default": "Learn More" },
+    { "type": "url", "id": "button_link", "label": "Button Link" }
   ],
   "presets": [
     { "name": "Boutique Image with Text" }

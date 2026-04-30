@@ -7,7 +7,8 @@
   .category-item { text-align: center; text-decoration: none; width: 140px; }
   
   .category-img-wrap { width: 140px; height: 140px; border-radius: 50%; overflow: hidden; background: var(--color-background); margin-bottom: 15px; border: 4px solid #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.05); transition: all 0.3s var(--ease-smooth); }
-  .category-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
+  .category-img, .category-placeholder { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; display: flex; align-items: center; justify-content: center; background: #f4f4f4; color: #ccc; }
+  .category-placeholder svg { width: 60%; height: 60%; }
   
   .category-item:hover .category-img-wrap { transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.1); border-color: var(--color-primary); }
   .category-item:hover .category-img { transform: scale(1.1); }
@@ -30,7 +31,9 @@
             {% if block.settings.image != blank %}
               <img src="{{ block.settings.image | image_url: width: 400 }}" class="category-img" alt="{{ block.settings.title }}">
             {% else %}
-              <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=400" class="category-img">
+              <div class="category-placeholder">
+                {{ 'collection-1' | placeholder_svg_tag }}
+              </div>
             {% endif %}
           </div>
           <span class="category-title">{{ block.settings.title }}</span>
@@ -39,7 +42,9 @@
         {%- for i in (1..6) -%}
           <div class="category-item">
             <div class="category-img-wrap">
-              <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=400" class="category-img">
+              <div class="category-placeholder">
+                {{ 'collection-' | append: i | placeholder_svg_tag }}
+              </div>
             </div>
             <span class="category-title">Category {{ i }}</span>
           </div>
