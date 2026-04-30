@@ -1,8 +1,14 @@
 {
   "sections": {
-    "header": { "type": "interactive-banner", "settings": { "title": "Bamboo Sleep Bags" } },
-    "marquee": { "type": "marquee-new-arrivals", "settings": { "title": "New in Sleep" } },
-    "grid": { "type": "main-collection", "settings": {} }
+    "banner": { "type": "interactive-banner", "settings": { "title": "Sleep Bags" } },
+    "marquee": { "type": "marquee-new-arrivals", "settings": {} },
+    "grid": { "type": "main-collection", "settings": {} },
+    "benefits": { "type": "why-bamboo", "settings": {} }
   },
-  "order": [ "header", "marquee", "grid" ]
+  "order": [
+    "banner",
+    "marquee",
+    "grid",
+    "benefits"
+  ]
 }

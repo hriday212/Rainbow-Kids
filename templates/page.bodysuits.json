@@ -1,7 +1,8 @@
 {
   "sections": {
-    "header": { "type": "interactive-banner", "settings": { "title": "Bamboo Bodysuits" } },
+    "banner": { "type": "interactive-banner", "settings": { "title": "Bodysuits" } },
+    "marquee": { "type": "marquee-new-arrivals", "settings": {} },
     "grid": { "type": "main-collection", "settings": {} }
   },
-  "order": [ "header", "grid" ]
+  "order": ["banner", "marquee", "grid"]
 }

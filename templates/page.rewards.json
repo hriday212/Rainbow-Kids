@@ -1,7 +1,7 @@
 {
   "sections": {
-    "main": { "type": "main-page", "settings": {} },
-    "rewards_info": { "type": "benefits-grid", "settings": { "title": "Boutique Rewards" } }
+    "banner": { "type": "interactive-banner", "settings": { "title": "Rewards" } },
+    "content": { "type": "image-with-text", "settings": { "title": "Join the Rainbow Family", "text": "Earn points for every purchase and unlock exclusive boutique rewards." } }
   },
-  "order": [ "main", "rewards_info" ]
+  "order": ["banner", "content"]
 }

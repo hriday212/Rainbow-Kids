@@ -1,7 +1,7 @@
 {
   "sections": {
-    "main": { "type": "main-page", "settings": {} },
-    "trust_info": { "type": "trust-bar", "settings": {} }
+    "banner": { "type": "interactive-banner", "settings": { "title": "Shipping & Returns" } },
+    "content": { "type": "image-with-text", "settings": { "title": "Our Shipping Policy", "text": "Free shipping on orders over $85. We deliver softness to your door." } }
   },
-  "order": [ "main", "trust_info" ]
+  "order": ["banner", "content"]
 }

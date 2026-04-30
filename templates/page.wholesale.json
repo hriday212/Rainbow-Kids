@@ -1,7 +1,7 @@
 {
   "sections": {
-    "main": { "type": "main-page", "settings": {} },
-    "wholesale_form": { "type": "main-contact", "settings": {} }
+    "banner": { "type": "interactive-banner", "settings": { "title": "Wholesale" } },
+    "content": { "type": "image-with-text", "settings": { "title": "Partner with Us", "text": "Interested in carrying Rainbow Kids Hub in your boutique? Contact our wholesale team today." } }
   },
-  "order": [ "main", "wholesale_form" ]
+  "order": ["banner", "content"]
 }

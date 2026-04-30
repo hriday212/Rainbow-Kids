@@ -1,26 +1,8 @@
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "settings": {}
-    },
-    "founder": {
-      "type": "founder-story",
-      "settings": {}
-    },
-    "bamboo": {
-      "type": "why-bamboo",
-      "settings": {}
-    },
-    "testimonials": {
-      "type": "testimonials",
-      "settings": {}
-    }
+    "banner": { "type": "interactive-banner", "settings": { "title": "Our Story" } },
+    "story": { "type": "founder-story", "settings": {} },
+    "benefits": { "type": "why-bamboo", "settings": {} }
   },
-  "order": [
-    "main",
-    "founder",
-    "bamboo",
-    "testimonials"
-  ]
+  "order": ["banner", "story", "benefits"]
 }

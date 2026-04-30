@@ -1,7 +1,7 @@
 {
   "sections": {
-    "header": { "type": "interactive-banner", "settings": { "title": "The Toddler Shop" } },
+    "banner": { "type": "interactive-banner", "settings": { "title": "Toddler Collection" } },
     "grid": { "type": "main-collection", "settings": {} }
   },
-  "order": [ "header", "grid" ]
+  "order": ["banner", "grid"]
 }

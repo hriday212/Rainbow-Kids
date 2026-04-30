@@ -1,8 +1,9 @@
 {
   "sections": {
-    "header": { "type": "interactive-banner", "settings": { "title": "The Newborn Shop" } },
+    "banner": { "type": "interactive-banner", "settings": { "title": "Newborn Essentials" } },
+    "marquee": { "type": "marquee-new-arrivals", "settings": {} },
     "grid": { "type": "main-collection", "settings": {} },
-    "story": { "type": "founder-story", "settings": { "subtitle": "Made for your newest arrival" } }
+    "benefits": { "type": "why-bamboo", "settings": {} }
   },
-  "order": [ "header", "grid", "story" ]
+  "order": ["banner", "marquee", "grid", "benefits"]
 }
