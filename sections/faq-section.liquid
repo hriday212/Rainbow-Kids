@@ -16,13 +16,13 @@
 
 <section class="faq-section">
   <div class="container">
-    <div class="faq-header animate-reveal">
+    <div class="faq-header">
       <h2 class="faq-title">Frequently Asked Questions</h2>
     </div>
 
     <div class="faq-container">
       {%- for block in section.blocks -%}
-        <div class="faq-item animate-reveal" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 100 }}">
+        <div class="faq-item" data-aos="fade-up" data-aos-delay="{{ forloop.index | times: 100 }}">
           <button class="faq-question" onclick="this.parentElement.classList.toggle('active'); var ans = this.nextElementSibling; if(ans.style.maxHeight){ans.style.maxHeight=null}else{ans.style.maxHeight=ans.scrollHeight+'px'}">
             {{ block.settings.question }}
             <svg viewBox="0 0 10 6" fill="none"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>

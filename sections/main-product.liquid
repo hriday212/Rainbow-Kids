@@ -23,7 +23,7 @@
   <div class="container">
     <div class="product-layout">
       <!-- Media -->
-      <div class="product-media animate-reveal">
+      <div class="product-media">
         <div class="product-img-wrap">
           {% if product.featured_image != blank %}
             <img src="{{ product.featured_image | image_url: width: 1200 }}" class="product-img">
@@ -36,7 +36,7 @@
       </div>
 
       <!-- Info -->
-      <div class="product-info animate-reveal">
+      <div class="product-info">
         <span class="product-vendor">{{ product.vendor | default: "Rainbow Kids Hub" }}</span>
         <h1 class="product-title">{{ product.title | default: "Bamboo Sleep Bag" }}</h1>
         <span class="product-price">{{ product.price | money | default: "$55.00" }}</span>

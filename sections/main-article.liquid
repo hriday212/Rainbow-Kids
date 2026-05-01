@@ -16,18 +16,18 @@
 
 <article class="article-page">
   <div class="container">
-    <header class="article-header animate-reveal">
+    <header class="article-header">
       <span class="article-date">{{ article.published_at | date: "%B %d, %Y" }}</span>
       <h1 class="article-title">{{ article.title }}</h1>
     </header>
 
     {%- if article.image -%}
-      <img src="{{ article.image | image_url: width: 2000 }}" class="article-featured-img animate-reveal">
+      <img src="{{ article.image | image_url: width: 2000 }}" class="article-featured-img">
     {%- else -%}
       <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=2000" class="article-featured-img">
     {%- endif -%}
 
-    <div class="article-content animate-reveal">
+    <div class="article-content">
       {{ article.content }}
     </div>
 

@@ -7,123 +7,94 @@
   .header__logo-text { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: var(--color-text-dark); line-height: 1; }
   
   .header__nav { display: flex; gap: 30px; align-items: center; }
-  .header__nav-item { position: static; }
+  .header__nav-item { position: relative; }
   .header__nav-link { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-text-light); text-decoration: none; padding: 25px 0; position: relative; display: block; }
   .header__nav-link::after { content: ''; position: absolute; bottom: 20px; left: 0; width: 0; height: 2px; background: var(--color-primary); transition: width 0.3s; }
   .header__nav-item:hover .header__nav-link::after { width: 100%; }
 
   /* Mega Menu Elite */
-  .mega-menu { position: absolute; top: 100%; left: 0; width: 100%; background: #fff; border-top: 1px solid #f4f4f4; box-shadow: 0 40px 100px rgba(0,0,0,0.05); padding: 60px 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; opacity: 0; visibility: hidden; transition: all 0.3s var(--ease-smooth); }
+  .mega-menu { position: absolute; top: 100%; left: -300px; width: 1100px; background: #fff; border-top: 1px solid #f4f4f4; box-shadow: 0 40px 100px rgba(0,0,0,0.05); padding: 60px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; opacity: 0; visibility: hidden; transition: all 0.3s; }
   .header__nav-item:hover .mega-menu { opacity: 1; visibility: visible; }
   
-  .mega-col__title { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; margin-bottom: 25px; display: block; }
-  .mega-link { display: block; font-size: 0.95rem; color: #666; text-decoration: none; margin-bottom: 12px; transition: color 0.3s; }
-  .mega-link:hover { color: var(--color-primary); }
-  
-  .mega-image { position: relative; border-radius: 12px; overflow: hidden; aspect-ratio: 1/1; text-decoration: none; display: block; background: #f4f4f4; }
-  .mega-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s; }
-  .mega-image:hover img { transform: scale(1.1); }
-  .mega-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #ccc; }
-  .mega-placeholder svg { width: 50%; height: 50%; }
+  /* Dropdown Menu */
+  .dropdown-menu { position: absolute; top: 100%; left: 0; width: 220px; background: #fff; border: 1px solid #f4f4f4; box-shadow: 0 20px 50px rgba(0,0,0,0.05); padding: 20px; opacity: 0; visibility: hidden; transition: all 0.3s; display: flex; flex-direction: column; gap: 15px; }
+  .header__nav-item:hover .dropdown-menu { opacity: 1; visibility: visible; }
+  .dropdown-link { font-size: 0.85rem; color: #666; text-decoration: none; transition: color 0.3s; }
+  .dropdown-link:hover { color: var(--color-primary); font-weight: 700; }
 
-  /* Mobile Drawer */
-  .mobile-nav-toggle { display: none; background: none; border: none; font-size: 1.5rem; cursor: pointer; }
-  .mobile-drawer { position: fixed; inset: 0; background: #fff; z-index: 10000; transform: translateX(-100%); transition: transform 0.4s var(--ease-smooth); padding: 40px; display: flex; flex-direction: column; gap: 20px; overflow-y: auto; }
-  .mobile-drawer.active { transform: translateX(0); }
-  .mobile-drawer__close { align-self: flex-end; font-size: 2rem; cursor: pointer; }
-  .mobile-link { font-family: var(--font-heading); font-size: 1.8rem; color: #1a1a1a; text-decoration: none; margin-bottom: 10px; display: block; }
+  .header__actions { display: flex; align-items: center; gap: 15px; }
+  .header__action-btn { background: none; border: none; padding: 8px; cursor: pointer; color: #1a1a1a; display: flex; align-items: center; justify-content: center; transition: color 0.3s; }
+  .header__action-btn:hover { color: var(--color-primary); }
+  .header__action-btn svg { width: 22px; height: 22px; }
 
-  @media (max-width: 1024px) { .header__nav { display: none; } .mobile-nav-toggle { display: block; } .header__logo-text { font-size: 1.2rem; } }
+  @media (max-width: 1024px) { .header__nav { display: none; } }
 </style>
-
-<div class="mobile-drawer" id="MobileDrawer">
-  <span class="mobile-drawer__close" id="MobileClose">&times;</span>
-  <a href="/" class="mobile-link">Home</a>
-  <a href="/collections/all" class="mobile-link">Shop All</a>
-  <a href="/pages/newborn" class="mobile-link">Newborn Essentials</a>
-  <a href="/pages/sleep-bags" class="mobile-link">Sleep Solutions</a>
-  <a href="/pages/pajamas" class="mobile-link">Pajamas</a>
-  <a href="/pages/story" class="mobile-link">Our Story</a>
-  <a href="/pages/contact" class="mobile-link">Support</a>
-</div>
 
 <header class="header">
   <div class="container header__grid">
-    <div style="display:flex; align-items:center; gap:15px;">
-      <button class="mobile-nav-toggle" id="MobileToggle">☰</button>
-      <a href="/" class="header__logo-wrapper">
-        {% if section.settings.logo != blank %}
-          <img src="{{ section.settings.logo | image_url: width: 400 }}" class="header__logo-img" style="width: {{ section.settings.logo_width }}px;" alt="{{ shop.name }}">
-        {% endif %}
-        <span class="header__logo-text">{{ shop.name }}</span>
-      </a>
-    </div>
+    <a href="/" class="header__logo-wrapper">
+      {% if section.settings.logo != blank %}
+        <img src="{{ section.settings.logo | image_url: width: 400 }}" class="header__logo-img" style="width: {{ section.settings.logo_width }}px;" alt="{{ shop.name }}">
+      {% endif %}
+      <span class="header__logo-text">{{ shop.name }}</span>
+    </a>
 
     <nav class="header__nav">
       <div class="header__nav-item">
         <a href="/collections/all" class="header__nav-link">Shop All</a>
         <div class="mega-menu">
-          <div class="container" style="display:grid; grid-template-columns: repeat(4, 1fr); gap:40px; width:100%;">
-            <div>
-              <span class="mega-col__title">Essentials</span>
-              <a href="/pages/sleep-bags" class="mega-link">Sleep Bags</a>
-              <a href="/pages/pajamas" class="mega-link">Pajamas</a>
-              <a href="/pages/bodysuits" class="mega-link">Bodysuits</a>
-            </div>
-            <div>
-              <span class="mega-col__title">Shop by Age</span>
-              <a href="/pages/newborn" class="mega-link">Newborn</a>
-              <a href="/pages/baby" class="mega-link">Baby</a>
-              <a href="/pages/toddler" class="mega-link">Toddler</a>
-            </div>
-            <a href="/pages/sleep-bags" class="mega-image">
-              {% if section.settings.mega_img_1 != blank %}
-                <img src="{{ section.settings.mega_img_1 | image_url: width: 600 }}">
-              {% else %}
-                <div class="mega-placeholder">{{ 'product-1' | placeholder_svg_tag }}</div>
-              {% endif %}
-            </a>
-            <a href="/pages/newborn" class="mega-image">
-              {% if section.settings.mega_img_2 != blank %}
-                <img src="{{ section.settings.mega_img_2 | image_url: width: 600 }}">
-              {% else %}
-                <div class="mega-placeholder">{{ 'product-2' | placeholder_svg_tag }}</div>
-              {% endif %}
-            </a>
+          <div>
+            <span class="mega-col__title">Essentials</span>
+            <a href="/pages/sleep-bags" class="mega-link">Sleep Bags</a>
+            <a href="/pages/pajamas" class="mega-link">Pajamas</a>
+            <a href="/pages/bodysuits" class="mega-link">Bodysuits</a>
+          </div>
+          <div>
+            <span class="mega-col__title">Shop by Age</span>
+            <a href="/pages/newborn" class="mega-link">Newborn</a>
+            <a href="/pages/baby" class="mega-link">Baby</a>
+            <a href="/pages/toddler" class="mega-link">Toddler</a>
+          </div>
+          <div style="grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+             <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-1' | placeholder_svg_tag }}</div>
+             <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-2' | placeholder_svg_tag }}</div>
           </div>
         </div>
       </div>
       <div class="header__nav-item"><a href="/collections/new-arrivals" class="header__nav-link">New Arrivals</a></div>
       <div class="header__nav-item"><a href="/pages/story" class="header__nav-link">Our Story</a></div>
       <div class="header__nav-item"><a href="/pages/contact" class="header__nav-link">Support</a></div>
+      <div class="header__nav-item">
+        <a href="#" class="header__nav-link">More</a>
+        <div class="dropdown-menu">
+          <a href="/blogs/news" class="dropdown-link">The Family Blog</a>
+          <a href="/pages/rewards" class="dropdown-link">Rainbow Rewards</a>
+          <a href="/pages/shipping" class="dropdown-link">Shipping Policy</a>
+          <a href="/pages/wholesale" class="dropdown-link">Wholesale</a>
+        </div>
+      </div>
     </nav>
 
     <div class="header__actions">
-      <a href="/account" class="header__action-btn">👤</a>
-      <button class="header__action-btn" id="SearchToggle">🔍</button>
-      <button class="header__action-btn">🛒</button>
+      <a href="/account" class="header__action-btn" title="Account">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
+      </a>
+      <button class="header__action-btn" title="Search">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
+      </button>
+      <a href="/cart" class="header__action-btn" title="Cart">
+        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>
+      </a>
     </div>
   </div>
 </header>
-
-<script>
-  document.getElementById('MobileToggle')?.addEventListener('click', () => {
-    document.getElementById('MobileDrawer').classList.add('active');
-  });
-  document.getElementById('MobileClose')?.addEventListener('click', () => {
-    document.getElementById('MobileDrawer').classList.remove('active');
-  });
-</script>
 
 {% schema %}
 {
   "name": "Boutique Header",
   "settings": [
     { "type": "image_picker", "id": "logo", "label": "Logo Image" },
-    { "type": "range", "id": "logo_width", "min": 30, "max": 300, "step": 10, "unit": "px", "label": "Logo Width", "default": 60 },
-    { "type": "header", "content": "Mega Menu Images" },
-    { "type": "image_picker", "id": "mega_img_1", "label": "Mega Menu Image 1 (Sleep Bags)" },
-    { "type": "image_picker", "id": "mega_img_2", "label": "Mega Menu Image 2 (Newborn)" }
+    { "type": "range", "id": "logo_width", "min": 30, "max": 300, "step": 10, "unit": "px", "label": "Logo Width", "default": 60 }
   ]
 }
 {% endschema %}

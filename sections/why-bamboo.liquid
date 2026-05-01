@@ -6,13 +6,13 @@
   
   .wb-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
   .wb-item { padding: 60px 40px; border-radius: 30px; background: #fdf8f6; text-align: center; transition: all 0.4s ease; opacity: 1 !important; visibility: visible !important; }
-  .wb-item:hover { transform: translateY(-10px); background: #fff; box-shadow: 0 30px 60px rgba(0,0,0,0.06); }
   
-  .wb-icon { width: 80px; height: 80px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; font-size: 2.2rem; box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
+  .wb-icon { width: 80px; height: 80px; border-radius: 50%; background: #fff; display: flex; align-items: center; justify-content: center; margin: 0 auto 30px; color: var(--color-primary); box-shadow: 0 10px 20px rgba(0,0,0,0.02); }
+  .wb-icon svg { width: 32px; height: 32px; }
   .wb-title { font-family: var(--font-heading); font-size: 1.8rem; color: #1a1a1a; margin-bottom: 15px; }
   .wb-text { font-size: 1rem; color: #777; line-height: 1.8; margin: 0; }
 
-  @media (max-width: 1024px) { .wb-grid { grid-template-columns: 1fr; gap: 30px; } .why-bamboo__title { font-size: 2.5rem; } }
+  @media (max-width: 1024px) { .wb-grid { grid-template-columns: 1fr; gap: 30px; } }
 </style>
 
 <section class="why-bamboo">
@@ -23,53 +23,25 @@
     </div>
 
     <div class="wb-grid">
-      {%- if section.blocks.size > 0 -%}
-        {%- for block in section.blocks -%}
-          <div class="wb-item" {{ block.shopify_attributes }}>
-            <div class="wb-icon">{{ block.settings.icon | default: "✦" }}</div>
-            <h3 class="wb-title">{{ block.settings.title }}</h3>
-            <p class="wb-text">{{ block.settings.text }}</p>
-          </div>
-        {%- endfor -%}
-      {%- else -%}
-        <div class="wb-item">
-          <div class="wb-icon">☀️</div>
-          <h3 class="wb-title">Thermoregulating</h3>
-          <p class="wb-text">Naturally keeps your little one cool in summer and cozy in winter — no overheating, no night wakings.</p>
-        </div>
-        <div class="wb-item">
-          <div class="wb-icon">☁️</div>
-          <h3 class="wb-title">Buttery Soft</h3>
-          <p class="wb-text">Three times softer than cotton. Our bamboo fabric feels like a gentle hug against the most delicate newborn skin.</p>
-        </div>
-        <div class="wb-item">
-          <div class="wb-icon">🌿</div>
-          <h3 class="wb-title">Sustainably Grown</h3>
-          <p class="wb-text">Bamboo grows without pesticides or irrigation. Kind to your baby, and kind to the planet they'll inherit.</p>
-        </div>
-      {%- endif -%}
+      <div class="wb-item">
+        <div class="wb-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386-1.591 1.591M21 12h-2.25m-.386 6.364-1.591-1.591M12 18.75V21m-4.773-4.227-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0Z" /></svg></div>
+        <h3 class="wb-title">Thermoregulating</h3>
+        <p class="wb-text">Naturally keeps your little one cool in summer and cozy in winter — no overheating, no night wakings.</p>
+      </div>
+      <div class="wb-item">
+        <div class="wb-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 15a4.5 4.5 0 0 0 4.5 4.5H18a3.75 3.75 0 0 0 1.332-7.257 3 3 0 0 0-3.758-3.848 5.25 5.25 0 0 0-10.233 2.33A4.502 4.502 0 0 0 2.25 15Z" /></svg></div>
+        <h3 class="wb-title">Buttery Soft</h3>
+        <p class="wb-text">Three times softer than cotton. Our bamboo fabric feels like a gentle hug against the most delicate newborn skin.</p>
+      </div>
+      <div class="wb-item">
+        <div class="wb-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M12 21a9.004 9.004 0 0 0 8.716-6.747M12 21a9.004 9.004 0 0 1-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 0 1 7.843 4.582M12 3a8.997 8.997 0 0 0-7.843 4.582" /></svg></div>
+        <h3 class="wb-title">Eco-Friendly</h3>
+        <p class="wb-text">Bamboo grows without pesticides or irrigation. Kind to your baby, and kind to the planet they'll inherit.</p>
+      </div>
     </div>
   </div>
 </section>
 
 {% schema %}
-{
-  "name": "Why Bamboo",
-  "settings": [
-    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "The Rainbow Difference" },
-    { "type": "text", "id": "title", "label": "Section Heading", "default": "Why Bamboo?" }
-  ],
-  "blocks": [
-    {
-      "type": "benefit",
-      "name": "Benefit Card",
-      "settings": [
-        { "type": "text", "id": "icon", "label": "Icon (emoji)", "default": "✦" },
-        { "type": "text", "id": "title", "label": "Title", "default": "Our Benefit" },
-        { "type": "textarea", "id": "text", "label": "Description", "default": "Tell customers why bamboo is amazing for their baby." }
-      ]
-    }
-  ],
-  "presets": [{ "name": "Boutique Why Bamboo" }]
-}
+{ "name": "Why Bamboo", "settings": [ { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "The Rainbow Difference" }, { "type": "text", "id": "title", "label": "Heading", "default": "Why Bamboo?" } ], "presets": [{ "name": "Boutique Why Bamboo" }] }
 {% endschema %}

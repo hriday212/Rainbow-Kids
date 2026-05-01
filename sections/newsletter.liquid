@@ -1,30 +1,34 @@
 <style>
-  .newsletter { padding: 120px 0; background: var(--color-background); text-align: center; }
-  .news-content { max-width: 700px; margin: 0 auto; background: #fff; padding: 60px; border-radius: 40px; box-shadow: 0 40px 100px rgba(0,0,0,0.05); }
+  .newsletter { padding: 100px 0; background: #fff; text-align: center; }
+  .news-content { max-width: 800px; margin: 0 auto; background: #fdf8f6; padding: 80px 40px; border-radius: 40px; opacity: 1 !important; visibility: visible !important; }
   
-  .news-title { font-family: var(--font-heading); font-size: 3rem; color: #1a1a1a; margin-bottom: 20px; }
-  .news-text { font-size: 1.1rem; color: #666; margin-bottom: 40px; line-height: 1.6; }
+  .news-title { font-family: var(--font-heading); font-size: 3.5rem; color: #1a1a1a; margin-bottom: 20px; line-height: 1.1; }
+  .news-text { font-size: 1.15rem; color: #666; margin-bottom: 45px; line-height: 1.6; max-width: 500px; margin-left: auto; margin-right: auto; }
   
-  .news-form { display: flex; gap: 10px; max-width: 500px; margin: 0 auto; }
-  .news-input { flex: 1; padding: 18px 25px; border: 2px solid #eee; border-radius: 50px; outline: none; font-size: 1rem; transition: border-color 0.3s; }
+  .news-form { display: flex; gap: 15px; max-width: 550px; margin: 0 auto; }
+  .news-input { flex: 1; padding: 22px 30px; border: 2px solid #fff; border-radius: 50px; outline: none; font-size: 1rem; box-shadow: 0 10px 30px rgba(0,0,0,0.03); transition: border-color 0.3s; }
   .news-input:focus { border-color: var(--color-primary); }
-  .news-btn { padding: 18px 40px; background: var(--color-primary); color: #fff; border: none; border-radius: 50px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; cursor: pointer; transition: all 0.3s; }
-  .news-btn:hover { transform: scale(1.05); box-shadow: 0 10px 25px rgba(255,140,105,0.3); }
+  .news-btn { padding: 22px 50px; background: #1a1a1a; color: #fff; border: none; border-radius: 50px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; cursor: pointer; transition: all 0.3s; font-size: 0.85rem; }
+  .news-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 40px rgba(0,0,0,0.15); }
 
-  @media (max-width: 600px) { .news-form { flex-direction: column; } .news-content { padding: 40px 20px; } }
+  @media (max-width: 600px) { 
+    .news-form { flex-direction: column; } 
+    .news-content { padding: 50px 20px; border-radius: 20px; } 
+    .news-title { font-size: 2.2rem; }
+  }
 </style>
 
 <section class="newsletter">
   <div class="container">
-    <div class="news-content animate-reveal">
-      <h2 class="news-title">{{ section.settings.title | default: "Join the Family" }}</h2>
-      <p class="news-text">Get 10% OFF your first order and stay updated on our newest bamboo drops!</p>
+    <div class="news-content">
+      <h2 class="news-title">{{ section.settings.title | default: "Join the Family Hub" }}</h2>
+      <p class="news-text">{{ section.settings.text | default: "Get 15% OFF your first order and stay updated on our newest bamboo drops!" }}</p>
       
       <form action="#" class="news-form">
-        <input type="email" placeholder="Email Address" class="news-input" required>
-        <button type="submit" class="news-btn">Join</button>
+        <input type="email" placeholder="Your Email Address" class="news-input" required>
+        <button type="submit" class="news-btn">Join Now</button>
       </form>
-      <p style="margin-top:20px; font-size:0.75rem; color:#999; text-transform:uppercase; letter-spacing:0.1em;">No spam. Just sweetness.</p>
+      <p style="margin-top:25px; font-size:0.75rem; color:#999; text-transform:uppercase; letter-spacing:0.15em; font-weight:700;">Zero Spam. Just Sweetness.</p>
     </div>
   </div>
 </section>
@@ -33,10 +37,9 @@
 {
   "name": "Boutique Newsletter",
   "settings": [
-    { "type": "text", "id": "title", "label": "Heading", "default": "Join the Family" }
+    { "type": "text", "id": "title", "label": "Heading", "default": "Join the Family Hub" },
+    { "type": "textarea", "id": "text", "label": "Subtext", "default": "Get 15% OFF your first order and stay updated on our newest bamboo drops!" }
   ],
-  "presets": [
-    { "name": "Boutique Newsletter" }
-  ]
+  "presets": [{ "name": "Boutique Newsletter" }]
 }
 {% endschema %}

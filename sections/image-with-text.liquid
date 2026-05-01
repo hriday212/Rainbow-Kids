@@ -17,7 +17,7 @@
 <section class="image-with-text">
   <div class="container">
     <div class="iwt-grid {% if section.settings.layout == 'right' %}iwt--reverse{% endif %}">
-      <div class="iwt-img-wrap animate-reveal">
+      <div class="iwt-img-wrap">
         {% if section.settings.image != blank %}
           <img src="{{ section.settings.image | image_url: width: 1000 }}" class="iwt-img" alt="{{ section.settings.title }}">
         {% else %}
@@ -27,7 +27,7 @@
         {% endif %}
       </div>
       
-      <div class="iwt-content animate-reveal">
+      <div class="iwt-content">
         <h2 class="iwt-title">{{ section.settings.title | default: "Quality you can feel." }}</h2>
         <div class="iwt-text">
           {{ section.settings.text | default: "<p>Our bamboo is specifically sourced for its buttery softness and durability. Made for the most sensitive skin, because your little one deserves the best.</p>" }}

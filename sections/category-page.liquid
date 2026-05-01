@@ -1,33 +1,21 @@
 <style>
   .category-page { padding: 0 0 100px; background: #fff; }
-
-  /* Page Hero */
-  .cat-hero { padding: 80px 0 60px; text-align: center; background: var(--color-background); margin-bottom: 60px; }
+  .cat-hero { padding: 80px 0 60px; text-align: center; background: #fdf8f6; margin-bottom: 60px; opacity: 1 !important; visibility: visible !important; }
   .cat-hero__subtitle { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-primary); display: block; margin-bottom: 16px; }
   .cat-hero__title { font-family: var(--font-heading); font-size: 4rem; color: #1a1a1a; margin-bottom: 20px; }
   .cat-hero__text { font-size: 1.1rem; color: #888; max-width: 560px; margin: 0 auto 35px; line-height: 1.7; }
   .cat-hero__badges { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
   .cat-badge { padding: 8px 20px; background: #fff; border: 1.5px solid #f0f0f0; border-radius: 50px; font-size: 0.78rem; font-weight: 700; color: #666; display: flex; align-items: center; gap: 8px; }
 
-  /* Layout */
   .cat-layout { display: grid; grid-template-columns: 260px 1fr; gap: 60px; }
-
-  /* Sidebar */
   .cat-sidebar__section { margin-bottom: 36px; padding-bottom: 28px; border-bottom: 1px solid #f0f0f0; }
   .cat-sidebar__title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; margin-bottom: 18px; display: block; }
   .cat-filter-link { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; font-size: 0.92rem; color: #666; text-decoration: none; transition: color 0.2s; border-radius: 6px; }
   .cat-filter-link:hover, .cat-filter-link.active { color: var(--color-primary); font-weight: 700; }
   .cat-filter-link.active::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--color-primary); display: inline-block; }
 
-  /* Sort & Grid */
-  .cat-main__topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px; }
-  .cat-count { font-size: 0.85rem; color: #aaa; }
-  .boutique-sort { display: flex; align-items: center; gap: 10px; }
-  .boutique-sort__label { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #999; }
-  .boutique-sort__select { appearance: none; background: none; border: none; border-bottom: 1.5px solid #1a1a1a; padding: 4px 28px 4px 0; font-weight: 700; font-size: 0.82rem; text-transform: uppercase; cursor: pointer; outline: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231a1a1a' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 4px center; }
-
   .cat-product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-  .cat-product-card { text-decoration: none; display: block; }
+  .cat-product-card { text-decoration: none; display: block; opacity: 1 !important; visibility: visible !important; }
   .cat-product-card__img { aspect-ratio: 4/5; border-radius: 16px; overflow: hidden; background: #f9f9f9; margin-bottom: 14px; position: relative; }
   .cat-product-card__img img, .cat-product-card__placeholder { width: 100%; height: 100%; object-fit: cover; }
   .cat-product-card__placeholder { display: flex; align-items: center; justify-content: center; background: #f4f4f4; color: #ddd; }
@@ -36,10 +24,7 @@
   .badge--sale { background: var(--color-primary); color: #fff; }
   .badge--bestseller { background: #FFD700; color: #1a1a1a; }
 
-  .cat-product-card__name { font-family: var(--font-heading); font-size: 1.05rem; color: #1a1a1a; margin-bottom: 4px; }
-  .cat-product-card__price { font-weight: 700; color: var(--color-primary); font-size: 0.9rem; }
-
-  @media (max-width: 1024px) { .cat-layout { grid-template-columns: 1fr; } .cat-product-grid { grid-template-columns: repeat(2, 1fr); } .cat-hero__title { font-size: 2.5rem; } }
+  @media (max-width: 1024px) { .cat-layout { grid-template-columns: 1fr; } .cat-product-grid { grid-template-columns: repeat(2, 1fr); } }
 </style>
 
 {% assign demo_products = "Bamboo Sleep Bag — Classic,Bamboo Sleep Bag — Floral,Bamboo Zip Pajama Set,Long-Sleeve Bodysuit,Newborn Starter Set,Convertible Sleep Bag" | split: "," %}
@@ -47,8 +32,7 @@
 {% assign demo_badges = "new,bestseller,new,,sale," | split: "," %}
 
 <div class="category-page">
-  <!-- Hero -->
-  <div class="cat-hero animate-reveal">
+  <div class="cat-hero">
     <div class="container">
       <span class="cat-hero__subtitle">{{ section.settings.subtitle | default: "Rainbow Kids Hub" }}</span>
       <h1 class="cat-hero__title">{{ section.settings.title | default: collection.title | default: "Our Collection" }}</h1>
@@ -63,7 +47,6 @@
 
   <div class="container">
     <div class="cat-layout">
-      <!-- Sidebar -->
       <aside>
         <div class="cat-sidebar__section">
           <span class="cat-sidebar__title">Categories</span>
@@ -74,47 +57,14 @@
           <a href="/pages/baby" class="cat-filter-link {% if section.settings.active_page == 'baby' %}active{% endif %}">Baby</a>
           <a href="/pages/toddler" class="cat-filter-link {% if section.settings.active_page == 'toddler' %}active{% endif %}">Toddler</a>
         </div>
-
-        <div class="cat-sidebar__section">
-          <span class="cat-sidebar__title">Availability</span>
-          <label style="display:flex; align-items:center; gap:10px; font-size:0.9rem; padding:6px 0; cursor:pointer; color:#666;"><input type="checkbox" checked> In Stock</label>
-          <label style="display:flex; align-items:center; gap:10px; font-size:0.9rem; padding:6px 0; cursor:pointer; color:#666;"><input type="checkbox"> Out of Stock</label>
-        </div>
-
-        <div class="cat-sidebar__section">
-          <span class="cat-sidebar__title">Colour</span>
-          <div style="display:flex; gap:10px; flex-wrap:wrap; padding-top:4px;">
-            <div style="width:28px; height:28px; border-radius:50%; background:#F8D7E3; border:2px solid #fff; box-shadow:0 0 0 1.5px #eee; cursor:pointer;" title="Blush"></div>
-            <div style="width:28px; height:28px; border-radius:50%; background:#D7E9F8; border:2px solid #fff; box-shadow:0 0 0 1.5px #eee; cursor:pointer;" title="Sky"></div>
-            <div style="width:28px; height:28px; border-radius:50%; background:#E3D7F8; border:2px solid #fff; box-shadow:0 0 0 1.5px #eee; cursor:pointer;" title="Lavender"></div>
-            <div style="width:28px; height:28px; border-radius:50%; background:#F8E5D7; border:2px solid #fff; box-shadow:0 0 0 1.5px #eee; cursor:pointer;" title="Peach"></div>
-            <div style="width:28px; height:28px; border-radius:50%; background:#D7F8E9; border:2px solid #fff; box-shadow:0 0 0 1.5px #eee; cursor:pointer;" title="Mint"></div>
-          </div>
-        </div>
       </aside>
 
-      <!-- Products -->
       <main>
-        <div class="cat-main__topbar">
-          <span class="cat-count">
-            {%- assign target = section.settings.collection | default: collection -%}
-            {{ target.products_count | default: 6 }} Items
-          </span>
-          <div class="boutique-sort">
-            <span class="boutique-sort__label">Sort By</span>
-            <select class="boutique-sort__select">
-              <option>Bestsellers</option>
-              <option>Newest First</option>
-              <option>Price: Low to High</option>
-              <option>Price: High to Low</option>
-            </select>
-          </div>
-        </div>
-
         <div class="cat-product-grid">
+          {%- assign target = section.settings.collection | default: collection -%}
           {%- if target.products.size > 0 -%}
             {%- for product in target.products -%}
-              <a href="{{ product.url }}" class="cat-product-card animate-reveal">
+              <a href="{{ product.url }}" class="cat-product-card">
                 <div class="cat-product-card__img">
                   {%- if product.featured_image -%}
                     <img src="{{ product.featured_image | image_url: width: 800 }}" alt="{{ product.title }}">
@@ -122,25 +72,21 @@
                     <div class="cat-product-card__placeholder">{{ 'product-1' | placeholder_svg_tag }}</div>
                   {%- endif -%}
                 </div>
-                <p class="cat-product-card__name">{{ product.title }}</p>
-                <p class="cat-product-card__price">{{ product.price | money }}</p>
+                <p style="font-family: var(--font-heading); font-size: 1.05rem; color: #1a1a1a; margin-bottom: 4px;">{{ product.title }}</p>
+                <p style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem;">{{ product.price | money }}</p>
               </a>
             {%- endfor -%}
           {%- else -%}
             {%- for i in (1..6) -%}
               {%- assign di = forloop.index0 -%}
-              {%- assign pname = demo_products[di] -%}
-              {%- assign pprice = demo_prices[di] -%}
-              {%- assign pbadge = demo_badges[di] -%}
-              <div class="cat-product-card animate-reveal">
+              <div class="cat-product-card">
                 <div class="cat-product-card__img">
                   <div class="cat-product-card__placeholder">{{ 'product-' | append: i | placeholder_svg_tag }}</div>
-                  {%- if pbadge != blank -%}
-                    <span class="cat-product-badge badge--{{ pbadge }}">{{ pbadge }}</span>
-                  {%- endif -%}
+                  {%- assign pbadge = demo_badges[di] -%}
+                  {%- if pbadge != blank -%}<span class="cat-product-badge badge--{{ pbadge }}">{{ pbadge }}</span>{%- endif -%}
                 </div>
-                <p class="cat-product-card__name">{{ pname }}</p>
-                <p class="cat-product-card__price">{{ pprice }}</p>
+                <p style="font-family: var(--font-heading); font-size: 1.05rem; color: #1a1a1a; margin-bottom: 4px;">{{ demo_products[di] }}</p>
+                <p style="font-weight: 700; color: var(--color-primary); font-size: 0.9rem;">{{ demo_prices[di] }}</p>
               </div>
             {%- endfor -%}
           {%- endif -%}
@@ -154,26 +100,13 @@
 {
   "name": "Category Page",
   "settings": [
-    { "type": "text", "id": "subtitle", "label": "Subtitle (above title)", "default": "Rainbow Kids Hub" },
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Rainbow Kids Hub" },
     { "type": "text", "id": "title", "label": "Page Heading", "default": "Our Collection" },
     { "type": "textarea", "id": "description", "label": "Page Description" },
     { "type": "collection", "id": "collection", "label": "Linked Collection" },
-    {
-      "type": "select",
-      "id": "active_page",
-      "label": "Active Sidebar Category",
-      "options": [
-        { "value": "none", "label": "None" },
-        { "value": "sleep-bags", "label": "Sleep Bags" },
-        { "value": "pajamas", "label": "Pajamas" },
-        { "value": "bodysuits", "label": "Bodysuits" },
-        { "value": "newborn", "label": "Newborn" },
-        { "value": "baby", "label": "Baby" },
-        { "value": "toddler", "label": "Toddler" }
-      ],
-      "default": "none"
-    }
-  ],
-  "presets": [{ "name": "Boutique Category Page" }]
+    { "type": "select", "id": "active_page", "label": "Active Sidebar Category", "options": [
+        { "value": "none", "label": "None" }, { "value": "sleep-bags", "label": "Sleep Bags" }, { "value": "pajamas", "label": "Pajamas" }, { "value": "bodysuits", "label": "Bodysuits" }, { "value": "newborn", "label": "Newborn" }, { "value": "baby", "label": "Baby" }, { "value": "toddler", "label": "Toddler" }
+      ], "default": "none" }
+  ]
 }
 {% endschema %}

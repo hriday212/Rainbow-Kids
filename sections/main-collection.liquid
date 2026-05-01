@@ -24,7 +24,7 @@
   <div class="container">
     <div class="collection-layout">
       <!-- Sidebar -->
-      <aside class="collection-sidebar animate-reveal">
+      <aside class="collection-sidebar">
         <div class="sidebar-section">
           <span class="sidebar-title">Category</span>
           <div class="filter-list">
@@ -75,7 +75,7 @@
           {%- assign target_collection = section.settings.collection | default: collection -%}
           {%- if target_collection.products.size > 0 -%}
             {%- for product in target_collection.products -%}
-              <a href="{{ product.url }}" class="product-card animate-reveal">
+              <a href="{{ product.url }}" class="product-card">
                 <div class="product-card__img">
                   <img src="{{ product.featured_image | image_url: width: 800 }}" style="width:100%; height:100%; object-fit:cover;">
                 </div>
@@ -85,7 +85,7 @@
             {%- endfor -%}
           {%- else -%}
             {%- for i in (1..6) -%}
-              <div class="product-card animate-reveal">
+              <div class="product-card">
                 <div class="product-card__img">
                   <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#f4f4f4; color:#ccc;">
                     {{ 'product-' | append: i | placeholder_svg_tag }}

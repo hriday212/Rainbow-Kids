@@ -25,7 +25,7 @@
 
     <div class="blog-grid">
       {%- for article in blog.articles -%}
-        <a href="{{ article.url }}" class="article-card animate-reveal">
+        <a href="{{ article.url }}" class="article-card">
           <div class="article-card__img-wrap">
             <img src="{{ article.image | image_url: width: 800 }}" class="article-card__img" alt="{{ article.title }}">
           </div>
