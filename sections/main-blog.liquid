@@ -1,55 +1,81 @@
 <style>
-  .blog-page { padding: 100px 0; background: #fff; }
-  .blog-header { text-align: center; margin-bottom: 80px; }
-  .blog-title { font-family: var(--font-heading); font-size: 4rem; color: #1a1a1a; margin-bottom: 20px; }
-  
-  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 60px 40px; }
-  .article-card { text-decoration: none; color: inherit; }
-  .article-card__img-wrap { aspect-ratio: 16/10; overflow: hidden; border-radius: 20px; background: #f9f9f9; margin-bottom: 25px; }
-  .article-card__img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s cubic-bezier(0.19, 1, 0.22, 1); }
-  .article-card:hover .article-card__img { transform: scale(1.05); }
-  
-  .article-card__tag { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-primary); margin-bottom: 15px; display: block; }
-  .article-card__title { font-family: var(--font-heading); font-size: 1.6rem; color: #1a1a1a; margin-bottom: 15px; line-height: 1.2; }
-  .article-card__excerpt { font-size: 0.95rem; color: #666; line-height: 1.6; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .blog-page { padding: 80px 0 120px; background: #fff; }
+  .blog-page__header { text-align: center; margin-bottom: 80px; }
+  .blog-page__subtitle { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-primary); margin-bottom: 20px; display: block; }
+  .blog-page__title { font-family: var(--font-heading); font-size: 4.5rem; color: #1a1a1a; margin: 0; }
 
-  @media (max-width: 1024px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .blog-grid { grid-template-columns: 1fr; } }
+  .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 40px; }
+  .article-card { text-decoration: none; display: block; }
+  .article-card__img { aspect-ratio: 16/11; border-radius: 24px; overflow: hidden; background: #fdf8f6; margin-bottom: 25px; position: relative; }
+  .article-card__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s var(--ease-smooth); }
+  .article-card:hover .article-card__img img { transform: scale(1.05); }
+
+  .article-card__tag { position: absolute; top: 20px; left: 20px; background: #fff; padding: 7px 18px; border-radius: 50px; font-size: 0.65rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.12em; color: #1a1a1a; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+  .article-card__info { font-size: 0.75rem; color: var(--color-primary); font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; margin-bottom: 12px; display: block; }
+  .article-card__title { font-family: var(--font-heading); font-size: 1.6rem; color: #1a1a1a; margin-bottom: 15px; line-height: 1.3; }
+  .article-card__excerpt { font-size: 0.95rem; color: #777; line-height: 1.7; margin-bottom: 20px; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; overflow: hidden; }
+  .article-card__link { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; border-bottom: 2px solid #eee; padding-bottom: 4px; display: inline-block; transition: all 0.3s; }
+  .article-card:hover .article-card__link { color: var(--color-primary); border-color: var(--color-primary); }
+
+  @media (max-width: 1024px) { .blog-grid { grid-template-columns: repeat(2, 1fr); } .blog-page__title { font-size: 3rem; } }
+  @media (max-width: 768px) { .blog-grid { grid-template-columns: 1fr; } }
 </style>
 
 <section class="blog-page">
   <div class="container">
-    <header class="blog-header">
-      <h1 class="blog-title">{{ blog.title }}</h1>
-    </header>
+    <div class="blog-page__header">
+      <span class="blog-page__subtitle">{{ section.settings.subtitle | default: "Inside the Hub" }}</span>
+      <h1 class="blog-page__title">{{ section.settings.title | default: "The Family Blog" }}</h1>
+    </div>
 
     <div class="blog-grid">
-      {%- for article in blog.articles -%}
-        <a href="{{ article.url }}" class="article-card">
-          <div class="article-card__img-wrap">
-            <img src="{{ article.image | image_url: width: 800 }}" class="article-card__img" alt="{{ article.title }}">
-          </div>
-          <span class="article-card__tag">{{ article.tags[0] | default: "Parenting" }}</span>
-          <h2 class="article-card__title">{{ article.title }}</h2>
-          <div class="article-card__excerpt">{{ article.excerpt_or_content | strip_html | truncatewords: 30 }}</div>
-        </a>
-      {%- else -%}
-        {% comment %} Demo Articles {% endcomment %}
-        {%- for i in (1..3) -%}
-          <div class="article-card">
-            <div class="article-card__img-wrap">
-              <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=800" class="article-card__img">
+      {%- if blog.articles.size > 0 -%}
+        {%- for article in blog.articles -%}
+          <a href="{{ article.url }}" class="article-card">
+            <div class="article-card__img">
+              {%- if article.image -%}
+                <img src="{{ article.image | image_url: width: 800 }}" alt="{{ article.title }}">
+              {%- else -%}
+                <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; color:#ccc;">{{ 'lifestyle-1' | placeholder_svg_tag }}</div>
+              {%- endif -%}
+              <span class="article-card__tag">Parenting</span>
             </div>
-            <span class="article-card__tag">Life with Bamboo</span>
+            <span class="article-card__info">Life with Bamboo</span>
+            <h2 class="article-card__title">{{ article.title }}</h2>
+            <div class="article-card__excerpt">
+              {%- if article.excerpt.size > 0 -%}
+                {{ article.excerpt | strip_html }}
+              {%- else -%}
+                {{ article.content | strip_html | truncate: 150 }}
+              {%- endif -%}
+            </div>
+            <span class="article-card__link">Read Article</span>
+          </a>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..6) -%}
+          <div class="article-card">
+            <div class="article-card__img">
+              <div style="width:100%; height:100%; display:flex; align-items:center; justify-content:center; background:#f9f9f9; color:#ccc;">{{ 'lifestyle-' | append: i | placeholder_svg_tag }}</div>
+              <span class="article-card__tag">Boutique</span>
+            </div>
+            <span class="article-card__info">Safe Sleep Tips</span>
             <h2 class="article-card__title">5 Tips for a Better Night's Sleep with Your Little One</h2>
-            <div class="article-card__excerpt">Discover how the right bamboo fabric can transform your baby's sleep routine and bring comfort to the whole family...</div>
+            <p class="article-card__excerpt">Discover how the right bamboo fabric can transform your baby's sleep routine and bring comfort to the whole family...</p>
+            <span class="article-card__link">Read Article</span>
           </div>
         {%- endfor -%}
-      {%- endfor -%}
+      {%- endif -%}
     </div>
   </div>
 </section>
 
 {% schema %}
-{ "name": "Boutique Blog", "settings": [] }
+{
+  "name": "Boutique Blog",
+  "settings": [
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Inside the Hub" },
+    { "type": "text", "id": "title", "label": "Page Title", "default": "The Family Blog" }
+  ]
+}
 {% endschema %}

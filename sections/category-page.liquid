@@ -14,15 +14,18 @@
   .cat-filter-link:hover, .cat-filter-link.active { color: var(--color-primary); font-weight: 700; }
   .cat-filter-link.active::after { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--color-primary); display: inline-block; }
 
+  .cat-main__topbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 36px; }
+  .boutique-sort { display: flex; align-items: center; gap: 10px; }
+  .boutique-sort__select { appearance: none; background: none; border: none; border-bottom: 1.5px solid #1a1a1a; padding: 4px 28px 4px 0; font-weight: 700; font-size: 0.82rem; text-transform: uppercase; cursor: pointer; outline: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%231a1a1a' stroke-width='2.5'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 4px center; }
+
   .cat-product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; }
-  .cat-product-card { text-decoration: none; display: block; opacity: 1 !important; visibility: visible !important; }
+  .cat-product-card { text-decoration: none; display: block; }
   .cat-product-card__img { aspect-ratio: 4/5; border-radius: 16px; overflow: hidden; background: #f9f9f9; margin-bottom: 14px; position: relative; }
-  .cat-product-card__img img, .cat-product-card__placeholder { width: 100%; height: 100%; object-fit: cover; }
-  .cat-product-card__placeholder { display: flex; align-items: center; justify-content: center; background: #f4f4f4; color: #ddd; }
+  .cat-product-card__img img { width: 100%; height: 100%; object-fit: cover; }
+  .cat-product-card__placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f4f4f4; color: #ddd; }
   .cat-product-badge { position: absolute; top: 12px; left: 12px; padding: 4px 12px; border-radius: 50px; font-size: 0.62rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.05em; }
   .badge--new { background: #B5EAD7; color: #1a1a1a; }
   .badge--sale { background: var(--color-primary); color: #fff; }
-  .badge--bestseller { background: #FFD700; color: #1a1a1a; }
 
   @media (max-width: 1024px) { .cat-layout { grid-template-columns: 1fr; } .cat-product-grid { grid-template-columns: repeat(2, 1fr); } }
 </style>
@@ -36,7 +39,7 @@
     <div class="container">
       <span class="cat-hero__subtitle">{{ section.settings.subtitle | default: "Rainbow Kids Hub" }}</span>
       <h1 class="cat-hero__title">{{ section.settings.title | default: collection.title | default: "Our Collection" }}</h1>
-      <p class="cat-hero__text">{{ section.settings.description | default: "Crafted from 100% OEKO-TEX certified bamboo. Buttery soft, breathable, and designed for the dreamiest sleep — for babies, toddlers, and everyone in between." }}</p>
+      <p class="cat-hero__text">{{ section.settings.description | default: "Crafted from 100% OEKO-TEX certified bamboo. Buttery soft, breathable, and designed for the dreamiest sleep." }}</p>
       <div class="cat-hero__badges">
         <span class="cat-badge">🌿 100% Organic Bamboo</span>
         <span class="cat-badge">🛡️ OEKO-TEX Certified</span>
@@ -60,6 +63,20 @@
       </aside>
 
       <main>
+        <div class="cat-main__topbar">
+          <span style="font-size:0.85rem; color:#aaa;">{{ collection.products_count | default: 6 }} Items</span>
+          <div class="boutique-sort">
+            <span style="font-size:0.7rem; font-weight:800; text-transform:uppercase; color:#999;">Sort By</span>
+            <select class="boutique-sort__select" id="BoutiqueSort">
+              <option value="manual">Featured</option>
+              <option value="best-selling">Bestsellers</option>
+              <option value="price-ascending">Price: Low to High</option>
+              <option value="price-descending">Price: High to Low</option>
+              <option value="created-descending">Newest First</option>
+            </select>
+          </div>
+        </div>
+
         <div class="cat-product-grid">
           {%- assign target = section.settings.collection | default: collection -%}
           {%- if target.products.size > 0 -%}
@@ -96,6 +113,20 @@
   </div>
 </div>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const sortSelect = document.getElementById('BoutiqueSort');
+    if (!sortSelect) return;
+    const urlParams = new URLSearchParams(window.location.search);
+    const currentSort = urlParams.get('sort_by');
+    if (currentSort) sortSelect.value = currentSort;
+    sortSelect.addEventListener('change', function(e) {
+      urlParams.set('sort_by', e.target.value);
+      window.location.search = urlParams.toString();
+    });
+  });
+</script>
+
 {% schema %}
 {
   "name": "Category Page",
@@ -104,7 +135,7 @@
     { "type": "text", "id": "title", "label": "Page Heading", "default": "Our Collection" },
     { "type": "textarea", "id": "description", "label": "Page Description" },
     { "type": "collection", "id": "collection", "label": "Linked Collection" },
-    { "type": "select", "id": "active_page", "label": "Active Sidebar Category", "options": [
+    { "type": "select", "id": "active_page", "label": "Active Sidebar", "options": [
         { "value": "none", "label": "None" }, { "value": "sleep-bags", "label": "Sleep Bags" }, { "value": "pajamas", "label": "Pajamas" }, { "value": "bodysuits", "label": "Bodysuits" }, { "value": "newborn", "label": "Newborn" }, { "value": "baby", "label": "Baby" }, { "value": "toddler", "label": "Toddler" }
       ], "default": "none" }
   ]
