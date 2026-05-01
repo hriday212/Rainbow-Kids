@@ -4,7 +4,8 @@
   
   .header__logo-wrapper { display: flex; align-items: center; gap: 15px; text-decoration: none; }
   .header__logo-img { display: block; height: auto; max-width: 100%; object-fit: contain; }
-  .header__logo-text { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: var(--color-text-dark); line-height: 1; }
+  .header__logo-text { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: #1a1a1a; line-height: 1; }
+  .header__logo-text span { color: var(--color-primary); } /* The Boutique Pop */
   
   .header__nav { display: flex; gap: 30px; align-items: center; }
   .header__nav-item { position: relative; }
@@ -12,11 +13,9 @@
   .header__nav-link::after { content: ''; position: absolute; bottom: 20px; left: 0; width: 0; height: 2px; background: var(--color-primary); transition: width 0.3s; }
   .header__nav-item:hover .header__nav-link::after { width: 100%; }
 
-  /* Mega Menu Elite */
   .mega-menu { position: absolute; top: 100%; left: -300px; width: 1100px; background: #fff; border-top: 1px solid #f4f4f4; box-shadow: 0 40px 100px rgba(0,0,0,0.05); padding: 60px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; opacity: 0; visibility: hidden; transition: all 0.3s; }
   .header__nav-item:hover .mega-menu { opacity: 1; visibility: visible; }
   
-  /* Dropdown Menu */
   .dropdown-menu { position: absolute; top: 100%; left: 0; width: 220px; background: #fff; border: 1px solid #f4f4f4; box-shadow: 0 20px 50px rgba(0,0,0,0.05); padding: 20px; opacity: 0; visibility: hidden; transition: all 0.3s; display: flex; flex-direction: column; gap: 15px; }
   .header__nav-item:hover .dropdown-menu { opacity: 1; visibility: visible; }
   .dropdown-link { font-size: 0.85rem; color: #666; text-decoration: none; transition: color 0.3s; }
@@ -36,7 +35,7 @@
       {% if section.settings.logo != blank %}
         <img src="{{ section.settings.logo | image_url: width: 400 }}" class="header__logo-img" style="width: {{ section.settings.logo_width }}px;" alt="{{ shop.name }}">
       {% endif %}
-      <span class="header__logo-text">{{ shop.name }}</span>
+      <span class="header__logo-text"><span>Rainbow</span> Kids Hub</span>
     </a>
 
     <nav class="header__nav">
@@ -44,16 +43,16 @@
         <a href="/collections/all" class="header__nav-link">Shop All</a>
         <div class="mega-menu">
           <div>
-            <span class="mega-col__title">Essentials</span>
-            <a href="/pages/sleep-bags" class="mega-link">Sleep Bags</a>
-            <a href="/pages/pajamas" class="mega-link">Pajamas</a>
-            <a href="/pages/bodysuits" class="mega-link">Bodysuits</a>
+            <span class="mega-col__title" style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Essentials</span>
+            <a href="/pages/sleep-bags" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Sleep Bags</a>
+            <a href="/pages/pajamas" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Pajamas</a>
+            <a href="/pages/bodysuits" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Bodysuits</a>
           </div>
           <div>
-            <span class="mega-col__title">Shop by Age</span>
-            <a href="/pages/newborn" class="mega-link">Newborn</a>
-            <a href="/pages/baby" class="mega-link">Baby</a>
-            <a href="/pages/toddler" class="mega-link">Toddler</a>
+            <span class="mega-col__title" style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Shop by Age</span>
+            <a href="/pages/newborn" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Newborn</a>
+            <a href="/pages/baby" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Baby</a>
+            <a href="/pages/toddler" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Toddler</a>
           </div>
           <div style="grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
              <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-1' | placeholder_svg_tag }}</div>

@@ -1,56 +1,63 @@
 <style>
-  .gender-split { display: grid; grid-template-columns: 1fr 1fr; height: 600px; }
+  .gender-split-wrap { padding: 80px 0; background: #fff; }
+  .gender-split { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; height: 600px; }
   
-  .split-side { display: flex; align-items: center; justify-content: center; text-align: center; padding: 60px; text-decoration: none; position: relative; overflow: hidden; }
+  .split-side { display: flex; align-items: center; justify-content: center; text-align: center; padding: 60px; text-decoration: none; position: relative; overflow: hidden; border-radius: 30px; box-shadow: 0 10px 40px rgba(0,0,0,0.03); transition: all 0.5s var(--ease-smooth); }
+  .split-side:hover { transform: translateY(-5px); box-shadow: 0 30px 60px rgba(0,0,0,0.08); }
   
   .side--girls { background: var(--color-pink); color: #1a1a1a; }
   .side--boys { background: var(--color-blue); color: #1a1a1a; }
   
-  .split-img { position: absolute; inset: 0; opacity: 0.6; z-index: 1; transition: all 1s var(--ease-smooth); }
-  .split-side:hover .split-img { transform: scale(1.1); opacity: 0.8; }
+  .split-img { position: absolute; inset: 0; opacity: 0.5; z-index: 1; transition: all 1s var(--ease-smooth); }
+  .split-side:hover .split-img { transform: scale(1.1); opacity: 0.7; }
   .split-img img { width: 100%; height: 100%; object-fit: cover; }
   
   .split-content { position: relative; z-index: 2; }
   .split-subtitle { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; display: block; margin-bottom: 15px; }
-  .split-title { font-family: var(--font-heading); font-size: 3.5rem; margin-bottom: 25px; line-height: 1; }
-  .split-btn { display: inline-block; padding: 15px 35px; border: 2px solid #1a1a1a; text-transform: uppercase; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.1em; transition: all 0.3s; }
+  .split-title { font-family: var(--font-heading); font-size: 3.5rem; margin-bottom: 25px; line-height: 1; font-weight: 400; }
+  .split-btn { display: inline-block; padding: 15px 35px; border: 2.5px solid #1a1a1a; text-transform: uppercase; font-weight: 800; font-size: 0.75rem; letter-spacing: 0.1em; transition: all 0.3s; }
   .split-side:hover .split-btn { background: #1a1a1a; color: #fff; }
 
-  @media (max-width: 768px) { .gender-split { grid-template-columns: 1fr; height: auto; } .split-side { height: 400px; } }
+  @media (max-width: 1024px) { .gender-split { height: 500px; } .split-title { font-size: 2.5rem; } }
+  @media (max-width: 768px) { .gender-split { grid-template-columns: 1fr; height: auto; gap: 20px; } .split-side { height: 400px; } }
 </style>
 
-<section class="gender-split">
-  <!-- Girls Side -->
-  <a href="{{ section.settings.link_girls | default: '#' }}" class="split-side side--girls">
-    <div class="split-img">
-      {% if section.settings.image_girls != blank %}
-        <img src="{{ section.settings.image_girls | image_url: width: 1000 }}" alt="Girls Collection">
-      {% else %}
-        <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=1000">
-      {% endif %}
-    </div>
-    <div class="split-content">
-      <span class="split-subtitle">{{ section.settings.subtitle_girls | default: "The Collection" }}</span>
-      <h2 class="split-title">{{ section.settings.title_girls | default: "For Her" }}</h2>
-      <span class="split-btn">{{ section.settings.btn_girls | default: "Shop Girls" }}</span>
-    </div>
-  </a>
+<section class="gender-split-wrap">
+  <div class="container">
+    <div class="gender-split">
+      <!-- Girls Side -->
+      <a href="{{ section.settings.link_girls | default: '#' }}" class="split-side side--girls">
+        <div class="split-img">
+          {% if section.settings.image_girls != blank %}
+            <img src="{{ section.settings.image_girls | image_url: width: 1000 }}" alt="Girls Collection">
+          {% else %}
+            <img src="https://images.unsplash.com/photo-1515488403636-ee00ca9ff67b?q=80&w=1000">
+          {% endif %}
+        </div>
+        <div class="split-content">
+          <span class="split-subtitle">{{ section.settings.subtitle_girls | default: "The Collection" }}</span>
+          <h2 class="split-title">{{ section.settings.title_girls | default: "For Her" }}</h2>
+          <span class="split-btn">{{ section.settings.btn_girls | default: "Shop Girls" }}</span>
+        </div>
+      </a>
 
-  <!-- Boys Side -->
-  <a href="{{ section.settings.link_boys | default: '#' }}" class="split-side side--boys">
-    <div class="split-img">
-      {% if section.settings.image_boys != blank %}
-        <img src="{{ section.settings.image_boys | image_url: width: 1000 }}" alt="Boys Collection">
-      {% else %}
-        <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=1000">
-      {% endif %}
+      <!-- Boys Side -->
+      <a href="{{ section.settings.link_boys | default: '#' }}" class="split-side side--boys">
+        <div class="split-img">
+          {% if section.settings.image_boys != blank %}
+            <img src="{{ section.settings.image_boys | image_url: width: 1000 }}" alt="Boys Collection">
+          {% else %}
+            <img src="https://images.unsplash.com/photo-1522771917710-2ee211117f77?q=80&w=1000">
+          {% endif %}
+        </div>
+        <div class="split-content">
+          <span class="split-subtitle">{{ section.settings.subtitle_boys | default: "The Essentials" }}</span>
+          <h2 class="split-title">{{ section.settings.title_boys | default: "For Him" }}</h2>
+          <span class="split-btn">{{ section.settings.btn_boys | default: "Shop Boys" }}</span>
+        </div>
+      </a>
     </div>
-    <div class="split-content">
-      <span class="split-subtitle">{{ section.settings.subtitle_boys | default: "The Essentials" }}</span>
-      <h2 class="split-title">{{ section.settings.title_boys | default: "For Him" }}</h2>
-      <span class="split-btn">{{ section.settings.btn_boys | default: "Shop Boys" }}</span>
-    </div>
-  </a>
+  </div>
 </section>
 
 {% schema %}

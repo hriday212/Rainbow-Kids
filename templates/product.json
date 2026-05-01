@@ -8,6 +8,10 @@
       "type": "tog-guide",
       "settings": {}
     },
+    "size_guide": {
+      "type": "size-chart",
+      "settings": {}
+    },
     "upsells": {
       "type": "product-upsells",
       "settings": {
@@ -18,6 +22,7 @@
   "order": [
     "main",
     "tog_guide",
+    "size_guide",
     "upsells"
   ]
 }

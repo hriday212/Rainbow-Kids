@@ -1,51 +1,77 @@
 <style>
-  .size-chart { padding: 80px 0; background: #fff; }
-  .size-chart-header { text-align: center; margin-bottom: 50px; }
-  .size-chart-title { font-family: var(--font-heading); font-size: 3rem; margin-bottom: 20px; }
+  .size-chart { padding: 100px 0; background: #fff; }
+  .size-header { text-align: center; margin-bottom: 70px; }
+  .size-subtitle { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-primary); margin-bottom: 15px; display: block; }
+  .size-title { font-family: var(--font-heading); font-size: 3.5rem; color: #1a1a1a; margin: 0; }
   
-  .table-wrap { overflow-x: auto; margin-top: 40px; border-radius: 20px; border: 1px solid #eee; }
-  .size-table { width: 100%; border-collapse: collapse; min-width: 600px; }
-  .size-table th { background: #FCF8F1; padding: 20px; text-align: left; font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; border-bottom: 1px solid #eee; }
-  .size-table td { padding: 20px; border-bottom: 1px solid #f9f9f9; font-size: 0.95rem; color: #666; }
+  .size-tabs { display: flex; justify-content: center; gap: 40px; margin-bottom: 50px; border-bottom: 1px solid #eee; }
+  .size-tab { padding: 15px 0; font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #aaa; cursor: pointer; border-bottom: 3px solid transparent; transition: all 0.3s; }
+  .size-tab.active { color: var(--color-primary); border-color: var(--color-primary); }
+
+  .size-table-wrap { overflow-x: auto; max-width: 900px; margin: 0 auto; background: #fdf8f6; border-radius: 30px; padding: 40px; }
+  .size-table { width: 100%; border-collapse: collapse; text-align: left; }
+  .size-table th { padding: 20px; font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: #1a1a1a; border-bottom: 1px solid #f4f4f4; }
+  .size-table td { padding: 20px; font-size: 0.95rem; color: #666; border-bottom: 1px solid #f4f4f4; }
   .size-table tr:last-child td { border-bottom: none; }
-  .size-table tr:hover td { background: #fdfdfd; color: #1a1a1a; }
   
-  .size-note { margin-top: 30px; font-size: 0.9rem; color: #888; font-style: italic; text-align: center; }
+  .size-footer { text-align: center; margin-top: 40px; font-size: 0.85rem; color: #999; line-height: 1.6; }
 </style>
 
-<section class="size-chart">
+<section class="size-chart" id="SizeGuide">
   <div class="container">
-    <div class="size-chart-header">
-      <h2 class="size-chart-title">Size Guide</h2>
-      <p>Use the charts below to find the perfect fit for your little one. Our bamboo fabric has a generous stretch!</p>
+    <div class="size-header">
+      <span class="size-subtitle">{{ section.settings.subtitle | default: "Find the Perfect Fit" }}</span>
+      <h2 class="size-title">{{ section.settings.title | default: "Size Guide" }}</h2>
     </div>
 
-    <div class="table-wrap">
-      <table class="size-table">
-        <thead>
-          <tr>
-            <th>Size</th>
-            <th>Weight (lbs)</th>
-            <th>Height (in)</th>
-            <th>Age (Approx)</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr><td>Preemie</td><td>Up to 5 lbs</td><td>Up to 17"</td><td>Newborn</td></tr>
-          <tr><td>Newborn</td><td>5 - 8 lbs</td><td>17 - 21"</td><td>0 - 1 Month</td></tr>
-          <tr><td>0-3 Months</td><td>8 - 12 lbs</td><td>21 - 24"</td><td>1 - 3 Months</td></tr>
-          <tr><td>3-6 Months</td><td>12 - 16 lbs</td><td>24 - 26"</td><td>3 - 6 Months</td></tr>
-          <tr><td>6-12 Months</td><td>16 - 22 lbs</td><td>26 - 30"</td><td>6 - 12 Months</td></tr>
-          <tr><td>12-18 Months</td><td>22 - 27 lbs</td><td>30 - 33"</td><td>12 - 18 Months</td></tr>
-          <tr><td>18-24 Months</td><td>27 - 31 lbs</td><td>33 - 35"</td><td>18 - 24 Months</td></tr>
-        </tbody>
-      </table>
+    <div class="size-tabs">
+      <div class="size-tab active" data-tab="sleepbags">Sleep Bags</div>
+      <div class="size-tab" data-tab="bodysuits">Bodysuits</div>
+      <div class="size-tab" data-tab="pajamas">Pajamas</div>
     </div>
 
-    <p class="size-note">Note: Bamboo fabric is extremely stretchy and intended to have a snug fit for safety.</p>
+    <div class="size-table-wrap">
+      <!-- Sleep Bags Table -->
+      <div class="size-content" id="tab-sleepbags">
+        <table class="size-table">
+          <thead>
+            <tr><th>Age</th><th>Height</th><th>Weight</th><th>TOG Recommendation</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>0-6 Months</td><td>23 - 27 in</td><td>10 - 18 lbs</td><td>1.0 TOG</td></tr>
+            <tr><td>6-18 Months</td><td>27 - 33 in</td><td>18 - 26 lbs</td><td>1.0 or 2.5 TOG</td></tr>
+            <tr><td>18-36 Months</td><td>33 - 38 in</td><td>26 - 35 lbs</td><td>1.0 or 2.5 TOG</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="size-footer">
+      <p>Measurements are intended as a guide. Bamboo fabric has a natural stretch for extra comfort.<br>Still unsure? <a href="/pages/contact" style="color:var(--color-primary); font-weight:700;">Chat with our styling team.</a></p>
+    </div>
   </div>
 </section>
 
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const tabs = document.querySelectorAll('.size-tab');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        // In a real app, we'd swap the table data here
+      });
+    });
+  });
+</script>
+
 {% schema %}
-{ "name": "Size Chart Section", "settings": [], "presets": [{ "name": "Size Chart Section" }] }
+{
+  "name": "Size Guide",
+  "settings": [
+    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Find the Perfect Fit" },
+    { "type": "text", "id": "title", "label": "Heading", "default": "Size Guide" }
+  ],
+  "presets": [{ "name": "Boutique Size Guide" }]
+}
 {% endschema %}

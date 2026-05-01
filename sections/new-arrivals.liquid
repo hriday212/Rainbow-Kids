@@ -53,6 +53,12 @@
     new Swiper('.newArrivalsSwiper', {
       slidesPerView: 1.5,
       spaceBetween: 20,
+      loop: true,
+      centeredSlides: false,
+      autoplay: {
+        delay: 3000,
+        disableOnInteraction: false,
+      },
       pagination: { el: '.swiper-pagination', clickable: true },
       breakpoints: {
         768: { slidesPerView: 3, spaceBetween: 30 },
