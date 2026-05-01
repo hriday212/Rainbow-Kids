@@ -1,0 +1,52 @@
+<style>
+  .reveal-text { opacity: 1 !important; visibility: visible !important; }
+  .reveal-char { 
+    display: inline-block; 
+    transform: translateY(100%); 
+    opacity: 0; 
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.8s linear;
+    will-change: transform, opacity;
+  }
+  .reveal-text.is-visible .reveal-char { 
+    transform: translateY(0); 
+    opacity: 1; 
+  }
+</style>
+
+<script>
+  function initBoutiqueReveal() {
+    const revealElements = document.querySelectorAll('.reveal-text');
+    
+    revealElements.forEach(el => {
+      if (el.dataset.splitDone) return;
+      
+      const text = el.innerText;
+      el.innerHTML = '';
+      
+      text.split('').forEach((char, i) => {
+        const span = document.createElement('span');
+        span.className = 'reveal-char';
+        span.style.transitionDelay = `${i * 30}ms`;
+        span.innerHTML = char === ' ' ? '&nbsp;' : char;
+        el.appendChild(span);
+      });
+      
+      el.dataset.splitDone = "true";
+      
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            el.classList.add('is-visible');
+            observer.unobserve(el);
+          }
+        });
+      }, { threshold: 0.1 });
+      
+      observer.observe(el);
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', initBoutiqueReveal);
+  // Re-run for dynamic sections like sliders
+  document.addEventListener('shopify:section:load', initBoutiqueReveal);
+</script>

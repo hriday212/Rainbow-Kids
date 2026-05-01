@@ -1,26 +1,7 @@
 <style>
-  .header { 
-    padding: 15px 0; 
-    background: #fff; 
-    border-bottom: 1px solid #f4f4f4; 
-    position: fixed; 
-    top: 0; 
-    left: 0;
-    width: 100%;
-    z-index: 1000; 
-    transition: transform 0.4s var(--ease-smooth), background 0.3s;
-  }
-
-  /* Smart Sticky States */
-  .header--hidden { 
-    transform: translateY(-100%); 
-  }
-  .header--visible { 
-    transform: translateY(0); 
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-  }
-  
-  /* Space for fixed header */
+  .header { padding: 15px 0; background: #fff; border-bottom: 1px solid #f4f4f4; position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; transition: transform 0.4s var(--ease-smooth); }
+  .header--hidden { transform: translateY(-100%); }
+  .header--visible { transform: translateY(0); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
   body { padding-top: 80px; } 
 
   .header__grid { display: flex; justify-content: space-between; align-items: center; }
@@ -47,15 +28,19 @@
   .header__action-btn:hover { color: var(--color-primary); }
   .header__action-btn svg { width: 22px; height: 22px; }
 
-  @media (max-width: 1024px) { .header__nav { display: none; } body { padding-top: 70px; } }
+  .search-modal { position: fixed; inset: 0; z-index: 3000; visibility: hidden; opacity: 0; transition: all 0.4s var(--ease-smooth); }
+  .search-modal.active { visibility: visible; opacity: 1; }
+  .search-modal__overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); }
+  .search-modal__content { position: relative; width: 100%; max-width: 800px; margin: 150px auto; padding: 0 20px; transform: translateY(-30px); transition: transform 0.4s; }
+  .search-modal.active .search-modal__content { transform: translateY(0); }
+  .search-input { flex: 1; background: none; border: none; font-family: var(--font-heading); font-size: 3rem; color: #1a1a1a; outline: none; width: 100%; border-bottom: 3px solid #1a1a1a; padding: 0 0 15px; }
+
+  @media (max-width: 1024px) { .header__nav { display: none; } }
 </style>
 
 <header class="header" id="SmartHeader">
   <div class="container header__grid">
     <a href="/" class="header__logo-wrapper">
-      {% if section.settings.logo != blank %}
-        <img src="{{ section.settings.logo | image_url: width: 400 }}" class="header__logo-img" style="width: {{ section.settings.logo_width }}px;" alt="{{ shop.name }}">
-      {% endif %}
       <span class="header__logo-text"><span>Rainbow</span> Kids Hub</span>
     </a>
 
@@ -65,15 +50,15 @@
         <div class="mega-menu">
           <div>
             <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Essentials</span>
-            <a href="/pages/sleep-bags" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Sleep Bags</a>
-            <a href="/pages/pajamas" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Pajamas</a>
-            <a href="/pages/bodysuits" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Bodysuits</a>
+            <a href="/pages/sleep-bags" class="dropdown-link" style="display:block; margin-bottom:12px;">Sleep Bags</a>
+            <a href="/pages/pajamas" class="dropdown-link" style="display:block; margin-bottom:12px;">Pajamas</a>
+            <a href="/pages/bodysuits" class="dropdown-link" style="display:block; margin-bottom:12px;">Bodysuits</a>
           </div>
           <div>
             <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Shop by Age</span>
-            <a href="/pages/newborn" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Newborn</a>
-            <a href="/pages/baby" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Baby</a>
-            <a href="/pages/toddler" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Toddler</a>
+            <a href="/pages/newborn" class="dropdown-link" style="display:block; margin-bottom:12px;">Newborn</a>
+            <a href="/pages/baby" class="dropdown-link" style="display:block; margin-bottom:12px;">Baby</a>
+            <a href="/pages/toddler" class="dropdown-link" style="display:block; margin-bottom:12px;">Toddler</a>
           </div>
           <div style="grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
              <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-1' | placeholder_svg_tag }}</div>
@@ -96,41 +81,43 @@
     </nav>
 
     <div class="header__actions">
-      <a href="/account" class="header__action-btn" title="Account">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg>
-      </a>
-      <button class="header__action-btn" title="Search">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg>
-      </button>
-      <a href="/cart" class="header__action-btn" title="Cart">
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg>
-      </a>
+      <a href="/account" class="header__action-btn" title="Account"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></a>
+      <button class="header__action-btn" onclick="toggleSearch()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg></button>
+      <button class="header__action-btn" onclick="toggleCart()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg></button>
     </div>
   </div>
 </header>
 
+<div class="search-modal" id="SearchModal">
+  <div class="search-modal__overlay" onclick="toggleSearch()"></div>
+  <div class="search-modal__content">
+    <form action="/search" method="get">
+      <input type="text" name="q" class="search-input" placeholder="What are you looking for?" autofocus>
+    </form>
+  </div>
+</div>
+
 <script>
+  function toggleSearch() {
+    const modal = document.getElementById('SearchModal');
+    modal.classList.toggle('active');
+    if(modal.classList.contains('active')) setTimeout(() => document.querySelector('.search-input').focus(), 300);
+  }
+  function toggleCart() {
+    const drawer = document.getElementById('CartDrawer');
+    if(drawer) drawer.classList.toggle('active');
+  }
+
   document.addEventListener('DOMContentLoaded', function() {
     const header = document.getElementById('SmartHeader');
     let lastScroll = 0;
-
     window.addEventListener('scroll', () => {
       const currentScroll = window.pageYOffset;
-
-      if (currentScroll <= 100) {
-        header.classList.remove('header--hidden');
-        header.classList.remove('header--visible');
-        return;
-      }
-
+      if (currentScroll <= 100) { header.classList.remove('header--hidden', 'header--visible'); return; }
       if (currentScroll > lastScroll && !header.classList.contains('header--hidden')) {
-        // Scroll Down - Hide Header
-        header.classList.remove('header--visible');
-        header.classList.add('header--hidden');
+        header.classList.remove('header--visible'); header.classList.add('header--hidden');
       } else if (currentScroll < lastScroll && header.classList.contains('header--hidden')) {
-        // Scroll Up - Show Header
-        header.classList.remove('header--hidden');
-        header.classList.add('header--visible');
+        header.classList.remove('header--hidden'); header.classList.add('header--visible');
       }
       lastScroll = currentScroll;
     });
@@ -138,11 +125,5 @@
 </script>
 
 {% schema %}
-{
-  "name": "Boutique Header",
-  "settings": [
-    { "type": "image_picker", "id": "logo", "label": "Logo Image" },
-    { "type": "range", "id": "logo_width", "min": 30, "max": 300, "step": 10, "unit": "px", "label": "Logo Width", "default": 60 }
-  ]
-}
+{ "name": "Boutique Header" }
 {% endschema %}
