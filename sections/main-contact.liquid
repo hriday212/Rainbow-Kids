@@ -3,28 +3,33 @@
   .contact-grid { display: grid; grid-template-columns: 1fr 1.5fr; gap: 80px; }
   
   .contact-info { display: flex; flex-direction: column; gap: 40px; }
-  .contact-card { background: var(--color-background); padding: 40px; border-radius: 24px; display: flex; flex-direction: column; gap: 15px; }
-  .contact-card h3 { font-size: 1.2rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; }
-  .contact-card p { font-size: 1.1rem; color: var(--color-text-light); }
-  .contact-card a { color: var(--color-primary); font-weight: 700; text-decoration: none; filter: brightness(0.8); }
+  .contact-card { background: var(--color-background); padding: 40px; border-radius: 24px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 5px 15px rgba(0,0,0,0.02); }
+  .contact-card h3 { font-size: 1rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; }
+  .contact-card p { font-size: 1.1rem; color: #666; margin: 0; }
+  .contact-card a { color: var(--color-primary); font-weight: 700; text-decoration: none; border-bottom: 2px solid transparent; transition: all 0.3s; width: fit-content; }
+  .contact-card a:hover { border-color: var(--color-primary); }
 
-  .contact-form { display: flex; flex-direction: column; gap: 20px; }
-  .contact-form__field { display: flex; flex-direction: column; gap: 8px; }
-  .contact-form__label { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.1em; color: var(--color-text-light); }
-  .contact-form__input { padding: 18px 24px; border-radius: 12px; border: 1.5px solid #eee; font-family: var(--font-body); font-size: 1rem; transition: border-color 0.3s; outline: none; }
-  .contact-form__input:focus { border-color: var(--color-text-dark); }
-  .contact-form__textarea { height: 150px; resize: none; }
+  .contact-form { display: flex; flex-direction: column; gap: 25px; background: #fff; border: 1px solid #f4f4f4; padding: 50px; border-radius: 30px; box-shadow: 0 20px 50px rgba(0,0,0,0.03); }
+  .contact-form__field { display: flex; flex-direction: column; gap: 10px; }
+  .contact-form__label { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; }
+  .contact-form__input { padding: 18px 24px; border-radius: 12px; border: 1.5px solid #eee; font-family: var(--font-body); font-size: 1rem; transition: all 0.3s; outline: none; background: #fafafa; }
+  .contact-form__input:focus { border-color: var(--color-primary); background: #fff; box-shadow: 0 5px 15px rgba(0,0,0,0.05); }
+  .contact-form__textarea { height: 160px; resize: none; }
 
-  @media (max-width: 1024px) { .contact-grid { grid-template-columns: 1fr; gap: 60px; } }
+  .boutique-btn { background: var(--color-primary); color: #fff; padding: 20px 40px; border-radius: 50px; border: none; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; font-size: 0.8rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 10px 20px rgba(255, 140, 105, 0.2); }
+  .boutique-btn:hover { transform: translateY(-3px); box-shadow: 0 15px 30px rgba(255, 140, 105, 0.3); background: #ff7b52; }
+
+  @media (max-width: 1024px) { .contact-grid { grid-template-columns: 1fr; gap: 60px; } .contact-form { padding: 30px; } }
 </style>
 
 <section class="contact-section">
   <div class="container contact-grid">
     
-    <div class="contact-info" >
+    <div class="contact-info">
       <div class="contact-header">
-        <span class="section-tag">Get in Touch</span>
-        <h1 style="font-size: 3.5rem; margin-top: 10px;">We're here to help.</h1>
+        <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.2em; color:var(--color-primary); margin-bottom:15px; display:block;">Get in Touch</span>
+        <h1 style="font-family:var(--font-heading); font-size: 3.5rem; color:#1a1a1a; margin:0 0 30px;">We're here for you.</h1>
+        <p style="font-size:1.1rem; color:#666; line-height:1.7; margin-bottom:40px;">Whether it's a question about sizing or your recent order, our Family Support team is standing by.</p>
       </div>
       
       <div class="contact-card">
@@ -38,19 +43,13 @@
         <p>support@rainbowkidshub.com</p>
         <a href="mailto:support@rainbowkidshub.com">Send an Email</a>
       </div>
-      
-      <div class="contact-card" style="background: var(--color-secondary);">
-        <h3>Visit Our Google Profile</h3>
-        <p>See our 5-star reviews and location.</p>
-        <a href="https://share.google/3KW7AdBGh5ncM2c52" target="_blank">View on Google Maps</a>
-      </div>
     </div>
 
-    <div class="contact-form-wrapper" >
+    <div class="contact-form-wrapper">
       {%- form 'contact', class: 'contact-form' -%}
         {%- if form.posted_successfully? -%}
-          <div style="background: var(--color-accent); padding: 20px; border-radius: 12px; margin-bottom: 20px; font-weight: 700; text-align: center;">
-            ✓ Message sent! We'll get back to you within 24 hours.
+          <div style="background: #DFF5E1; color: #2D5A27; padding: 20px; border-radius: 12px; margin-bottom: 30px; font-weight: 700; text-align: center;">
+            ✓ Message sent! We'll reply within 24 hours.
           </div>
         {%- endif -%}
 
@@ -65,11 +64,11 @@
         </div>
 
         <div class="contact-form__field">
-          <label class="contact-form__label">Message</label>
-          <textarea name="contact[body]" class="contact-form__input contact-form__textarea" placeholder="How can we help you today?" required></textarea>
+          <label class="contact-form__label">How can we help?</label>
+          <textarea name="contact[body]" class="contact-form__input contact-form__textarea" placeholder="Tell us more..." required></textarea>
         </div>
 
-        <button type="submit" class="button" style="width: 100%; margin-top: 20px;">Send Message</button>
+        <button type="submit" class="boutique-btn">Send Message</button>
       {%- endform -%}
     </div>
 
@@ -77,5 +76,5 @@
 </section>
 
 {% schema %}
-{ "name": "Contact Form" }
+{ "name": "Boutique Contact Form", "presets": [{ "name": "Boutique Contact Page" }] }
 {% endschema %}

@@ -63,6 +63,18 @@
           <span class="marquee-price">$45.00</span>
         </div>
       {%- endfor -%}
+      {% comment %} Duplicate Demo for infinite scroll {% endcomment %}
+      {%- for i in (1..6) -%}
+        <div class="marquee-card">
+          <div class="marquee-img-wrap">
+            <div class="marquee-placeholder">
+              {{ 'product-' | append: i | placeholder_svg_tag }}
+            </div>
+          </div>
+          <span class="marquee-title">Demo Product {{ i }}</span>
+          <span class="marquee-price">$45.00</span>
+        </div>
+      {%- endfor -%}
     {%- endif -%}
   </div>
 </section>
