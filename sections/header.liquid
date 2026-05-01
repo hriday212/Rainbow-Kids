@@ -1,11 +1,32 @@
 <style>
-  .header { padding: 15px 0; background: #fff; border-bottom: 1px solid #f4f4f4; position: sticky; top: 0; z-index: 1000; }
-  .header__grid { display: flex; justify-content: space-between; align-items: center; }
+  .header { 
+    padding: 15px 0; 
+    background: #fff; 
+    border-bottom: 1px solid #f4f4f4; 
+    position: fixed; 
+    top: 0; 
+    left: 0;
+    width: 100%;
+    z-index: 1000; 
+    transition: transform 0.4s var(--ease-smooth), background 0.3s;
+  }
+
+  /* Smart Sticky States */
+  .header--hidden { 
+    transform: translateY(-100%); 
+  }
+  .header--visible { 
+    transform: translateY(0); 
+    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+  }
   
+  /* Space for fixed header */
+  body { padding-top: 80px; } 
+
+  .header__grid { display: flex; justify-content: space-between; align-items: center; }
   .header__logo-wrapper { display: flex; align-items: center; gap: 15px; text-decoration: none; }
-  .header__logo-img { display: block; height: auto; max-width: 100%; object-fit: contain; }
   .header__logo-text { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: #1a1a1a; line-height: 1; }
-  .header__logo-text span { color: var(--color-primary); } /* The Boutique Pop */
+  .header__logo-text span { color: var(--color-primary); }
   
   .header__nav { display: flex; gap: 30px; align-items: center; }
   .header__nav-item { position: relative; }
@@ -26,10 +47,10 @@
   .header__action-btn:hover { color: var(--color-primary); }
   .header__action-btn svg { width: 22px; height: 22px; }
 
-  @media (max-width: 1024px) { .header__nav { display: none; } }
+  @media (max-width: 1024px) { .header__nav { display: none; } body { padding-top: 70px; } }
 </style>
 
-<header class="header">
+<header class="header" id="SmartHeader">
   <div class="container header__grid">
     <a href="/" class="header__logo-wrapper">
       {% if section.settings.logo != blank %}
@@ -43,13 +64,13 @@
         <a href="/collections/all" class="header__nav-link">Shop All</a>
         <div class="mega-menu">
           <div>
-            <span class="mega-col__title" style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Essentials</span>
+            <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Essentials</span>
             <a href="/pages/sleep-bags" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Sleep Bags</a>
             <a href="/pages/pajamas" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Pajamas</a>
             <a href="/pages/bodysuits" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Bodysuits</a>
           </div>
           <div>
-            <span class="mega-col__title" style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Shop by Age</span>
+            <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Shop by Age</span>
             <a href="/pages/newborn" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Newborn</a>
             <a href="/pages/baby" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Baby</a>
             <a href="/pages/toddler" style="display:block; font-size:0.95rem; color:#666; text-decoration:none; margin-bottom:12px;">Toddler</a>
@@ -87,6 +108,34 @@
     </div>
   </div>
 </header>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const header = document.getElementById('SmartHeader');
+    let lastScroll = 0;
+
+    window.addEventListener('scroll', () => {
+      const currentScroll = window.pageYOffset;
+
+      if (currentScroll <= 100) {
+        header.classList.remove('header--hidden');
+        header.classList.remove('header--visible');
+        return;
+      }
+
+      if (currentScroll > lastScroll && !header.classList.contains('header--hidden')) {
+        // Scroll Down - Hide Header
+        header.classList.remove('header--visible');
+        header.classList.add('header--hidden');
+      } else if (currentScroll < lastScroll && header.classList.contains('header--hidden')) {
+        // Scroll Up - Show Header
+        header.classList.remove('header--hidden');
+        header.classList.add('header--visible');
+      }
+      lastScroll = currentScroll;
+    });
+  });
+</script>
 
 {% schema %}
 {
