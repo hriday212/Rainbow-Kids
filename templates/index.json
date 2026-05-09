@@ -15,7 +15,7 @@
         "slide_gMy7W8": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-03-27_at_4.56.41_PM_2.jpg",
+            "image": "shopify://shop_images/baby-looks-at-father.jpg",
             "subtitle": "Spring Collection",
             "title": "Softness defined.",
             "text": "Discover the world's softest bamboo apparel.",
@@ -44,6 +44,7 @@
     "categories": {
       "type": "categories-grid",
       "settings": {
+        "subtitle": "Find Their Perfect Fit",
         "title": "Shop the Rainbow"
       }
     },
@@ -84,9 +85,7 @@
     },
     "marquee": {
       "type": "marquee-new-arrivals",
-      "settings": {
-        "title": "Just Landed"
-      }
+      "settings": {}
     },
     "trust_bar": {
       "type": "trust-bar",
@@ -105,13 +104,15 @@
     "benefits": {
       "type": "why-bamboo",
       "settings": {
+        "subtitle": "The Rainbow Difference",
         "title": "The Magic of Bamboo"
       }
     },
     "newsletter": {
       "type": "newsletter",
       "settings": {
-        "title": "Join the Family"
+        "title": "Join the Family",
+        "text": "Get 15% OFF your first order and stay updated on our newest bamboo drops!"
       }
     }
   },
