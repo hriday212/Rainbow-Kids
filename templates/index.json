@@ -101,6 +101,9 @@
     },
     "trust_bar": {
       "type": "trust-bar",
+      "custom_css": [
+        "section.trust-bar{background-color: #FDEDED}"
+      ],
       "settings": {}
     },
     "story": {
@@ -129,7 +132,7 @@
     "newsletter": {
       "type": "newsletter",
       "custom_css": [
-        "section.newsletter{background-color: #F6FFDC}"
+        "section.newsletter {background-color: #f6ffdc;}"
       ],
       "settings": {
         "title": "Join the Family",
