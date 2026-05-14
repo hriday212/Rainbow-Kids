@@ -78,7 +78,7 @@
     "blue_shop": {
       "type": "featured-collection",
       "custom_css": [
-        "section.featured-collection--blue {background-color: #f5afaf;}"
+        "section.featured-collection--blue {background-color: #FFF8E7;}"
       ],
       "settings": {
         "title": "The Little Boy Shop",
@@ -132,7 +132,7 @@
     "newsletter": {
       "type": "newsletter",
       "custom_css": [
-        "section.why-bamboo {background-color: #E3F2FD;}"
+        "section.newsletter {background-color: #dceeff;}"
       ],
       "settings": {
         "title": "Join the Family",
