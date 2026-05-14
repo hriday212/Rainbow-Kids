@@ -128,6 +128,9 @@
     },
     "newsletter": {
       "type": "newsletter",
+      "custom_css": [
+        "section.newsletter{background-color: #F6FFDC}"
+      ],
       "settings": {
         "title": "Join the Family",
         "text": "Get 15% OFF your first order and stay updated on our newest bamboo drops!"
