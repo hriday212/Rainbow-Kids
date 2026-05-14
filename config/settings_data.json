@@ -33,7 +33,7 @@
       "header": {
         "type": "header",
         "custom_css": [
-          "header#SmartHeader.header{background-color: #F891BB}"
+          "header#SmartHeader.header {background-color: #FFE5EC;}"
         ],
         "settings": {}
       },

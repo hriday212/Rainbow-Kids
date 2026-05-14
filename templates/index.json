@@ -44,7 +44,7 @@
     "categories": {
       "type": "categories-grid",
       "custom_css": [
-        "section.categories-grid {background-color: #fff9d2;}"
+        "section.categories-grid {background-color: #f8c8dc;}"
       ],
       "settings": {
         "subtitle": "Find Their Perfect Fit",
@@ -54,7 +54,7 @@
     "gender_split": {
       "type": "gender-split-banner",
       "custom_css": [
-        "section.gender-split-wrap {background-color: #f9d0cd;}"
+        "section.gender-split-wrap {background-color: #ffc0cb;}"
       ],
       "settings": {
         "subtitle_girls": "The Collection",
@@ -102,7 +102,7 @@
     "trust_bar": {
       "type": "trust-bar",
       "custom_css": [
-        "section.trust-bar{background-color: #FDEDED}"
+        "section.trust-bar {background-color: #fdeded;}"
       ],
       "settings": {}
     },
@@ -132,7 +132,7 @@
     "newsletter": {
       "type": "newsletter",
       "custom_css": [
-        "section.newsletter {background-color: #f6ffdc;}"
+        "section.why-bamboo {background-color: #E3F2FD;}"
       ],
       "settings": {
         "title": "Join the Family",
