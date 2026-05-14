@@ -43,6 +43,9 @@
     },
     "categories": {
       "type": "categories-grid",
+      "custom_css": [
+        "section.categories-grid {background-color: #fff9d2;}"
+      ],
       "settings": {
         "subtitle": "Find Their Perfect Fit",
         "title": "Shop the Rainbow"
@@ -50,6 +53,9 @@
     },
     "gender_split": {
       "type": "gender-split-banner",
+      "custom_css": [
+        "section.gender-split-wrap {background-color: #f9d0cd;}"
+      ],
       "settings": {
         "subtitle_girls": "The Collection",
         "title_girls": "For Her",
@@ -71,6 +77,9 @@
     },
     "blue_shop": {
       "type": "featured-collection",
+      "custom_css": [
+        "section.featured-collection--blue {background-color: #f5afaf;}"
+      ],
       "settings": {
         "title": "The Little Boy Shop",
         "collection": "",
@@ -85,6 +94,9 @@
     },
     "marquee": {
       "type": "marquee-new-arrivals",
+      "custom_css": [
+        "section.marquee-new {background-color: #ffebcc;}"
+      ],
       "settings": {}
     },
     "trust_bar": {
@@ -93,6 +105,9 @@
     },
     "story": {
       "type": "founder-story",
+      "custom_css": [
+        "section.founder-story {background-color: #bfddf0;}"
+      ],
       "settings": {
         "subtitle": "THE HEART OF  THE HUB",
         "title": "Made by a  Mom. For Every Mom.",
@@ -103,6 +118,9 @@
     },
     "benefits": {
       "type": "why-bamboo",
+      "custom_css": [
+        "section.why-bamboo {background-color: #bfdef0;}"
+      ],
       "settings": {
         "subtitle": "THE RAINBOW DIFFERENCE",
         "title": "Why Bamboo? Because Babies Deserve Better."
