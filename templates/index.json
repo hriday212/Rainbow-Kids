@@ -44,7 +44,7 @@
     "categories": {
       "type": "categories-grid",
       "custom_css": [
-        "section.categories-grid {background-color: #f8c8dc;}"
+        "section.categories-grid {background-color: #ffe5ec;}"
       ],
       "settings": {
         "subtitle": "Find Their Perfect Fit",
@@ -54,7 +54,7 @@
     "gender_split": {
       "type": "gender-split-banner",
       "custom_css": [
-        "section.gender-split-wrap {background-color: #ffc0cb;}"
+        "section.gender-split-wrap {background-color: #ffe5ec;}"
       ],
       "settings": {
         "subtitle_girls": "The Collection",
@@ -69,6 +69,9 @@
     },
     "pink_shop": {
       "type": "featured-collection",
+      "custom_css": [
+        "section.featured-collection--pink {background-color: #fdeded;}"
+      ],
       "settings": {
         "title": "The Little Girl Shop",
         "collection": "",
@@ -78,7 +81,7 @@
     "blue_shop": {
       "type": "featured-collection",
       "custom_css": [
-        "section.featured-collection--blue {background-color: #FFF8E7;}"
+        "section.featured-collection--blue {background-color: #ffebcc;}"
       ],
       "settings": {
         "title": "The Little Boy Shop",
@@ -88,6 +91,9 @@
     },
     "testimonials": {
       "type": "testimonials",
+      "custom_css": [
+        "section.testimonials {background-color: #ffebcc;}"
+      ],
       "settings": {
         "title": "What Mamas are Saying"
       }
@@ -102,7 +108,7 @@
     "trust_bar": {
       "type": "trust-bar",
       "custom_css": [
-        "section.trust-bar {background-color: #fdeded;}"
+        "section.trust-bar {background-color: #ffebcc;}"
       ],
       "settings": {}
     },
@@ -132,7 +138,7 @@
     "newsletter": {
       "type": "newsletter",
       "custom_css": [
-        "section.newsletter {background-color: #dceeff;}"
+        "section.newsletter {background-color: #bfdef0;}"
       ],
       "settings": {
         "title": "Join the Family",
