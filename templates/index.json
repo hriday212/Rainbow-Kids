@@ -15,11 +15,11 @@
         "slide_gMy7W8": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/WhatsApp_Image_2026-03-27_at_4.56.41_PM_2.jpg",
-            "subtitle": "Spring Collection",
-            "title": "Softness defined.",
-            "text": "Discover the world's softest bamboo apparel.",
-            "button_label": "Shop All",
+            "image": "shopify://shop_images/baby-looks-at-father.jpg",
+            "subtitle": "NEW ARRIVALS - SPRING COLLECTION",
+            "title": "Softness Defined",
+            "text": "Discover bamboo baby clothes your little one will live in – buttery soft, breathable, and gentle on the most delicate newborn skin.",
+            "button_label": "SHOP BAMBOO ESSENTIALS",
             "button_link": ""
           }
         },
@@ -27,10 +27,10 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/baby-shoes.jpg",
-            "subtitle": "Spring Collection",
-            "title": "Softness defined.",
-            "text": "Discover the world's softest bamboo apparel.",
-            "button_label": "Shop All",
+            "subtitle": "NEW ARRIVALS  -  SPRING COLLECTION",
+            "title": "Softness Defined",
+            "text": "Discover bamboo baby clothes your little one will live in – buttery soft, breathable, and gentle on the most delicate newborn skin.",
+            "button_label": "SHOP BAMBOO ESSENTIALS",
             "button_link": ""
           }
         }
@@ -43,12 +43,19 @@
     },
     "categories": {
       "type": "categories-grid",
+      "custom_css": [
+        "section.categories-grid {background-color: #ffe5ec;}"
+      ],
       "settings": {
+        "subtitle": "Find Their Perfect Fit",
         "title": "Shop the Rainbow"
       }
     },
     "gender_split": {
       "type": "gender-split-banner",
+      "custom_css": [
+        "section.gender-split-wrap {background-color: #ffe5ec;}"
+      ],
       "settings": {
         "subtitle_girls": "The Collection",
         "title_girls": "For Her",
@@ -62,6 +69,9 @@
     },
     "pink_shop": {
       "type": "featured-collection",
+      "custom_css": [
+        "section.featured-collection--pink {background-color: #fdeded;}"
+      ],
       "settings": {
         "title": "The Little Girl Shop",
         "collection": "",
@@ -70,6 +80,9 @@
     },
     "blue_shop": {
       "type": "featured-collection",
+      "custom_css": [
+        "section.featured-collection--blue {background-color: #ffebcc;}"
+      ],
       "settings": {
         "title": "The Little Boy Shop",
         "collection": "",
@@ -78,40 +91,58 @@
     },
     "testimonials": {
       "type": "testimonials",
+      "custom_css": [
+        "section.testimonials {background-color: #ffebcc;}"
+      ],
       "settings": {
         "title": "What Mamas are Saying"
       }
     },
     "marquee": {
       "type": "marquee-new-arrivals",
-      "settings": {
-        "title": "Just Landed"
-      }
+      "custom_css": [
+        "section.marquee-new {background-color: #ffebcc;}"
+      ],
+      "settings": {}
     },
     "trust_bar": {
       "type": "trust-bar",
+      "custom_css": [
+        "section.trust-bar {background-color: #ffebcc;}"
+      ],
       "settings": {}
     },
     "story": {
       "type": "founder-story",
+      "custom_css": [
+        "section.founder-story {background-color: #bfddf0;}"
+      ],
       "settings": {
-        "subtitle": "The Heart of the Hub",
-        "title": "Made by a Mom.",
-        "text": "",
-        "link_label": "Our Story",
+        "subtitle": "THE HEART OF  THE HUB",
+        "title": "Made by a  Mom. For Every Mom.",
+        "text": "<p>It started with a restless night and a baby who wouldn't settle. I tried every sleeping bag, every bodysuit, and every pyjama set on the market – and nothing felt right. <br/>Too scratchy, too hot. Too stiff. So I went looking for better. What I found was bamboo – impossibly soft, naturally breathable and safe enough for the most delicate newborn skin. <br/><br/><strong>Rainbow Kids Hub</strong> was born from that search. It is more than a store. It is a promise that every baby deserves the softest start to life and every parent deserves the peace of mind that comes with it.<br/><br/><br/><br/></p>",
+        "link_label": "OUR STORY",
         "link": ""
       }
     },
     "benefits": {
       "type": "why-bamboo",
+      "custom_css": [
+        "section.why-bamboo {background-color: #bfdef0;}"
+      ],
       "settings": {
-        "title": "The Magic of Bamboo"
+        "subtitle": "THE RAINBOW DIFFERENCE",
+        "title": "Why Bamboo? Because Babies Deserve Better."
       }
     },
     "newsletter": {
       "type": "newsletter",
+      "custom_css": [
+        "section.newsletter {background-color: #bfdef0;}"
+      ],
       "settings": {
-        "title": "Join the Family"
+        "title": "Join the Family",
+        "text": "Get 15% OFF your first order and stay updated on our newest bamboo drops!"
       }
     }
   },
