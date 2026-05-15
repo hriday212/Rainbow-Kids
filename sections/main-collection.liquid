@@ -29,10 +29,13 @@
         <div class="sidebar-section">
           <span class="sidebar-title">Category</span>
           <div class="filter-list">
-            <a href="/pages/sleep-bags" class="filter-link {% if section.settings.active_category == 'sleep-bags' %}active{% endif %}">Sleep Bags</a>
-            <a href="/pages/pajamas" class="filter-link {% if section.settings.active_category == 'pajamas' %}active{% endif %}">Pajamas</a>
-            <a href="/pages/bodysuits" class="filter-link {% if section.settings.active_category == 'bodysuits' %}active{% endif %}">Bodysuits</a>
-            <a href="/pages/newborn" class="filter-link {% if section.settings.active_category == 'newborn' %}active{% endif %}">Newborn</a>
+            <a href="/collections/all" class="filter-link active" data-category="all">All Products</a>
+            <a href="#" class="filter-link" data-category="sleep-bags">Sleep Bags</a>
+            <a href="#" class="filter-link" data-category="pajamas">Pajamas</a>
+            <a href="#" class="filter-link" data-category="bodysuits">Bodysuits</a>
+            <a href="#" class="filter-link" data-category="newborn">Newborn</a>
+            <a href="#" class="filter-link" data-category="baby">Baby</a>
+            <a href="#" class="filter-link" data-category="toddler">Toddler</a>
           </div>
         </div>
         
@@ -85,13 +88,24 @@
               </a>
             {%- endfor -%}
           {%- else -%}
-            {%- for image_name in static_product_images offset: 12 limit: 12 -%}
-              {%- assign di = forloop.index0 | plus: 12 -%}
-              <div class="product-card">
+            {%- for image_name in static_product_images -%}
+              {%- assign di = forloop.index0 -%}
+              {%- assign category = "all" -%}
+              {%- if image_name contains "nightsuit" or image_name contains "pajama" or image_name contains "dungaree" -%}
+                {%- assign category = "pajamas" -%}
+              {%- elsif image_name contains "sleeveless" or image_name contains "frock" or image_name contains "dress" or image_name contains "gown" -%}
+                {%- assign category = "bodysuits" -%}
+              {%- elsif image_name contains "mattress" or image_name contains "pillow" or image_name contains "sleeping bag" -%}
+                {%- assign category = "sleep-bags" -%}
+              {%- elsif image_name contains "bodysuit" or image_name contains "newborn" -%}
+                {%- assign category = "newborn" -%}
+              {%- endif -%}
+              
+              <div class="product-card js-filter-item" data-category="{{ category }}">
                 <div class="product-card__img">
                   <img src="{{ 'products/' | append: image_name | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
                 </div>
-                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; margin: 0 0 5px; text-transform: capitalize;">{{ image_name | remove: '.webp' | replace: '-', ' ' }}</h3>
+                <h3 style="font-family: var(--font-heading); font-size: 1.1rem; margin: 0 0 5px; text-transform: capitalize;">{{ image_name | remove: '.webp' | replace: '-', ' ' | split: '(' | first }}</h3>
                 <p style="font-weight: 700; color: var(--color-primary);">{{ static_product_prices[di] }}</p>
               </div>
             {%- endfor -%}
@@ -101,6 +115,52 @@
     </div>
   </div>
 </section>
+
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    const filterLinks = document.querySelectorAll('.filter-link[data-category]');
+    const filterItems = document.querySelectorAll('.js-filter-item');
+    const pageTitle = document.querySelector('.collection-main h1');
+
+    filterLinks.forEach(link => {
+      link.addEventListener('click', function(e) {
+        e.preventDefault();
+        const category = this.getAttribute('data-category');
+        
+        // Update Active State
+        filterLinks.forEach(l => l.classList.remove('active'));
+        this.classList.add('active');
+
+        // Update Title
+        if(category === 'all') {
+          pageTitle.textContent = 'All Products';
+        } else {
+          pageTitle.textContent = this.textContent;
+        }
+
+        // Filter Items
+        filterItems.forEach(item => {
+          if (category === 'all' || item.getAttribute('data-category') === category) {
+            item.style.display = 'block';
+          } else {
+            item.style.display = 'none';
+          }
+        });
+
+        // Smooth Scroll to Top of Grid
+        window.scrollTo({ top: document.querySelector('.collection-main').offsetTop - 150, behavior: 'smooth' });
+      });
+    });
+
+    // Handle URL param if coming from header
+    const urlParams = new URLSearchParams(window.location.search);
+    const catParam = urlParams.get('cat');
+    if(catParam) {
+      const targetLink = document.querySelector(`.filter-link[data-category="${catParam}"]`);
+      if(targetLink) targetLink.click();
+    }
+  });
+</script>
 
 {% schema %}
 {
