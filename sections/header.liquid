@@ -1,18 +1,18 @@
 <style>
-  .header { padding: 15px 0; background: #fff; border-bottom: 1px solid #f4f4f4; position: fixed; top: 40px; left: 0; width: 100%; z-index: 1000; transition: transform 0.4s var(--ease-smooth); }
+  .header { height: 80px; background: #fff; border-bottom: 1px solid #f4f4f4; position: fixed; top: 40px; left: 0; width: 100%; z-index: 1000; transition: transform 0.4s var(--ease-smooth); display: flex; align-items: center; }
   .header--hidden { transform: translateY(-200%); }
   .header--visible { transform: translateY(0); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
   body { padding-top: 120px; } 
-
+  .header .container { height: 100%; }
   .header__grid { display: flex; justify-content: space-between; align-items: center; }
   .header__logo-wrapper { display: flex; align-items: center; gap: 15px; text-decoration: none; }
   .header__logo-text { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: #1a1a1a; line-height: 1; }
   .header__logo-text span { color: var(--color-primary); }
   
-  .header__nav { display: flex; gap: 30px; align-items: center; }
-  .header__nav-item { position: relative; }
-  .header__nav-link { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-text-light); text-decoration: none; padding: 25px 0; position: relative; display: block; }
-  .header__nav-link::after { content: ''; position: absolute; bottom: 20px; left: 0; width: 0; height: 2px; background: var(--color-primary); transition: width 0.3s; }
+  .header__nav { display: flex; gap: 30px; align-items: center; height: 100%; }
+  .header__nav-item { position: relative; height: 100%; display: flex; align-items: center; }
+  .header__nav-link { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-text-light); text-decoration: none; position: relative; display: block; }
+  .header__nav-link::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px; background: var(--color-primary); transition: width 0.3s; }
   .header__nav-item:hover .header__nav-link::after { width: 100%; }
 
   .mega-menu { position: absolute; top: 100%; left: -300px; width: 1100px; background: #fff; border-top: 1px solid #f4f4f4; box-shadow: 0 40px 100px rgba(0,0,0,0.05); padding: 60px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; opacity: 0; visibility: hidden; transition: all 0.3s; }
@@ -40,9 +40,9 @@
 
 <header class="header" id="SmartHeader">
   <div class="container header__grid">
-    <a href="{{ routes.root_url }}" class="header__logo-wrapper" style="display: block;">
+    <a href="{{ routes.root_url }}" class="header__logo-wrapper" style="display: flex; align-items: center; position: relative; z-index: 10;">
       {%- if section.settings.logo != blank -%}
-        <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}" style="width: {{ section.settings.logo_width }}px; height: auto; max-height: 65px; display: block; max-width: 100%; object-fit: contain;">
+        <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}" style="width: {{ section.settings.logo_width }}px; height: auto; display: block; max-width: none; transform: translateY(10px);">
       {%- else -%}
         <span class="header__logo-text" style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--color-primary);">{{ shop.name }}</span>
       {%- endif -%}
