@@ -40,9 +40,9 @@
 
 <header class="header" id="SmartHeader">
   <div class="container header__grid">
-    <a href="{{ routes.root_url }}" class="header__logo-wrapper" style="display: block; padding: 10px 0;">
+    <a href="{{ routes.root_url }}" class="header__logo-wrapper" style="display: block;">
       {%- if section.settings.logo != blank -%}
-        <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}" style="width: {{ section.settings.logo_width }}px; height: auto; display: block; max-width: 100%;">
+        <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}" style="width: {{ section.settings.logo_width }}px; height: auto; max-height: 65px; display: block; max-width: 100%; object-fit: contain;">
       {%- else -%}
         <span class="header__logo-text" style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--color-primary);">{{ shop.name }}</span>
       {%- endif -%}
