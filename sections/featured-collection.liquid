@@ -10,6 +10,8 @@
   .fc-header { text-align: center; margin-bottom: 60px; }
   .fc-title { font-family: var(--font-heading); font-size: 3rem; color: #1a1a1a; margin-bottom: 10px; }
   .fc-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 30px; }
+  .product-card { text-decoration: none; color: inherit; display: block; transition: transform 0.3s; }
+  .product-card:hover { transform: translateY(-5px); }
   
   .product-placeholder { background: #f4f4f4; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: #ccc; }
   .product-placeholder svg { width: 100px; height: 100px; }
@@ -38,22 +40,22 @@
       {%- else -%}
         {%- assign gender_filter = "" -%}
         {%- if section.settings.bg_color == 'pink' -%}
-          {%- assign gender_filter = "(G)" -%}
+          {%- assign gender_filter = "-g-" -%}
         {%- elsif section.settings.bg_color == 'blue' -%}
-          {%- assign gender_filter = "(B)" -%}
+          {%- assign gender_filter = "-b-" -%}
         {%- endif -%}
 
         {%- assign count = 0 -%}
         {%- for image_name in static_product_images -%}
-          {%- if gender_filter == "" or image_name contains gender_filter or image_name contains "(U)" or image_name contains "(B&G)" -%}
+          {%- if gender_filter == "" or image_name contains gender_filter or image_name contains "-u-" or image_name contains "-b-g-" -%}
             {%- assign di = forloop.index0 -%}
-            <div class="product-card">
+            <a href="/products/{{ image_name | remove: '.webp' | handleize }}" class="product-card">
               <div class="product-card__image-wrap" style="aspect-ratio:1/1.2; border-radius:12px; overflow:hidden; background:#fff; margin-bottom:15px;">
-                <img src="{{ image_name | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
+                <img src="{{ image_name | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' | replace: '-', ' ' }}">
               </div>
               <h3 style="font-family:var(--font-heading); font-size:1.1rem; margin:0 0 5px; text-transform: capitalize;">{{ image_name | remove: '.webp' | replace: '-', ' ' | split: '(' | first }}</h3>
               <p style="font-weight:700; color:var(--color-primary);">{{ static_product_prices[di] }}</p>
-            </div>
+            </a>
             {%- assign count = count | plus: 1 -%}
             {%- if count >= 4 -%}{%- break -%}{%- endif -%}
           {%- endif -%}

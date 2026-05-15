@@ -16,6 +16,8 @@
   .elite-sort__select { background: none; border: none; border-bottom: 1.5px solid #1a1a1a; padding: 5px 20px 5px 0; font-weight: 800; font-size: 0.85rem; text-transform: uppercase; cursor: pointer; outline: none; }
 
   .product-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+  .product-card { text-decoration: none; color: inherit; display: block; transition: transform 0.3s; }
+  .product-card:hover { transform: translateY(-5px); }
   .product-card__img { aspect-ratio: 4/5; border-radius: 12px; overflow: hidden; background: #f9f9f9; margin-bottom: 15px; position: relative; }
   
   @media (max-width: 1024px) { .collection-layout { grid-template-columns: 1fr; } .product-grid { grid-template-columns: repeat(2, 1fr); } }
@@ -30,12 +32,11 @@
           <span class="sidebar-title">Category</span>
           <div class="filter-list">
             <a href="/collections/all" class="filter-link active" data-category="all">All Products</a>
-            <a href="#" class="filter-link" data-category="sleep-bags">Sleep Bags</a>
-            <a href="#" class="filter-link" data-category="pajamas">Pajamas</a>
-            <a href="#" class="filter-link" data-category="bodysuits">Bodysuits</a>
-            <a href="#" class="filter-link" data-category="newborn">Newborn</a>
-            <a href="#" class="filter-link" data-category="baby">Baby</a>
-            <a href="#" class="filter-link" data-category="toddler">Toddler</a>
+            <a href="#" class="filter-link" data-category="dresses">Dresses & Frocks</a>
+            <a href="#" class="filter-link" data-category="pajamas">Pajamas & Nightsuits</a>
+            <a href="#" class="filter-link" data-category="sets">Sets & Dungarees</a>
+            <a href="#" class="filter-link" data-category="bodysuits">Bodysuits & Basics</a>
+            <a href="#" class="filter-link" data-category="accessories">Bedding & Accessories</a>
           </div>
         </div>
         
@@ -79,7 +80,7 @@
           {%- assign target_collection = section.settings.collection | default: collection -%}
           {%- if target_collection.products.size > 0 -%}
             {%- for product in target_collection.products -%}
-              <a href="{{ product.url }}" class="product-card">
+              <a href="{{ product.url }}" class="product-card js-filter-item" data-category="sets">
                 <div class="product-card__img">
                   <img src="{{ product.featured_image | image_url: width: 800 }}" style="width:100%; height:100%; object-fit:cover;">
                 </div>
@@ -87,29 +88,31 @@
                 <p style="font-weight: 700; color: var(--color-primary);">{{ product.price | money }}</p>
               </a>
             {%- endfor -%}
-          {%- else -%}
-            {%- for image_name in static_product_images -%}
-              {%- assign di = forloop.index0 -%}
-              {%- assign category = "all" -%}
-              {%- if image_name contains "nightsuit" or image_name contains "pajama" or image_name contains "dungaree" -%}
-                {%- assign category = "pajamas" -%}
-              {%- elsif image_name contains "sleeveless" or image_name contains "frock" or image_name contains "dress" or image_name contains "gown" -%}
-                {%- assign category = "bodysuits" -%}
-              {%- elsif image_name contains "mattress" or image_name contains "pillow" or image_name contains "sleeping bag" -%}
-                {%- assign category = "sleep-bags" -%}
-              {%- elsif image_name contains "bodysuit" or image_name contains "newborn" -%}
-                {%- assign category = "newborn" -%}
-              {%- endif -%}
+          {%- endif -%}
+
+          {%- for image_name in static_product_images -%}
+            {%- assign di = forloop.index0 -%}
+            {%- assign category = "all" -%}
+            {%- if image_name contains "dress" or image_name contains "frock" or image_name contains "gown" or image_name contains "tutu" -%}
+              {%- assign category = "dresses" -%}
+            {%- elsif image_name contains "nightsuit" or image_name contains "pajama" or image_name contains "sleeping-bag" -%}
+              {%- assign category = "pajamas" -%}
+            {%- elsif image_name contains "set" or image_name contains "dungaree" or image_name contains "polo" or image_name contains "soccer" -%}
+              {%- assign category = "sets" -%}
+            {%- elsif image_name contains "mattress" or image_name contains "pillow" or image_name contains "pad" or image_name contains "bottles" or image_name contains "sunglasses" -%}
+              {%- assign category = "accessories" -%}
+            {%- else -%}
+              {%- assign category = "bodysuits" -%}
+            {%- endif -%}
               
-              <div class="product-card js-filter-item" data-category="{{ category }}">
+              <a href="/products/{{ image_name | remove: '.webp' | handleize }}" class="product-card js-filter-item" data-category="{{ category }}">
                 <div class="product-card__img">
-                  <img src="{{ image_name | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
+                  <img src="{{ image_name | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' | replace: '-', ' ' }}">
                 </div>
                 <h3 style="font-family: var(--font-heading); font-size: 1.1rem; margin: 0 0 5px; text-transform: capitalize;">{{ image_name | remove: '.webp' | replace: '-', ' ' | split: '(' | first }}</h3>
                 <p style="font-weight: 700; color: var(--color-primary);">{{ static_product_prices[di] }}</p>
-              </div>
+              </a>
             {%- endfor -%}
-          {%- endif -%}
         </div>
       </main>
     </div>
