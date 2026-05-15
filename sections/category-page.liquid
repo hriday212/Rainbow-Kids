@@ -79,7 +79,7 @@
               {%- assign di = forloop.index0 | modulo: 12 -%}
               <div class="cat-product-card">
                 <div class="cat-product-card__img">
-                  <img src="{{ image_name | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
+                  <img src="{{ image_name | replace: ' ', '_' | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
                   {%- assign pbadge = demo_badges[di] -%}
                   {%- if pbadge != blank -%}<span class="cat-product-badge badge--{{ pbadge }}">{{ pbadge }}</span>{%- endif -%}
                 </div>

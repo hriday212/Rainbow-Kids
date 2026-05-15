@@ -1,16 +1,23 @@
 <style>
   {% include 'static-products' %}
-  .marquee-new { padding: 40px 0; background: #fff; overflow: hidden; border-top: 1px solid #f4f4f4; border-bottom: 1px solid #f4f4f4; }
-  .marquee-track { display: flex; animation: marquee-scroll 30s linear infinite; gap: 30px; width: max-content; }
+  .marquee-new { padding: 80px 0; background: #fff; overflow-x: auto; scroll-behavior: smooth; -webkit-overflow-scrolling: touch; border-top: 1px solid #f4f4f4; border-bottom: 1px solid #f4f4f4; }
+  .marquee-new::-webkit-scrollbar { height: 4px; }
+  .marquee-new::-webkit-scrollbar-track { background: #fdfdfd; }
+  .marquee-new::-webkit-scrollbar-thumb { background: #eee; border-radius: 10px; }
+  
+  .marquee-track { display: flex; animation: marquee-scroll 50s linear infinite; gap: 35px; width: max-content; padding: 0 40px; }
   .marquee-track:hover { animation-play-state: paused; }
   
-  .marquee-card { width: 250px; flex-shrink: 0; text-decoration: none; }
-  .marquee-img-wrap { aspect-ratio: 4/5; border-radius: 12px; overflow: hidden; background: #f4f4f4; margin-bottom: 15px; }
-  .marquee-img { width: 100%; height: 100%; object-fit: cover; }
-  .marquee-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #f4f4f4; color: #ccc; }
+  .marquee-card { width: 320px; flex-shrink: 0; background: #fff; border: 1px solid #eee; border-radius: 20px; padding: 18px; transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1); cursor: grab; text-decoration: none; }
+  .marquee-card:active { cursor: grabbing; }
+  .marquee-card:hover { border-color: var(--color-primary); transform: translateY(-10px); box-shadow: 0 20px 40px rgba(0,0,0,0.04); }
   
-  .marquee-title { font-size: 0.9rem; font-weight: 700; color: #1a1a1a; display: block; margin-bottom: 5px; }
-  .marquee-price { font-weight: 800; color: var(--color-primary); font-size: 0.85rem; }
+  .marquee-img-wrap { aspect-ratio: 1/1.2; border-radius: 12px; overflow: hidden; background: #fdfdfd; margin-bottom: 25px; }
+  .marquee-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.8s ease; }
+  .marquee-card:hover .marquee-img-wrap img { transform: scale(1.08); }
+  
+  .marquee-title { font-family: var(--font-heading); font-size: 1.1rem; font-weight: 700; color: #1a1a1a; display: block; margin-bottom: 8px; text-transform: capitalize; }
+  .marquee-price { font-weight: 800; color: var(--color-primary); font-size: 1rem; }
 
   @keyframes marquee-scroll {
     0% { transform: translateX(0); }
@@ -57,7 +64,7 @@
         {%- assign di = forloop.index0 | plus: 24 -%}
         <div class="marquee-card">
           <div class="marquee-img-wrap">
-            <img src="{{ image_name | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
+            <img src="{{ image_name | replace: ' ', '_' | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
           </div>
           <span class="marquee-title" style="text-transform: capitalize;">{{ image_name | remove: '.webp' | replace: '-', ' ' }}</span>
           <span class="marquee-price">{{ static_product_prices[di] }}</span>
@@ -68,7 +75,7 @@
         {%- assign di = forloop.index0 | plus: 24 -%}
         <div class="marquee-card">
           <div class="marquee-img-wrap">
-            <img src="{{ 'products/' | append: image_name | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
+            <img src="{{ image_name | replace: ' ', '_' | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
           </div>
           <span class="marquee-title" style="text-transform: capitalize;">{{ image_name | remove: '.webp' | replace: '-', ' ' }}</span>
           <span class="marquee-price">{{ static_product_prices[di] }}</span>
