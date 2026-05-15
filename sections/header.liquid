@@ -53,16 +53,15 @@
         <a href="/collections/all" class="header__nav-link">Shop All</a>
         <div class="mega-menu">
           <div>
-            <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Essentials</span>
-            <a href="/collections/all?cat=sleep-bags" class="dropdown-link" style="display:block; margin-bottom:12px;">Sleep Bags</a>
-            <a href="/collections/all?cat=pajamas" class="dropdown-link" style="display:block; margin-bottom:12px;">Pajamas</a>
-            <a href="/collections/all?cat=bodysuits" class="dropdown-link" style="display:block; margin-bottom:12px;">Bodysuits</a>
+            <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Clothing</span>
+            <a href="/collections/all?cat=dresses" class="dropdown-link" style="display:block; margin-bottom:12px;">Dresses & Frocks</a>
+            <a href="/collections/all?cat=pajamas" class="dropdown-link" style="display:block; margin-bottom:12px;">Pajamas & Nightsuits</a>
+            <a href="/collections/all?cat=sets" class="dropdown-link" style="display:block; margin-bottom:12px;">Sets & Dungarees</a>
           </div>
           <div>
-            <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Shop by Age</span>
-            <a href="/collections/all?cat=newborn" class="dropdown-link" style="display:block; margin-bottom:12px;">Newborn</a>
-            <a href="/collections/all?cat=baby" class="dropdown-link" style="display:block; margin-bottom:12px;">Baby</a>
-            <a href="/collections/all?cat=toddler" class="dropdown-link" style="display:block; margin-bottom:12px;">Toddler</a>
+            <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Essentials</span>
+            <a href="/collections/all?cat=bodysuits" class="dropdown-link" style="display:block; margin-bottom:12px;">Bodysuits & Basics</a>
+            <a href="/collections/all?cat=accessories" class="dropdown-link" style="display:block; margin-bottom:12px;">Bedding & Accessories</a>
           </div>
           <div style="grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
              <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-1' | placeholder_svg_tag }}</div>
@@ -121,5 +120,24 @@
 </script>
 
 {% schema %}
-{ "name": "Boutique Header" }
+{
+  "name": "Boutique Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "range",
+      "id": "logo_width",
+      "min": 50,
+      "max": 300,
+      "step": 10,
+      "default": 180,
+      "unit": "px",
+      "label": "Custom logo width"
+    }
+  ]
+}
 {% endschema %}
