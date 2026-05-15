@@ -4,8 +4,9 @@
   .header--visible { transform: translateY(0); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
   body { padding-top: 120px; } 
   .header .container { height: 100%; }
-  .header__grid { display: flex; justify-content: space-between; align-items: center; }
-  .header__logo-wrapper { display: flex; align-items: center; gap: 15px; text-decoration: none; }
+  .header__grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 100%; }
+  .header__grid--left { grid-template-columns: auto 1fr auto; }
+  .header__logo-wrapper { display: flex; align-items: center; text-decoration: none; position: relative; z-index: 10; }
   .header__logo-text { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: #1a1a1a; line-height: 1; }
   .header__logo-text span { color: var(--color-primary); }
   
@@ -39,43 +40,76 @@
 </style>
 
 <header class="header" id="SmartHeader">
-  <div class="container header__grid">
-    <a href="{{ routes.root_url }}" class="header__logo-wrapper" style="display: flex; align-items: center; position: relative; z-index: 10;">
+  <div class="container header__grid {% if section.settings.logo_position == 'left' %}header__grid--left{% endif %}">
+    
+    {%- if section.settings.logo_position == 'center' -%}
+      <nav class="header__nav header__nav--left">
+        <div class="header__nav-item">
+          <a href="/collections/all" class="header__nav-link">Shop All</a>
+          <div class="mega-menu" style="left: 0;">
+            <div>
+              <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Clothing</span>
+              <a href="/collections/all?cat=dresses" class="dropdown-link" style="display:block; margin-bottom:12px;">Dresses & Frocks</a>
+              <a href="/collections/all?cat=pajamas" class="dropdown-link" style="display:block; margin-bottom:12px;">Pajamas & Nightsuits</a>
+              <a href="/collections/all?cat=sets" class="dropdown-link" style="display:block; margin-bottom:12px;">Sets & Dungarees</a>
+            </div>
+            <div>
+              <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Essentials</span>
+              <a href="/collections/all?cat=bodysuits" class="dropdown-link" style="display:block; margin-bottom:12px;">Bodysuits & Basics</a>
+              <a href="/collections/all?cat=accessories" class="dropdown-link" style="display:block; margin-bottom:12px;">Bedding & Accessories</a>
+            </div>
+            <div style="grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+               <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-1' | placeholder_svg_tag }}</div>
+               <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-2' | placeholder_svg_tag }}</div>
+            </div>
+          </div>
+        </div>
+        <div class="header__nav-item"><a href="/collections/new-arrivals" class="header__nav-link">New Arrivals</a></div>
+      </nav>
+    {%- endif -%}
+
+    <a href="{{ routes.root_url }}" class="header__logo-wrapper" style="justify-content: {{ section.settings.logo_position }};">
       {%- if section.settings.logo != blank -%}
-        <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}" style="width: {{ section.settings.logo_width }}px; height: auto; display: block; max-width: none; transform: translateY(10px);">
+        <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}" style="width: {{ section.settings.logo_width }}px; height: auto; display: block; max-width: none; transform: translateY({{ section.settings.logo_vertical_offset }}px);">
       {%- else -%}
         <span class="header__logo-text" style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--color-primary);">{{ shop.name }}</span>
       {%- endif -%}
     </a>
 
-    <nav class="header__nav">
-      <div class="header__nav-item">
-        <a href="/collections/all" class="header__nav-link">Shop All</a>
-        <div class="mega-menu">
-          <div>
-            <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Clothing</span>
-            <a href="/collections/all?cat=dresses" class="dropdown-link" style="display:block; margin-bottom:12px;">Dresses & Frocks</a>
-            <a href="/collections/all?cat=pajamas" class="dropdown-link" style="display:block; margin-bottom:12px;">Pajamas & Nightsuits</a>
-            <a href="/collections/all?cat=sets" class="dropdown-link" style="display:block; margin-bottom:12px;">Sets & Dungarees</a>
-          </div>
-          <div>
-            <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Essentials</span>
-            <a href="/collections/all?cat=bodysuits" class="dropdown-link" style="display:block; margin-bottom:12px;">Bodysuits & Basics</a>
-            <a href="/collections/all?cat=accessories" class="dropdown-link" style="display:block; margin-bottom:12px;">Bedding & Accessories</a>
-          </div>
-          <div style="grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-             <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-1' | placeholder_svg_tag }}</div>
-             <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-2' | placeholder_svg_tag }}</div>
+    {%- if section.settings.logo_position == 'left' -%}
+      <nav class="header__nav header__nav--center">
+        <div class="header__nav-item">
+          <a href="/collections/all" class="header__nav-link">Shop All</a>
+          <div class="mega-menu">
+            <div>
+              <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Clothing</span>
+              <a href="/collections/all?cat=dresses" class="dropdown-link" style="display:block; margin-bottom:12px;">Dresses & Frocks</a>
+              <a href="/collections/all?cat=pajamas" class="dropdown-link" style="display:block; margin-bottom:12px;">Pajamas & Nightsuits</a>
+              <a href="/collections/all?cat=sets" class="dropdown-link" style="display:block; margin-bottom:12px;">Sets & Dungarees</a>
+            </div>
+            <div>
+              <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Essentials</span>
+              <a href="/collections/all?cat=bodysuits" class="dropdown-link" style="display:block; margin-bottom:12px;">Bodysuits & Basics</a>
+              <a href="/collections/all?cat=accessories" class="dropdown-link" style="display:block; margin-bottom:12px;">Bedding & Accessories</a>
+            </div>
+            <div style="grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+               <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-1' | placeholder_svg_tag }}</div>
+               <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-2' | placeholder_svg_tag }}</div>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="header__nav-item"><a href="/collections/new-arrivals" class="header__nav-link">New Arrivals</a></div>
-      <div class="header__nav-item"><a href="/pages/story" class="header__nav-link">Our Story</a></div>
-      <div class="header__nav-item"><a href="/pages/contact" class="header__nav-link">Support</a></div>
-      <div class="header__nav-item"><a href="/blogs/news" class="header__nav-link">Blog</a></div>
-    </nav>
+        <div class="header__nav-item"><a href="/collections/new-arrivals" class="header__nav-link">New Arrivals</a></div>
+        <div class="header__nav-item"><a href="/pages/story" class="header__nav-link">Our Story</a></div>
+        <div class="header__nav-item"><a href="/pages/contact" class="header__nav-link">Support</a></div>
+      </nav>
+    {%- else -%}
+      <nav class="header__nav" style="justify-content: flex-start; gap: 20px;">
+         <div class="header__nav-item"><a href="/pages/story" class="header__nav-link">Story</a></div>
+         <div class="header__nav-item"><a href="/pages/contact" class="header__nav-link">Support</a></div>
+      </nav>
+    {%- endif -%}
 
-    <div class="header__actions">
+    <div class="header__actions" style="display: flex; align-items: center; gap: 15px;">
       <a href="/account" class="header__action-btn" title="Account"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></a>
       <button class="header__action-btn" onclick="toggleSearch()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg></button>
       <button class="header__action-btn" onclick="toggleCart()"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg></button>
@@ -129,6 +163,16 @@
       "label": "Logo image"
     },
     {
+      "type": "select",
+      "id": "logo_position",
+      "label": "Logo position",
+      "options": [
+        { "value": "left", "label": "Left" },
+        { "value": "center", "label": "Center" }
+      ],
+      "default": "left"
+    },
+    {
       "type": "range",
       "id": "logo_width",
       "min": 50,
@@ -137,6 +181,16 @@
       "default": 180,
       "unit": "px",
       "label": "Custom logo width"
+    },
+    {
+      "type": "range",
+      "id": "logo_vertical_offset",
+      "min": -20,
+      "max": 50,
+      "step": 1,
+      "default": 10,
+      "unit": "px",
+      "label": "Logo vertical offset"
     }
   ]
 }
