@@ -23,7 +23,7 @@
   @media (max-width: 1024px) { .cat-layout { grid-template-columns: 1fr; } .cat-product-grid { grid-template-columns: repeat(2, 1fr); } }
 </style>
 
-{% render 'static-products' %}
+{% include 'static-products' %}
 {% assign demo_badges = "new,bestseller,new,,sale,,new,,bestseller,,,sale" | split: "," %}
 
 <div class="category-page">
