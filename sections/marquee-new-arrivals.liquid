@@ -64,7 +64,7 @@
         {%- assign di = forloop.index0 | plus: 24 -%}
         <div class="marquee-card">
           <div class="marquee-img-wrap">
-            <img src="{{ image_name | replace: ' ', '_' | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
+            <img src="{{ image_name | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
           </div>
           <span class="marquee-title" style="text-transform: capitalize;">{{ image_name | remove: '.webp' | replace: '-', ' ' }}</span>
           <span class="marquee-price">{{ static_product_prices[di] }}</span>
@@ -75,7 +75,7 @@
         {%- assign di = forloop.index0 | plus: 24 -%}
         <div class="marquee-card">
           <div class="marquee-img-wrap">
-            <img src="{{ image_name | replace: ' ', '_' | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
+            <img src="{{ image_name | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
           </div>
           <span class="marquee-title" style="text-transform: capitalize;">{{ image_name | remove: '.webp' | replace: '-', ' ' }}</span>
           <span class="marquee-price">{{ static_product_prices[di] }}</span>

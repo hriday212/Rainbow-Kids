@@ -40,8 +40,12 @@
 
 <header class="header" id="SmartHeader">
   <div class="container header__grid">
-    <a href="/" class="header__logo-wrapper" style="display: block; padding: 10px 0;">
-      <img src="{{ 'rainbow-logo.png' | asset_url }}" alt="Rainbow Kids Hub" style="width: 180px; height: auto; display: block; filter: drop-shadow(0 2px 10px rgba(0,0,0,0.05));">
+    <a href="{{ routes.root_url }}" class="header__logo-wrapper" style="display: block; padding: 10px 0;">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}" style="width: {{ section.settings.logo_width }}px; height: auto; display: block; max-width: 100%;">
+      {%- else -%}
+        <span class="header__logo-text" style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--color-primary);">{{ shop.name }}</span>
+      {%- endif -%}
     </a>
 
     <nav class="header__nav">

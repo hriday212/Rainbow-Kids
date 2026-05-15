@@ -103,7 +103,7 @@
               
               <div class="product-card js-filter-item" data-category="{{ category }}">
                 <div class="product-card__img">
-                  <img src="{{ image_name | replace: ' ', '_' | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
+                  <img src="{{ image_name | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
                 </div>
                 <h3 style="font-family: var(--font-heading); font-size: 1.1rem; margin: 0 0 5px; text-transform: capitalize;">{{ image_name | remove: '.webp' | replace: '-', ' ' | split: '(' | first }}</h3>
                 <p style="font-weight: 700; color: var(--color-primary);">{{ static_product_prices[di] }}</p>
