@@ -1,13 +1,6 @@
 <style>
-  .category-page { padding: 0 0 100px; background: #fff; }
-  .cat-hero { padding: 80px 0 60px; text-align: center; background: #fdf8f6; margin-bottom: 60px; opacity: 1 !important; visibility: visible !important; }
-  .cat-hero__subtitle { font-size: 0.75rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.2em; color: var(--color-primary); display: block; margin-bottom: 16px; }
-  .cat-hero__title { font-family: var(--font-heading); font-size: 4rem; color: #1a1a1a; margin-bottom: 20px; }
-  .cat-hero__text { font-size: 1.1rem; color: #888; max-width: 560px; margin: 0 auto 35px; line-height: 1.7; }
-  .cat-hero__badges { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-  .cat-badge { padding: 8px 20px; background: #fff; border: 1.5px solid #f0f0f0; border-radius: 50px; font-size: 0.78rem; font-weight: 700; color: #666; display: flex; align-items: center; gap: 8px; }
-
-  .cat-layout { display: grid; grid-template-columns: 260px 1fr; gap: 60px; }
+  .category-page { padding: 60px 0; background: #fff; }
+  .category-layout { display: grid; grid-template-columns: 260px 1fr; gap: 60px; }
   .cat-sidebar__section { margin-bottom: 36px; padding-bottom: 28px; border-bottom: 1px solid #f0f0f0; }
   .cat-sidebar__title { font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: #1a1a1a; margin-bottom: 18px; display: block; }
   .cat-filter-link { display: flex; align-items: center; justify-content: space-between; padding: 9px 0; font-size: 0.92rem; color: #666; text-decoration: none; transition: color 0.2s; border-radius: 6px; }
@@ -34,21 +27,8 @@
 {% assign demo_badges = "new,bestseller,new,,sale,,new,,bestseller,,,sale" | split: "," %}
 
 <div class="category-page">
-  <div class="cat-hero">
-    <div class="container">
-      <span class="cat-hero__subtitle">{{ section.settings.subtitle | default: "Rainbow Kids Hub" }}</span>
-      <h1 class="cat-hero__title">{{ section.settings.title | default: collection.title | default: "Our Collection" }}</h1>
-      <p class="cat-hero__text">{{ section.settings.description | default: "Crafted from 100% OEKO-TEX certified bamboo. Buttery soft, breathable, and designed for the dreamiest sleep." }}</p>
-      <div class="cat-hero__badges">
-        <span class="cat-badge">🌿 100% Organic Bamboo</span>
-        <span class="cat-badge">🛡️ OEKO-TEX Certified</span>
-        <span class="cat-badge">🚚 Free Shipping $85+</span>
-      </div>
-    </div>
-  </div>
-
   <div class="container">
-    <div class="cat-layout">
+    <div class="category-layout">
       <aside>
         <div class="cat-sidebar__section">
           <span class="cat-sidebar__title">Categories</span>
@@ -62,8 +42,10 @@
       </aside>
 
       <main>
-        <div class="cat-main__topbar">
-          <span style="font-size:0.85rem; color:#aaa;">{{ collection.products_count | default: 6 }} Items</span>
+        <div style="margin-bottom: 60px; display: flex; justify-content: space-between; align-items: center;">
+          <div>
+            <h1 style="font-family: var(--font-heading); font-size: 3.5rem; margin: 0;">{{ section.settings.title | default: collection.title | default: "Our Shop" }}</h1>
+          </div>
           <div class="boutique-sort">
             <span style="font-size:0.7rem; font-weight:800; text-transform:uppercase; color:#999;">Sort By</span>
             <select class="boutique-sort__select" id="BoutiqueSort">
@@ -130,9 +112,7 @@
 {
   "name": "Category Page",
   "settings": [
-    { "type": "text", "id": "subtitle", "label": "Subtitle", "default": "Rainbow Kids Hub" },
-    { "type": "text", "id": "title", "label": "Page Heading", "default": "Our Collection" },
-    { "type": "textarea", "id": "description", "label": "Page Description" },
+    { "type": "text", "id": "title", "label": "Page Heading" },
     { "type": "collection", "id": "collection", "label": "Linked Collection" },
     { "type": "select", "id": "active_page", "label": "Active Sidebar", "options": [
         { "value": "none", "label": "None" }, { "value": "sleep-bags", "label": "Sleep Bags" }, { "value": "pajamas", "label": "Pajamas" }, { "value": "bodysuits", "label": "Bodysuits" }, { "value": "newborn", "label": "Newborn" }, { "value": "baby", "label": "Baby" }, { "value": "toddler", "label": "Toddler" }
