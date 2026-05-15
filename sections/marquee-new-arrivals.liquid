@@ -1,4 +1,5 @@
 <style>
+  {% render 'static-products' %}
   .marquee-new { padding: 40px 0; background: #fff; overflow: hidden; border-top: 1px solid #f4f4f4; border-bottom: 1px solid #f4f4f4; }
   .marquee-track { display: flex; animation: marquee-scroll 30s linear infinite; gap: 30px; width: max-content; }
   .marquee-track:hover { animation-play-state: paused; }
@@ -52,27 +53,25 @@
         </div>
       {%- endfor -%}
     {%- else -%}
-      {%- for i in (1..6) -%}
+      {%- for image_name in static_product_images offset: 24 limit: 6 -%}
+        {%- assign di = forloop.index0 | plus: 24 -%}
         <div class="marquee-card">
           <div class="marquee-img-wrap">
-            <div class="marquee-placeholder">
-              {{ 'product-' | append: i | placeholder_svg_tag }}
-            </div>
+            <img src="{{ 'products/' | append: image_name | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
           </div>
-          <span class="marquee-title">Demo Product {{ i }}</span>
-          <span class="marquee-price">$45.00</span>
+          <span class="marquee-title" style="text-transform: capitalize;">{{ image_name | remove: '.webp' | replace: '-', ' ' }}</span>
+          <span class="marquee-price">{{ static_product_prices[di] }}</span>
         </div>
       {%- endfor -%}
       {% comment %} Duplicate Demo for infinite scroll {% endcomment %}
-      {%- for i in (1..6) -%}
+      {%- for image_name in static_product_images offset: 24 limit: 6 -%}
+        {%- assign di = forloop.index0 | plus: 24 -%}
         <div class="marquee-card">
           <div class="marquee-img-wrap">
-            <div class="marquee-placeholder">
-              {{ 'product-' | append: i | placeholder_svg_tag }}
-            </div>
+            <img src="{{ 'products/' | append: image_name | asset_url }}" style="width:100%; height:100%; object-fit:cover;" alt="{{ image_name | remove: '.webp' }}">
           </div>
-          <span class="marquee-title">Demo Product {{ i }}</span>
-          <span class="marquee-price">$45.00</span>
+          <span class="marquee-title" style="text-transform: capitalize;">{{ image_name | remove: '.webp' | replace: '-', ' ' }}</span>
+          <span class="marquee-price">{{ static_product_prices[di] }}</span>
         </div>
       {%- endfor -%}
     {%- endif -%}
