@@ -59,3 +59,11 @@ body {
 
 /* Global Styles */
 h1, h2, h3, h4 { font-family: var(--font-heading); font-weight: 400; }
+
+a { color: inherit; text-decoration: none; transition: color 0.3s; }
+a:hover { color: var(--color-primary); }
+
+button, .btn { font-family: var(--font-body); cursor: pointer; transition: all 0.3s; outline: none; border: none; background: none; }
+
+::selection { background: var(--color-secondary); color: #1a1a1a; }
+
