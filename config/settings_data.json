@@ -39,7 +39,8 @@
           "logo": "shopify://shop_images/Rainbow_Kids_Hub_Logo_Template-removebg-preview.png",
           "logo_position": "left",
           "logo_width": 150,
-          "logo_vertical_offset": -10
+          "logo_vertical_offset": 16,
+          "logo_horizontal_offset": -200
         }
       },
       "footer": {
