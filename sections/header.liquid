@@ -1,45 +1,186 @@
 <style>
-  .header { height: 80px; background: #fff; border-bottom: 1px solid #f4f4f4; position: fixed; top: 40px; left: 0; width: 100%; z-index: 1000; transition: transform 0.4s var(--ease-smooth); display: flex; align-items: center; }
+  /* =========================================================================
+     精品店导航栏样式 & 位置自定义指南 (BOUTIQUE NAV CUSTOMIZATION GUIDE)
+     =========================================================================
+     Want to move or adjust header elements? No complicated settings needed!
+     Simply edit the clean CSS rules below:
+     
+     1. TO ADJUST LOGO POSITION (LOGO 位置):
+        - By default, the logo sits at the FAR LEFT.
+        - To change distance from the screen edge, edit "padding: 0 20px" in ".header-container".
+        - To shift it vertically, edit "transform: translateY(0px)" under ".header-logo-link".
+        
+     2. TO ADJUST TEXT NAVIGATION LINKS (菜单文本链接位置):
+        - By default, they sit beautifully right-aligned next to the icons.
+        - To push links to the LEFT (closer to logo): Change "margin-left: auto;" to "margin-right: auto;" inside ".header-nav".
+        - To CENTER links perfectly in the viewport: Add "position: absolute; left: 50%; transform: translateX(-50%);" to ".header-nav".
+        - To change spacing between links: Edit "gap: 30px;" inside ".header-nav".
+        
+     3. TO ADJUST ICONS / ACTIONS (右侧图标位置):
+        - By default, they sit at the FAR RIGHT.
+        - To change distance from the right screen edge, edit "padding: 0 20px" in ".header-container".
+        - To change spacing between icons: Edit "gap: 15px;" inside ".header-actions".
+     ========================================================================= */
+
+  .boutique-header { 
+    height: 80px; 
+    background: #fff; 
+    border-bottom: 1px solid #f4f4f4; 
+    position: fixed; 
+    top: 40px; 
+    left: 0; 
+    width: 100%; 
+    z-index: 1000; 
+    transition: transform 0.4s var(--ease-smooth); 
+    display: flex; 
+    align-items: center; 
+  }
   .header--hidden { transform: translateY(-200%); }
   .header--visible { transform: translateY(0); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
   body { padding-top: 120px; } 
-  .header .container { height: 100%; max-width: 100%; padding: 0 40px; }
-  
-  /* Flex Layout (Left Logo Mode) */
-  .header__flex-layout { display: flex; align-items: center; justify-content: space-between; height: 100%; width: 100%; }
-  
-  /* Grid Layout (Center Logo Mode) */
-  .header__grid-layout { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 100%; width: 100%; }
-  
-  .header__logo-wrapper { display: flex; align-items: center; text-decoration: none; position: relative; z-index: 10; height: 80px; overflow: visible; }
-  .header__logo-wrapper--center { justify-content: center; }
-  .header__logo-text { font-family: var(--font-heading); font-size: 1.8rem; font-weight: 700; color: #1a1a1a; line-height: 1; }
-  .header__logo-text span { color: var(--color-primary); }
-  
-  .header__right-group { display: flex; align-items: center; gap: 40px; height: 80px; justify-content: flex-end; }
-  
-  .header__nav { display: flex; gap: 30px; align-items: center; height: 80px; }
-  .header__nav--left { justify-content: flex-start; }
-  
-  .header__nav-item { position: relative; height: 80px; display: flex; align-items: center; }
-  .header__nav-link { font-size: 0.8rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.15em; color: var(--color-text-light); text-decoration: none; position: relative; display: flex; align-items: center; justify-content: center; height: 100%; transition: color 0.3s; }
-  .header__nav-link::after { content: ''; position: absolute; bottom: 20px; left: 0; width: 0; height: 2px; background: var(--color-primary); transition: width 0.3s; }
-  .header__nav-item:hover .header__nav-link { color: var(--color-primary); }
-  .header__nav-item:hover .header__nav-link::after { width: 100%; }
 
-  .mega-menu { position: absolute; top: 100%; left: -300px; width: 1100px; background: #fff; border-top: 1px solid #f4f4f4; box-shadow: 0 40px 100px rgba(0,0,0,0.05); padding: 60px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 40px; opacity: 0; visibility: hidden; transition: all 0.3s; }
-  .header__nav-item:hover .mega-menu { opacity: 1; visibility: visible; }
-  
-  .dropdown-menu { position: absolute; top: 100%; left: 0; width: 220px; background: #fff; border: 1px solid #f4f4f4; box-shadow: 0 20px 50px rgba(0,0,0,0.05); padding: 20px; opacity: 0; visibility: hidden; transition: all 0.3s; display: flex; flex-direction: column; gap: 15px; }
-  .header__nav-item:hover .dropdown-menu { opacity: 1; visibility: visible; }
-  .dropdown-link { font-size: 0.85rem; color: #666; text-decoration: none; transition: color 0.3s; }
-  .dropdown-link:hover { color: var(--color-primary); font-weight: 700; }
+  /* Spans absolute full width of the screen */
+  .header-container { 
+    display: flex; 
+    align-items: center; 
+    height: 100%; 
+    width: 100%; 
+    padding: 0 20px; /* Controls margin of logo and icons from screen edge */
+  }
 
-  .header__actions { display: flex; align-items: center; gap: 15px; height: 80px; }
-  .header__action-btn { background: none; border: none; padding: 8px; cursor: pointer; color: #1a1a1a; display: flex; align-items: center; justify-content: center; transition: color 0.3s; height: 100%; }
-  .header__action-btn:hover { color: var(--color-primary); }
-  .header__action-btn svg { width: 22px; height: 22px; }
+  /* 1. LOGO STYLING */
+  .header-logo-link { 
+    display: flex; 
+    align-items: center; 
+    text-decoration: none; 
+    height: 80px; 
+    transform: translateY(0px); /* Vertical adjustment */
+  }
+  .header-logo-img { 
+    height: auto; 
+    display: block; 
+    max-width: none; 
+  }
+  .header-logo-text { 
+    font-family: var(--font-heading); 
+    font-size: 1.5rem; 
+    font-weight: 800; 
+    color: var(--color-primary); 
+  }
 
+  /* 2. TEXT NAVIGATION LINKS */
+  .header-nav { 
+    display: flex; 
+    gap: 30px; /* Gap between each text link */
+    align-items: center; 
+    height: 80px; 
+    margin-left: auto; /* Pushes links and icons to the right */
+  }
+  .nav-item { 
+    position: relative; 
+    height: 80px; 
+    display: flex; 
+    align-items: center; 
+  }
+  .nav-link { 
+    font-size: 0.8rem; 
+    font-weight: 800; 
+    text-transform: uppercase; 
+    letter-spacing: 0.15em; 
+    color: var(--color-text-light); 
+    text-decoration: none; 
+    position: relative; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    height: 100%; 
+    transition: color 0.3s; 
+  }
+  .nav-link::after { 
+    content: ''; 
+    position: absolute; 
+    bottom: 20px; 
+    left: 0; 
+    width: 0; 
+    height: 2px; 
+    background: var(--color-primary); 
+    transition: width 0.3s; 
+  }
+  .nav-item:hover .nav-link { color: var(--color-primary); }
+  .nav-item:hover .nav-link::after { width: 100%; }
+
+  /* MEGA MENU */
+  .mega-menu { 
+    position: absolute; 
+    top: 100%; 
+    right: -100px; 
+    width: 1100px; 
+    background: #fff; 
+    border-top: 1px solid #f4f4f4; 
+    box-shadow: 0 40px 100px rgba(0,0,0,0.05); 
+    padding: 60px; 
+    display: grid; 
+    grid-template-columns: repeat(4, 1fr); 
+    gap: 40px; 
+    opacity: 0; 
+    visibility: hidden; 
+    transition: all 0.3s; 
+  }
+  .nav-item:hover .mega-menu { opacity: 1; visibility: visible; }
+  .menu-column-title { 
+    font-size: 0.75rem; 
+    font-weight: 800; 
+    text-transform: uppercase; 
+    letter-spacing: 0.15em; 
+    color: #1a1a1a; 
+    margin-bottom: 25px; 
+    display: block; 
+  }
+  .menu-link { 
+    font-size: 0.85rem; 
+    color: #666; 
+    text-decoration: none; 
+    transition: color 0.3s; 
+    display: block; 
+    margin-bottom: 12px; 
+  }
+  .menu-link:hover { color: var(--color-primary); font-weight: 700; }
+  .menu-products { 
+    grid-column: span 2; 
+    display: grid; 
+    grid-template-columns: 1fr 1fr; 
+    gap: 20px; 
+  }
+  .menu-product-placeholder { 
+    background: #f4f4f4; 
+    border-radius: 12px; 
+    height: 100%; 
+  }
+
+  /* 3. ACTIONS (ICONS) */
+  .header-actions { 
+    display: flex; 
+    align-items: center; 
+    gap: 15px; /* Spacing between icon buttons */
+    height: 80px; 
+    margin-left: 40px; /* Gap between menu links and icons */
+  }
+  .action-btn { 
+    background: none; 
+    border: none; 
+    padding: 8px; 
+    cursor: pointer; 
+    color: #1a1a1a; 
+    display: flex; 
+    align-items: center; 
+    justify-content: center; 
+    transition: color 0.3s; 
+    height: 100%; 
+  }
+  .action-btn:hover { color: var(--color-primary); }
+  .action-btn svg { width: 22px; height: 22px; }
+
+  /* SEARCH MODAL */
   .search-modal { position: fixed; inset: 0; z-index: 3000; visibility: hidden; opacity: 0; transition: all 0.4s var(--ease-smooth); }
   .search-modal.active { visibility: visible; opacity: 1; }
   .search-modal__overlay { position: absolute; inset: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); }
@@ -47,107 +188,57 @@
   .search-modal.active .search-modal__content { transform: translateY(0); }
   .search-input { flex: 1; background: none; border: none; font-family: var(--font-heading); font-size: 3rem; color: #1a1a1a; outline: none; width: 100%; border-bottom: 3px solid #1a1a1a; padding: 0 0 15px; }
 
-  @media (max-width: 1024px) { .header__nav { display: none; } }
+  @media (max-width: 1024px) { 
+    .header-nav { display: none; } 
+    .header-container { padding: 0 20px; }
+  }
 </style>
 
-<header class="header" id="SmartHeader">
-  <div class="container">
+<header class="boutique-header" id="SmartHeader">
+  <div class="header-container">
     
-    {%- if section.settings.logo_position == 'left' -%}
-      <!-- LEFT LOGO LAYOUT -->
-      <div class="header__flex-layout">
-        <a href="{{ routes.root_url }}" class="header__logo-wrapper" style="transform: translate({{ section.settings.logo_horizontal_offset | default: 0 }}px, {{ section.settings.logo_vertical_offset | default: 0 }}px);">
-          {%- if section.settings.logo != blank -%}
-            <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}" style="width: {{ section.settings.logo_width | default: 180 }}px; height: auto; display: block; max-width: none;">
-          {%- else -%}
-            <span class="header__logo-text" style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--color-primary);">{{ shop.name }}</span>
-          {%- endif -%}
-        </a>
+    <!-- 1. LOGO (Far Left) -->
+    <a href="{{ routes.root_url }}" class="header-logo-link">
+      {%- if section.settings.logo != blank -%}
+        <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}" class="header-logo-img" style="width: {{ section.settings.logo_width | default: 180 }}px;">
+      {%- else -%}
+        <span class="header-logo-text">{{ shop.name }}</span>
+      {%- endif -%}
+    </a>
 
-        <div class="header__right-group">
-          <nav class="header__nav">
-            <div class="header__nav-item">
-              <a href="/collections/all" class="header__nav-link">Shop All</a>
-              <div class="mega-menu" style="right: -100px; left: auto;">
-                <div>
-                  <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Clothing</span>
-                  <a href="/collections/all?cat=dresses" class="dropdown-link" style="display:block; margin-bottom:12px;">Dresses & Frocks</a>
-                  <a href="/collections/all?cat=pajamas" class="dropdown-link" style="display:block; margin-bottom:12px;">Pajamas & Nightsuits</a>
-                  <a href="/collections/all?cat=sets" class="dropdown-link" style="display:block; margin-bottom:12px;">Sets & Dungarees</a>
-                </div>
-                <div>
-                  <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Essentials</span>
-                  <a href="/collections/all?cat=bodysuits" class="dropdown-link" style="display:block; margin-bottom:12px;">Bodysuits & Basics</a>
-                  <a href="/collections/all?cat=accessories" class="dropdown-link" style="display:block; margin-bottom:12px;">Bedding & Accessories</a>
-                </div>
-                <div style="grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                   <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-1' | placeholder_svg_tag }}</div>
-                   <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-2' | placeholder_svg_tag }}</div>
-                </div>
-              </div>
-            </div>
-            <div class="header__nav-item"><a href="/collections/new-arrivals" class="header__nav-link">New Arrivals</a></div>
-            <div class="header__nav-item"><a href="/pages/story" class="header__nav-link">Our Story</a></div>
-            <div class="header__nav-item"><a href="/pages/contact" class="header__nav-link">Support</a></div>
-          </nav>
-
-          <div class="header__actions">
-            <a href="/account" class="header__action-btn" title="Account" style="display: flex; align-items: center;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></a>
-            <button class="header__action-btn" onclick="toggleSearch()" style="display: flex; align-items: center;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg></button>
-            <button class="header__action-btn" onclick="toggleCart()" style="display: flex; align-items: center;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg></button>
+    <!-- 2. NAVIGATION LINKS -->
+    <nav class="header-nav">
+      <div class="nav-item">
+        <a href="/collections/all" class="nav-link">Shop All</a>
+        <div class="mega-menu">
+          <div>
+            <span class="menu-column-title">Clothing</span>
+            <a href="/collections/all?cat=dresses" class="menu-link">Dresses & Frocks</a>
+            <a href="/collections/all?cat=pajamas" class="menu-link">Pajamas & Nightsuits</a>
+            <a href="/collections/all?cat=sets" class="menu-link">Sets & Dungarees</a>
+          </div>
+          <div>
+            <span class="menu-column-title">Essentials</span>
+            <a href="/collections/all?cat=bodysuits" class="menu-link">Bodysuits & Basics</a>
+            <a href="/collections/all?cat=accessories" class="menu-link">Bedding & Accessories</a>
+          </div>
+          <div class="menu-products">
+             <div class="menu-product-placeholder">{{ 'product-1' | placeholder_svg_tag }}</div>
+             <div class="menu-product-placeholder">{{ 'product-2' | placeholder_svg_tag }}</div>
           </div>
         </div>
       </div>
-      
-    {%- else -%}
-      <!-- CENTER LOGO LAYOUT -->
-      <div class="header__grid-layout">
-        <nav class="header__nav header__nav--left">
-          <div class="header__nav-item">
-            <a href="/collections/all" class="header__nav-link">Shop All</a>
-            <div class="mega-menu" style="left: 0;">
-              <div>
-                <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Clothing</span>
-                <a href="/collections/all?cat=dresses" class="dropdown-link" style="display:block; margin-bottom:12px;">Dresses & Frocks</a>
-                <a href="/collections/all?cat=pajamas" class="dropdown-link" style="display:block; margin-bottom:12px;">Pajamas & Nightsuits</a>
-                <a href="/collections/all?cat=sets" class="dropdown-link" style="display:block; margin-bottom:12px;">Sets & Dungarees</a>
-              </div>
-              <div>
-                <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; letter-spacing:0.15em; color:#1a1a1a; margin-bottom:25px; display:block;">Essentials</span>
-                <a href="/collections/all?cat=bodysuits" class="dropdown-link" style="display:block; margin-bottom:12px;">Bodysuits & Basics</a>
-                <a href="/collections/all?cat=accessories" class="dropdown-link" style="display:block; margin-bottom:12px;">Bedding & Accessories</a>
-              </div>
-              <div style="grid-column: span 2; display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
-                 <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-1' | placeholder_svg_tag }}</div>
-                 <div style="background:#f4f4f4; border-radius:12px; height:100%;">{{ 'product-2' | placeholder_svg_tag }}</div>
-              </div>
-            </div>
-          </div>
-          <div class="header__nav-item"><a href="/collections/new-arrivals" class="header__nav-link">New Arrivals</a></div>
-        </nav>
+      <div class="nav-item"><a href="/collections/new-arrivals" class="nav-link">New Arrivals</a></div>
+      <div class="nav-item"><a href="/pages/story" class="nav-link">Our Story</a></div>
+      <div class="nav-item"><a href="/pages/contact" class="nav-link">Support</a></div>
+    </nav>
 
-        <a href="{{ routes.root_url }}" class="header__logo-wrapper header__logo-wrapper--center" style="transform: translate({{ section.settings.logo_horizontal_offset | default: 0 }}px, {{ section.settings.logo_vertical_offset | default: 0 }}px);">
-          {%- if section.settings.logo != blank -%}
-            <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}" style="width: {{ section.settings.logo_width | default: 180 }}px; height: auto; display: block; max-width: none;">
-          {%- else -%}
-            <span class="header__logo-text" style="font-family: var(--font-heading); font-size: 1.5rem; font-weight: 800; color: var(--color-primary);">{{ shop.name }}</span>
-          {%- endif -%}
-        </a>
-
-        <div class="header__right-group">
-          <nav class="header__nav">
-            <div class="header__nav-item"><a href="/pages/story" class="header__nav-link">Story</a></div>
-            <div class="header__nav-item"><a href="/pages/contact" class="header__nav-link">Support</a></div>
-          </nav>
-
-          <div class="header__actions">
-            <a href="/account" class="header__action-btn" title="Account" style="display: flex; align-items: center;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></a>
-            <button class="header__action-btn" onclick="toggleSearch()" style="display: flex; align-items: center;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg></button>
-            <button class="header__action-btn" onclick="toggleCart()" style="display: flex; align-items: center;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg></button>
-          </div>
-        </div>
-      </div>
-    {%- endif -%}
+    <!-- 3. ACTION ICONS -->
+    <div class="header-actions">
+      <a href="/account" class="action-btn" title="Account" style="display: flex; align-items: center;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" /></svg></a>
+      <button class="action-btn" onclick="toggleSearch()" style="display: flex; align-items: center;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" /></svg></button>
+      <button class="action-btn" onclick="toggleCart()" style="display: flex; align-items: center;"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M15.75 10.5V6a3.75 3.75 0 1 0-7.5 0v4.5m11.356-1.993 1.263 12c.07.665-.45 1.243-1.119 1.243H4.25a1.125 1.125 0 0 1-1.12-1.243l1.264-12A1.125 1.125 0 0 1 5.513 7.5h12.974c.576 0 1.059.435 1.119 1.007ZM8.625 10.5a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm7.5 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Z" /></svg></button>
+    </div>
 
   </div>
 </header>
@@ -198,16 +289,6 @@
       "label": "Logo image"
     },
     {
-      "type": "select",
-      "id": "logo_position",
-      "label": "Logo position",
-      "options": [
-        { "value": "left", "label": "Left" },
-        { "value": "center", "label": "Center" }
-      ],
-      "default": "left"
-    },
-    {
       "type": "range",
       "id": "logo_width",
       "min": 50,
@@ -216,26 +297,6 @@
       "default": 180,
       "unit": "px",
       "label": "Custom logo width"
-    },
-    {
-      "type": "range",
-      "id": "logo_vertical_offset",
-      "min": -200,
-      "max": 200,
-      "step": 2,
-      "default": 10,
-      "unit": "px",
-      "label": "Logo vertical offset"
-    },
-    {
-      "type": "range",
-      "id": "logo_horizontal_offset",
-      "min": -1000,
-      "max": 1000,
-      "step": 10,
-      "default": 0,
-      "unit": "px",
-      "label": "Logo horizontal offset"
     }
   ]
 }
