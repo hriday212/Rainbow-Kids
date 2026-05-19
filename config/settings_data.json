@@ -36,10 +36,10 @@
           "header#SmartHeader.header {background-color: #ffe5ec;}"
         ],
         "settings": {
-          "logo": "shopify://shop_images/Rainbow_Kids_Hub_Logo_Template-removebg-preview.png",
+          "logo": "shopify://shop_images/Rainbow_Kids_Hub_Logo_Template-removebg-preview1.png",
           "logo_position": "left",
           "logo_width": 150,
-          "logo_vertical_offset": 16,
+          "logo_vertical_offset": 1,
           "logo_horizontal_offset": -200
         }
       },
