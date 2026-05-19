@@ -5,6 +5,11 @@
   body { padding-top: 120px; } 
   .header .container { height: 100%; }
   
+  :root { --logo-max-left: -40px; }
+  @media (min-width: 1480px) {
+    :root { --logo-max-left: calc(-1 * ((100vw - 1400px) / 2 + 40px)); }
+  }
+  
   .header__grid { display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; height: 100%; }
   .header__grid--left { grid-template-columns: auto 1fr auto; }
   
@@ -75,7 +80,7 @@
       </nav>
     {%- endif -%}
 
-    <a href="{{ routes.root_url }}" class="header__logo-wrapper" style="justify-content: {{ section.settings.logo_position | default: 'left' }}; transform: translateX({{ section.settings.logo_horizontal_offset | default: 0 }}px);">
+    <a href="{{ routes.root_url }}" class="header__logo-wrapper" style="justify-content: {{ section.settings.logo_position | default: 'left' }}; transform: translateX(max(var(--logo-max-left), {{ section.settings.logo_horizontal_offset | default: 0 }}px));">
       {%- if section.settings.logo != blank -%}
         <img src="{{ section.settings.logo | image_url: width: 600 }}" alt="{{ section.settings.logo.alt | default: shop.name | escape }}" style="width: {{ section.settings.logo_width | default: 180 }}px; height: auto; display: block; max-width: none; transform: translateY({{ section.settings.logo_vertical_offset | default: 0 }}px);">
       {%- else -%}
