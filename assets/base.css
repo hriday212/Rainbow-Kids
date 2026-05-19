@@ -16,6 +16,8 @@
   --color-text-dark: #1a1a1a;
   --color-text-light: #666;
   
+  --color-highlight: var(--color-pink);
+  
   --ease-smooth: cubic-bezier(0.19, 1, 0.22, 1);
 }
 
